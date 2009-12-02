@@ -1,0 +1,22 @@
+php_flag short_open_tag on
+RewriteEngine On
+
+RewriteRule ^images/w/([0-9]+)/h/([0-9]+)/(.+)$ images/displayImage.php?w=$1&h=$2&src=$3 [l]
+RewriteRule ^images/w/([0-9]+)/(.+)$ images/displayImage.php?w=$1&src=$2 [l]
+RewriteRule ^images/h/([0-9]+)/(.+)$ images/displayImage.php?h=$1&src=$2 [l]
+RewriteRule ^css/images/(.*)$ images/site/$1?%{QUERY_STRING} [l]
+
+# CorpusPHP Prefers You to use non-www Domains
+# RewriteCond %{HTTP_HOST} ^www.donatstudios.com [NC]
+# RewriteRule ^(.*)$ http://donatstudios.com/$1 [L,R=301]
+
+RewriteRule ^favicon.ico$ images/site/favicon.ico [l]
+RewriteRule ^([a-zA-Z0-9_.-]+)$ index.php?url=$1&%{QUERY_STRING} [l]
+
+# 404 Handler
+php_flag register_globals off
+php_flag magic_quotes_gpc off
+php_flag register_long_arrays off
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1&%{QUERY_STRING}
