@@ -3,7 +3,7 @@
 * Configuration Loader / Modifier
 * 
 * @author Jesse G. Donat
-* @version 1.1.1
+* @version 1.1.2
 * @package CorpusPHP
 * @todo figure out a good global workaround without constants?
 * @property-read string ... gets configuration values by key
@@ -29,6 +29,10 @@ class Configuration {
 	public function __set( $key, $value ) {
 		$this->data[ $key ] = $value;
 		db::perform('config', array('key' => $key, 'value' => $value), true);
+	}
+	
+	public function __isset( $key ) {
+		return isset( $this->data[ $key ] );
 	}
 	
 }
