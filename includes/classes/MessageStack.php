@@ -1,4 +1,5 @@
 <?
+
 /**
 * MessageStack Class for Stacking Messages across
 * time/space/sessions until which time they can be output
@@ -8,7 +9,6 @@
 * @author Jesse G. Donat
 * @version 1.5.1
 */
-
 class MessageStack {
 	var $iid;
 

@@ -1,6 +1,24 @@
 <?
 
+/**
+* Cache Control Class
+*
+* @package CorpusPHP
+* @subpackage Data
+* @author Jesse G. Donat
+* @version .9b
+* @todo Add file caching capabilities
+*/
 class Cache {
+	
+	const SECOND = 'SECOND';
+	const MINUTE = 'MINUTE';
+	const HOUR = 'HOUR';
+	const DAY = 'DAY';
+	const WEEK = 'WEEK';
+	const MONTH = 'MONTH';
+	const QUARTER = 'QUARTER';
+	const YEAR = 'YEAR';
 
 	static function get($module, $key) {
 		self::cleanup();
@@ -20,7 +38,7 @@ class Cache {
 		db::query("Delete from cache where autoclear and now() > expires");
 	}
 	
-	static function set($module, $key, $value, $expires, $interval = 'MINUTE', $autoclear = true) {
+	static function set($module, $key, $value, $expires, $interval = self::MINUTE, $autoclear = true) {
 		self::cleanup();
 		db::perform('cache', array(
 			'module' => $module, 

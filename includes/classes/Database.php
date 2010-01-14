@@ -4,8 +4,10 @@
 * Database Connection / Manipulation Class
 *
 * @package CorpusPHP
+* @subpackage Data
 * @author Jesse G. Donat
 * @author Jon Henderson
+* @version 1.0
 */
 class db extends Database {} class Database {
 

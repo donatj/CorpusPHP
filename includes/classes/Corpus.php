@@ -4,6 +4,7 @@
 * The Corpus from which all modules, layouts, templates and content are compiled
 *
 * @package CorpusPHP
+* @subpackage Layout
 * @version 1.0.0.2
 * @subpackage Output
 */
