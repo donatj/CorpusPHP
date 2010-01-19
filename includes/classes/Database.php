@@ -7,7 +7,7 @@
 * @subpackage Data
 * @author Jesse G. Donat
 * @author Jon Henderson
-* @version 1.0
+* @version 1.1
 */
 class db extends Database {} class Database {
 
@@ -46,12 +46,14 @@ class db extends Database {} class Database {
 
 	/**
 	* Wrapper for mysql_query with erroring
+	* Will return passed resource if passed a resource
 	*
-	* @param string $query query string
+	* @param string|resource $query query string or query. 
 	* @param mixed $fatal whether a query error is fatal to the application
 	* @return resource the returned query resource
 	*/
 	static function query($query, $fatal = true, $display = false) {
+		if( is_resource($query) ) { return $query; } 
 		$qry = mysql_query($query);
 		if(!$qry) self::error($query, mysql_error(), $fatal, $display);
 		return $qry;
@@ -144,7 +146,7 @@ class db extends Database {} class Database {
 	* @return array|scalar the result of the query
 	*/
 	static function fetch($qry, $type = false, $trim = true) {
-		$qry = self::queryIfNot( $qry );
+		$qry = self::query( $qry );
 		$data = array();
 
 		switch( $type ) {
@@ -171,17 +173,6 @@ class db extends Database {} class Database {
 				while($row = mysql_fetch_assoc($qry)) { $data[] = $row; }
 		}
 		return $data;
-	}
-
-	/**
-	* If is a resource, returns it, else makes a query result resource from presuming query string
-	*
-	* @param mixed $qry
-	* @return resource
-	*/
-	static function queryIfNot( $qry ) {
-		if( !is_resource($qry) ) { $qry = self::query($qry); }
-		return $qry;
 	}
 
 	/**
