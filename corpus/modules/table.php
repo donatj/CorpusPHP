@@ -10,7 +10,11 @@ if( !$shutup ) :
 if( count( $data['header'] ) ) {
 	echo '<tr>';
 	foreach( $data['header'] as $header ) {
-		echo '<th align="left">' . $header . '</th>';
+		if( is_array( $header ) ) {
+			echo '<th '. $header['params'] .'>' . $header['text'] . '</th>';
+		}else{
+			echo '<th align="left">' . $header . '</th>';
+		}
 	}
 	echo '</tr>';
 }
@@ -18,7 +22,7 @@ if( count( $data['data'] ) ) {
 	foreach($data['data'] as $row) {
 		echo '<tr class="'.($i++ & 1 ? '' : 'odd').'">';
 		foreach($row as $field) {
-			echo '<td align="left">' . $field , '</td>';
+			echo '<td align="left">' . ( nempty( $field ) ? $field : '&nbsp;' ) . '</td>';
 		}
 		echo '</tr>';
 	}

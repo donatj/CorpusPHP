@@ -14,7 +14,7 @@
 <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.rss"/>
 
-<script src="js/mootools-1.2.3-core-yc.js" type="text/javascript"></script>
+<script src="js/mootools-1.2.4-core-yc.js" type="text/javascript"></script>
 <script src="js/mootools-1.2.3.1-more.js" type="text/javascript"></script>
 <script src="js/general.js" type="text/javascript"></script>
 <?= $_meta['header'] //for extra special meta stuff, eg contact page ?>

@@ -20,10 +20,7 @@ if( !$shutup ) {
 	?>
 	</ul>
 	</li>
-	<li>Collections
-	
 	<?= draw_category_tree('','') ?>
-	</li>
 </ul>
 <?
 }
