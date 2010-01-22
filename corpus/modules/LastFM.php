@@ -1,9 +1,11 @@
 <?
 
-$apikey = '82ebc59188004c7e067035c5d90012a0';
+$apikey = '';
 $cacheDir = 'cache/';
 
 if( !$shutup ) :
+
+if( empty($apikey) ) { $_ms->add('Last.fm API Key Required'); }
 
 $username = firstNotEmpty( $data[0], 'donatj' );
 $albumWidth = firstNotEmpty( $data[1], 115 );
