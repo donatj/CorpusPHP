@@ -39,7 +39,7 @@ legend {
 
 h1 { 
 	font-size: 2em;
-	color: #0092b4;
+	color: #005163;
 	font-weight:normal;
 	display: block;
 	border-bottom: 3px solid #bab6b6;
@@ -49,10 +49,9 @@ h3 { font-size: 1.3em; padding-top: 10px; }
 h4 { font-size: 1.1em; font-family: inherit; color: #555 }
 
 td { vertical-align: top; }
-
-dfn {
-	font-style: normal;
-}
+dfn {	font-style: normal; }
+dt { font-weight: bold; }
+dd { margin: 0; padding: 0 }
 
 /* * Layout * */
 #wrap {
@@ -70,17 +69,16 @@ dfn {
 	font-size:13px;
 }
 
-.message.error {
-	background: #CA4644;
-	color:white;
-}
-
 .message a {
 	color: #102A73;
 }
 
-.messagedialog {
+.messageerror {
+	background: #CA4644;
+	color:white;
+}
 
+.messagedialog {
 	border: 1px solid black;
 	padding: 20px;
 	position: fixed;
@@ -91,4 +89,9 @@ dfn {
 	-moz-border-radius: 4px; 
 	-webkit-border-radius: 4px; 
 	text-align: center;
+}
+
+.messagewarning {
+	background: #BA8E3C;
+	color: white;
 }

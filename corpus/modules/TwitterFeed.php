@@ -15,7 +15,7 @@ if( !Cache::isExpired( 'TwitterFeed', $cacheKey ) ) {
 	$feed = Cache::get( 'TwitterFeed', $cacheKey );
 }else{
 	if( $feed = file_get_contents( $feedUrl ) ) {
-		Cache::set( 'TwitterFeed', $cacheKey, $feed, 15, 'MINUTE', false );
+		Cache::set( 'TwitterFeed', $cacheKey, $feed, 15, Cache::MINUTE, false );
 	}else{
 		$feed = Cache::get( 'TwitterFeed', $cacheKey );
 		$_ms->add('Error Communicating with Twitter API, Error 1', true);

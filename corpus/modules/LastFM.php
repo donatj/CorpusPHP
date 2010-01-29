@@ -65,8 +65,9 @@ foreach($Albums as $Album) {
 	}
 	
 	if( file_exists($cacheFName) ) {
+		$title = htmlE( $artistName . ' - ' . $albumName );
 		echo '<div class="LastFMimg" title="'.htmlE( $artist['name'] ).'">
-			<img src="' . htmlE( 'images/displayImage.php?src=../'.$cacheFName.'&w='.(int)$albumWidth ) .'" alt="' . htmlE( $artistName . ' - ' . $albumName ) . '" /></div>';
+			<img src="' . htmlE( 'images/displayImage.php?src=../'.$cacheFName.'&w='.(int)$albumWidth ) .'" alt="' . $title . '" title="' . $title . '" /></div>';
 		
 		if(++$count >= $numberToDisplay) break 1;
 		if($count % 3 == 0) echo '<br clear="all" />';

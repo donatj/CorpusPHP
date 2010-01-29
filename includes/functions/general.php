@@ -87,10 +87,12 @@ function href($url = false, $encode = true, $strict = false) {
 * </code>
 * @todo merge into Creditcard class gracefully
 * @param array $ProcessData array of data to send to
+* @param array $rr response array return by reference
+* @param MessageStack $ms An optional message stack to use for errors
 * @return array|bool array with success code on success, false on failure
 */
-function AuthNetProcess( $ProcessData ) {
-	global $cc_message_stack;
+function AuthNetProcess( $ProcessData, &$rr = false, &$ms = false ) {
+	
 	$StdData = array(
 		x_login => AUTHORIZENET_AIM_LOGIN, // The login name as assigned to you by authorize.net
 		x_tran_key => AUTHORIZENET_AIM_TXNKEY,  // The Transaction Key (16 digits) is generated through the merchant interface
@@ -100,8 +102,8 @@ function AuthNetProcess( $ProcessData ) {
 		x_type => AUTHORIZENET_AIM_AUTHORIZATION_TYPE,
 		x_method => 'CC', //MODULE_PAYMENT_AUTHORIZENET_AIM_METHOD == 'Credit Card' ? 'CC' : 'ECHECK',
 		x_trans_id => (isset($authnet_trans_id)) ? $authnet_trans_id : '',
-		x_email_customer => MODULE_PAYMENT_AUTHORIZENET_AIM_EMAIL_CUSTOMER == 'True' ? 'TRUE': 'FALSE',
-		x_email_merchant => MODULE_PAYMENT_AUTHORIZENET_AIM_EMAIL_MERCHANT == 'True' ? 'TRUE': 'FALSE',
+		x_email_customer => 'FALSE',
+		x_email_merchant => 'FALSE',
 		// Merchant defined variables go here
 		Date => date('r'),
 		IP => $_SERVER['REMOTE_ADDR'],
@@ -136,17 +138,23 @@ function AuthNetProcess( $ProcessData ) {
 	$response_approval_code=$response[4];
 
 	db::perform( 'logging', array(
-		'logtime' => 'now()',
+		'logtime' => array( true, 'now()' ),
+		'type' => 'AuthNetTransaction',
 		'ip' => $_SERVER['REMOTE_ADDR'],
 		'request' => json_encode($_POST),
 		'data' => json_encode($submit_data),
 		'data2' => $data,
 		'data3' => $authorize,
 	) );
+	
+	$rr = $response;
 
 	if ($x_response_code != '1') {
 		//error
-		$cc_message_stack->add( $response_reason_code . ' - ' . $x_response_text, true );
+		if( $ms instanceof MessageStack ) { 
+			$ms->add( $response_reason_code . ' - ' . $x_response_text, true );
+		}
+
 		return false;
 	}else{
 		//we're golden
@@ -159,6 +167,8 @@ function AuthNetProcess( $ProcessData ) {
 
 /**
 * Serialize the current $_GET back to a query string, excluding anything in the excluded array
+* 
+* @todo needs a better name, eg: getvars() pr sp,etjomg
 *
 * @param array $exclude_array array of get variables to be excluded
 * @return string http query string
@@ -183,6 +193,9 @@ function getvarsSerializer($exclude_array = false, $strict = false) {
 */
 function nempty($s) { return (strlen(trim($s)) > 0); }
 
+/**
+* @todo Determine if there is need for these
+*/
 function valOrFalseIfEmpty( $val ) { return !nempty($val) ? false : $val; }
 
 function valOrFalseIfNumeric( $val ) { return is_numeric($val) ? false : $val; }
@@ -364,6 +377,6 @@ function dateSplit( $date, &$day = false, &$month = false, &$year = false, &$hou
 		$year = date( 'Y', $date );
 	}
 	/**
-	*@todo add rest of logic
+	*@todo add remaining logic
 	*/
 }
