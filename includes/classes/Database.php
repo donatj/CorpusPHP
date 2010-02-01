@@ -12,6 +12,11 @@
 class db extends Database {} class Database {
 
 	var $link;
+	
+	/**
+	* Constants for use with ::fetch
+	*/
+	const KEYVALUE = 'keyvalue', KEYROW = 'keyrow', ROW = 'row', SCALAR = 'scalar', FLAT = 'flat';
 
 	/**
 	* Creates connection to the database, checks the database character set, and sets the database to work in UTF-8
@@ -37,7 +42,7 @@ class db extends Database {} class Database {
 	*
 	* @param string $str string to escape/trim
 	* @param bool $trim whether or not to trim
-	* @return string escaoed/trimed string
+	* @return string escaped/trimmed string
 	*/
 	static function input($str, $trim = true) {
 		if($trim) $str = trim($str);
@@ -45,7 +50,7 @@ class db extends Database {} class Database {
 	}
 
 	/**
-	* Wrapper for mysql_query with erroring
+	* Wrapper for mysql_query with error-ing
 	* Will return passed resource if passed a resource
 	*
 	* @param string|resource $query query string or query. 
@@ -140,30 +145,37 @@ class db extends Database {} class Database {
 	* Return from a query.  Note, this is *not* simply mysql_fetch_array wrapper
 	*
 	* @todo rename to prevent mysql_fetch_array name confusion
-	* @param string|resource $qry ex: keyvalue, row, scalar, flat
-	* @param bool|string $type
+	* @todo universal/updated trim support
+	* @todo ::KEYROW - Maybe some way to chose a key?
+	* @param string|resource $qry
+	* @param bool|string $type ex: ::KEYVALUE, ::KEYROW, ::ROW, ::SCALAR, ::FLAT
 	* @param bool $trim
-	* @return array|scalar the result of the query
+	* @return array|scalar the result of the query in the format chosen by type
 	*/
 	static function fetch($qry, $type = false, $trim = true) {
 		$qry = self::query( $qry );
 		$data = array();
 
 		switch( $type ) {
-			case 'keyvalue':
+			case self::KEYVALUE:
 				while($row = mysql_fetch_array($qry)) {
 					if($trim) $row[1] = trim( $row[1] );
 					$data[$row[0]] = $row[1];
 				}
 				break;
-			case 'row':
+			case self::KEYROW:
+				while($row = mysql_fetch_array($qry)) {
+					$data[$row[0]] = $row;
+				}
+				break;
+			case self::ROW:
 				$data = mysql_fetch_assoc($qry);
 				break;
-			case 'scalar':
+			case self::SCALAR:
 				$row = mysql_fetch_array($qry);
 				$data = $row[0];
 				break;
-			case 'flat':
+			case self::FLAT:
 				while($row = mysql_fetch_array($qry)) {
 					if($trim) $row[0] = trim( $row[0] );
 					$data[] = $row[0];
@@ -177,7 +189,7 @@ class db extends Database {} class Database {
 
 	/**
 	* Backs up the database using MySQL Dump and Gzip
-	*
+	* @todo This is not well implimented
 	*/
 	static function backup() {
 		$db_file = DFS_DB_BACKUP . 'db_' . DB_DATABASE . '-' . date('YmdHis') . '.sql.gz';
