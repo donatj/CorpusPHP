@@ -1,1 +1,6 @@
+#Corpus Cache
 /cache/
+
+#MacOS Files
+.DS_Store
+._*
