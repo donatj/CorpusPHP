@@ -22,15 +22,15 @@ class Cache {
 
 	static function get($module, $key) {
 		self::cleanup();
-		return db::fetch("select value from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'",'scalar');
+		return db::fetch("select value from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'", db::SCALAR);
 	}
 	
 	static function isCached($module, $key) {
-		return db::fetch("select count(*) from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'",'scalar') > 0;
+		return db::fetch("select count(*) from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'", db::SCALAR) > 0;
 	}
 	
 	static function isExpired($module, $key) {
-		$cache = db::fetch("select now() > expires from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'",'scalar');
+		$cache = db::fetch("select now() > expires from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'", db::SCALAR);
 		return $cache || is_null($cache);
 	}
 	

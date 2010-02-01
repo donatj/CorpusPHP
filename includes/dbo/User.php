@@ -11,7 +11,7 @@ Class User {
 	}
 	
 	function refresh() {
-		$this->info = db::fetch("Select * From users Where user_id = " . $this->id, 'row');
+		$this->info = db::fetch("Select * From users Where user_id = " . $this->id, db::ROW );
 	}
 	
 }

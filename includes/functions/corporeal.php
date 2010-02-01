@@ -1,6 +1,6 @@
 <?
 function crux( $key ) {
-	return db::fetch( "Select value From crux where `key` = '" . db::input( $key ) . "'", 'scalar' );
+	return db::fetch( "Select value From crux where `key` = '" . db::input( $key ) . "'", db::SCALAR );
 }
 
 function recrux( $key, $value ) {

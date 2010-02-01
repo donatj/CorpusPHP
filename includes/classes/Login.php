@@ -38,7 +38,7 @@ class Login {
 
 	function attempt($user,$pass) {
 		
-		$uinfo = db::fetch("Select user_id, access From users WHERE email = '".db::input(trim($user))."' AND password = '".db::input(trim($pass))."'", 'row');
+		$uinfo = db::fetch("Select user_id, access From users WHERE email = '".db::input(trim($user))."' AND password = '".db::input(trim($pass))."'", db::ROW);
 		
 		if($uinfo['user_id'] > 0) {
 			$dbo_name = ucwords($uinfo['access']);

@@ -208,7 +208,7 @@ class db extends Database {} class Database {
 	* @return array the members of the enumeration
 	*/
 	static function enumMembers($table, $field) {
-		$row = self::fetch("show columns from " . $table . " where field = '" . self::input($field) . "'", 'row');
+		$row = self::fetch("show columns from " . $table . " where field = '" . self::input($field) . "'", db::ROW);
 		preg_match_all( '/\'(.*?)\'(?=[,)])/' , $row['Type'], $enum_array );
 		return $enum_array[1];
 	}
