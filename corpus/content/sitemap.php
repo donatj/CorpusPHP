@@ -1,6 +1,7 @@
 <?
 
 $_meta['title'] = 'Site Map';
+$_meta['sitemap'] = false;
 
 if( !$shutup ) {
 ?>

@@ -18,11 +18,23 @@ if( !$shutup ) {
 
 	$qry = db::query("select categories_id from categories where categories_id > 0 and list = 1 and template > 0");
 
+	//each database page
 	while($row = mysql_fetch_array($qry)) {
 		$url = $doc->createElement('url');
 		$url->appendChild($doc->createElement('loc', href($row['categories_id']) ));
 		$url->appendChild($doc->createElement( 'lastmod', date('Y-m-d', strtotime('Last Week') ) ) );
 		$urlset->appendChild($url);
+	}
+	
+	//each hardcoded page not excludded from the sitemap
+	$info = co::content_info();
+	foreach($info as $file => $data) {
+		if($data['sitemap'] !== false) {
+			$url = $doc->createElement('url');
+			$url->appendChild($doc->createElement('loc', href( $file ) ));
+			$url->appendChild($doc->createElement( 'lastmod', date('Y-m-d', filemtime( DWS_CONTENT . $file ) ) ) );
+			$urlset->appendChild($url);
+		}
 	}
 
 	echo $doc->saveXML();
