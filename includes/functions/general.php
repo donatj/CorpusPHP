@@ -168,7 +168,7 @@ function AuthNetProcess( $ProcessData, &$rr = false, &$ms = false ) {
 /**
 * Serialize the current $_GET back to a query string, excluding anything in the excluded array
 * 
-* @todo needs a better name, eg: getvars() pr sp,etjomg
+* @todo needs a better name, eg: getvars() or something
 *
 * @param array $exclude_array array of get variables to be excluded
 * @return string http query string
@@ -191,7 +191,7 @@ function getvarsSerializer($exclude_array = false, $strict = false) {
 * @todo merge firstNotEmpty into this
 * @param mixed $s
 */
-function nempty($s) { return (strlen(trim($s)) > 0); }
+function nempty($s) { return (strlen(trim( (string)$s) ) > 0); }
 
 /**
 * @todo Determine if there is need for these
@@ -238,71 +238,6 @@ function generateRandomValue($length, $type = 'mixed') {
 
 	return strtolower($rand_value);
 }
-
-/* delete
-function imgSRC($id) {
-	global $___Images;
-	cacheImages();
-	return valOrFalseIfEmpty( $___Images[$id]['filename'] );
-}
-*/
-
-/* delete
-function imgALT($image, $desc_if_is = false) {
-	global $___Images;
-	cacheImages();
-
-	if($desc_if_is == 'force') {
-		//return br2nl( $___Images[$image]['description'] );
-		return valOrFalseIfEmpty( $___Images[$image]['description'] );
-	}elseif($desc_if_is) {
-		return valOrFalseIfEmpty( firstNotEmpty( $___Images[$image]['description'], $___Images[$image]['alt'] ) );
-	}else{
-		return valOrFalseIfEmpty( $___Images[$image]['alt'] );
-	}
-}
-
-
-function sImgTag( $img, $size, $alt = false, $wORh = 'w', $imgParms = '') {
-	if( !$alt ) { $alt = imgALT($img); }
-	return '<img src="'.sImgSRC($img, $size, $wORh).'" alt="'. htmlE($alt) .'" '.$imgParms.' />';
-}
-
-function sImgSRC($img, $size = 426, $wORh = 'w', $encode = 2) {
-	if( is_numeric($img) ) { $img = imgSRC( $img ); }
-	for($i = 1; $i <= $encode; $i++) { $img = urlencode($img); }
-	return 'images/'.$wORh.'/'.(int)$size.'/content/'.$img;
-}
-
-function boxImage($img, $smallSize = 426, $largeSize = 988, $alt = false, $title = false, $wORh = 'w', $galName = 'gall1', $imgParms = '', $lpr = false) {
-	if( !$alt ) { $alt = imgALT($img); }
-
-	//inelegant hack to shut them up, not to be merged into framework
-	//if( !$title ) { $alt = strip_tags(str_replace(array('<br />','<br/>','<br>'),' ', imgALT($img, 'force'))); }
-	//was screwing stuff up, commented out until they complain
-	if( is_numeric($img) ) { $img = imgSRC( $img ); }
-	if($img) {
-
-	return ($lpr ? $lpr : '<a title="'. htmlE($alt) .'" href="'.sImgSRC($img,$largeSize).'" rel="milkbox['.$galName.']">')
-		. sImgTag($img, $smallSize, $alt, $wORh, $imgParms).
-		'</a>';
-	}
-}
-
-function cacheImages() {
-	global $___Images;
-	if( !$___Images ) {
-		$qry = db::query("Select * From images");
-		while( $row = mysql_fetch_assoc($qry) ) {
-			$___Images[ $row['images_id'] ] = $row;
-			//done by reference not for ram use but for if want to update
-			if( !isset( $___Images[ trim($row['filename']) ] ) ) { //2x multiplier
-				$___Images[ trim($row['filename']) ] =& $___Images[ $row['images_id'] ];
-			}
-		}
-	}
-}
-*/
 
 /**
 * UTF-8 Wrapper for htmlspecialchars
