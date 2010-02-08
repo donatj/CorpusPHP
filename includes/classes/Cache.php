@@ -6,7 +6,7 @@
 * @package CorpusPHP
 * @subpackage Data
 * @author Jesse G. Donat
-* @version .9b
+* @version 2 alpha
 * @todo Add file caching capabilities
 */
 class Cache {
@@ -19,18 +19,43 @@ class Cache {
 	const MONTH = 'MONTH';
 	const QUARTER = 'QUARTER';
 	const YEAR = 'YEAR';
+	
+	private $data = array();
+	private $module;
+	
+	function __construct($module = false) {
+		$this->module = $module;
+		$qry = db::query("Select `expires`, `autoclear` From cache Where module = '".db::input($this->module)."' ", true);
+		
+		while($cache = mysql_fetch_array($qry)) {
+			$this->data[ $config['key'] ] = $cache; //$config['value'];
+		}
+	}
+	
+	public function __get( $key ) {
+		return self::get( $key );
+	}
+	
+	public function __set( $key, $value ) {
+		die('Overloaded Set-ing Not Currently Supported');
+		//$this->data[ $key ] = $value;
+		//db::perform('cache', array('module' => $this->module, 'key' => $key, 'value' => $value), true);
+	}
+	
+	public function __isset( $key ) {
+		return self::isCached( $key );
+	}
 
-	static function get($module, $key) {
-		self::cleanup();
-		return db::fetch("select value from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'", db::SCALAR);
+	public function get($key) {
+		return db::fetch("select value from cache where module = '" .db::input( $this->module ). "' and `key` = '".db::input($key)."'", db::SCALAR);
 	}
 	
-	static function isCached($module, $key) {
-		return db::fetch("select count(*) from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'", db::SCALAR) > 0;
+	public function isCached($key) {
+		return db::fetch("select count(*) from cache where module = '" .db::input( $this->module ). "' and `key` = '".db::input($key)."'", db::SCALAR) > 0;
 	}
 	
-	static function isExpired($module, $key) {
-		$cache = db::fetch("select now() > expires from cache where module = '" .db::input($module). "' and `key` = '".db::input($key)."'", db::SCALAR);
+	function isExpired($key) {
+		$cache = db::fetch("select now() > expires from cache where module = '" .db::input( $this->module ). "' and `key` = '".db::input($key)."'", db::SCALAR);
 		return $cache || is_null($cache);
 	}
 	
@@ -38,10 +63,10 @@ class Cache {
 		db::query("Delete from cache where autoclear and now() > expires");
 	}
 	
-	static function set($module, $key, $value, $expires, $interval = self::MINUTE, $autoclear = true) {
+	public function set($key, $value, $expires = 30, $interval = self::MINUTE, $autoclear = true) {
 		self::cleanup();
 		db::perform('cache', array(
-			'module' => $module, 
+			'module' => $this->module, 
 			'key' => $key, 
 			'value' => $value, 
 			'expires' => array(true, 'date_add(now(), INTERVAL '.abs($expires).' ' .$interval. ')'),

@@ -1,5 +1,5 @@
 <?
-//define('DB_HOST', 'donatj.homeftp.net:8889');
+
 define('DB_HOST', 'localhost');
 define('DB_USER', '--username--');
 define('DB_PASSWORD', '--password--');

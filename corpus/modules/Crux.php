@@ -1,6 +1,7 @@
 <?
 
-$_meta['call'] = 'Crux';
+$_meta['name'] = 'Crux';
+$_meta['callable'] = true;
 
 if( !$shutup ) :
 

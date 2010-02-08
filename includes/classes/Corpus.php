@@ -30,11 +30,11 @@ class co extends Corpus {} class Corpus {
 	function __construct(){
 		self::$metaSupreme['content']['meta'] = self::__meta_scan(DWS_CONTENT);
 		self::$metaSupreme['modules']['meta'] = self::__meta_scan(DWS_MODULES);
-
+		
 		foreach( self::$metaSupreme['modules']['meta'] as $k => $v ) {
-			if( isset( $v['call'] ) ) { self::$metaSupreme['modules']['calls'][$v['call']] = $k; }
+			if( $v['callable'] === true ) { self::$metaSupreme['modules']['calls'][$v['name']] = $k; }
 		}
-
+		
 	}
 
 	/**
@@ -58,6 +58,12 @@ class co extends Corpus {} class Corpus {
 		}
 		return $data;
 	}
+	
+	private static function __premeta( $fname ) {
+		if( strpos( $fname, DWS_MODULES ) === 0 ) {
+			return self::$metaSupreme['modules']['meta'][ substr( $fname, strlen( DWS_MODULES ) ) ];
+		}
+	}
 
 	/**
 	* Does the actual loading of and sets up the enviornment for content/layouts/modules/templates
@@ -77,21 +83,28 @@ class co extends Corpus {} class Corpus {
 		$fname = self::__get_filename($fname);
 		if( $_meta === false ) { global $_meta; }
 		if( $__execConf ) { self::__conf_load($fname, $_meta); }
-
+		if( !$shutup ) { 
+			$_premeta = self::__premeta( $fname ); 
+			if( $_premeta['name'] ) {
+				$_cache = new Cache( $_premeta['name'] );
+				$_config = new Configuration( $_premeta['name'] );
+			}
+		}
+		
 		$static =& self::$staticSupreme[ $fname ];
 		if( file_exists( $fname ) ) {
 			ob_start();
 			require($fname);
 			$content = ob_get_clean();
 			if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false ) { self::exec_module_calls( $content ); }
-			//$content = preg_replace('([\t]|[\s]{2,}|[\r])',' ', $content);
+
 			if(!$lname || $_meta['raw']) {
 				return $content;
 			}else{
 				return '<div id="layout_'.str_replace( "/", "-", $lname).'">' . $content . '</div>';
 			}
 		}else{
-			if( !$shutup ) { $_ms->add( 'Template Not Found', true ); }
+			if( !$shutup ) { $_ms->add( $fname . ' Not Found', true ); }
 			return false;
 		}
 	}

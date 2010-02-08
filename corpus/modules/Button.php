@@ -1,6 +1,7 @@
 <?
 
-$_meta['call'] = 'Button';
+$_meta['name'] = 'Button';
+$_meta['callable'] = true;
 
 if( !$shutup ) :
 

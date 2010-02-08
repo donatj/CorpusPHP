@@ -1,6 +1,7 @@
 <?
 
-$_meta['call'] = 'FlashLoader';
+$_meta['name'] = 'FlashLoader';
+$_meta['callable'] = true;
 
 if( !$shutup ) :
 
