@@ -50,5 +50,10 @@ if( !file_exists($cacheName) ) {
 	imagejpeg($newImage, $cacheName, 90);
 }
 
-header("HTTP/1.1 301 Moved Permanently");
-header("Location: " . $cacheName);
+$fp = fopen($cacheName, 'rb');
+header("Last-Modified: ".gmdate( "D, d M Y H:i:s", filemtime($cacheName) )." GMT");
+header("OrigHeight: " . (int)$orig[0]);
+header("OrigWidth: " . (int)$orig[1]);
+header('Content-type: image/jpeg');
+header('X-Time-Taken: ' . microtime(true) - $s_time);
+fpassthru($fp);
