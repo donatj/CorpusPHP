@@ -1,0 +1,3 @@
+The folder is the generalized cache folder, used for modules to store data caches.
+
+This folder must be writeable

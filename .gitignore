@@ -1,5 +1,9 @@
+Local/*
+!Local/README
+
 #Corpus Cache
-/cache/
+Source/cache/*
+!Source/cache/README
 
 #MacOS Files
 .DS_Store
