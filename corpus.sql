@@ -75,7 +75,7 @@ CREATE TABLE `config` (
   PRIMARY KEY  (`module`,`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Set as InnoDB for efficency puproses, keeps keys tidy.';
 SET character_set_client = @saved_cs_client;
-INSERT INTO `config` VALUES ('','DEFAULT_META_DESC',''),('','DEFAULT_META_KEYS',''),('','DEFAULT_META_TITLE','CorpusPHP Base'),('','DEFAULT_META_TITLE_POST',' &mdash; CorpusPHP'),('','DEFAULT_META_TITLE_PRE',''),('','DISPLAY_DATE_FORMAT','M. j, Y'),('','DOCTYPE','<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\r\n	\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">'),('','GENERIC_DB_ERROR','An unspecified error occured, Please try again later.'),('','GENERIC_LOGIN_ERROR','Access Violation - You must be signed in'),('','GENERIC_PERM_ERROR','User lacks access rights'),('','GENERIC_USER_ERROR','The intergalactic space cat does not approve of your user'),('','HTMLATTR','xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\"'),('','PAGELOADS','0'),('','PATTERN_MODULE_CALL','/%([A-Za-z0-9_-]+?)\\[(.*?)\\]%/'),('','PATTERN_SEO_URL','([^a-zA-Z0-9_\\-\\.]+)'),('','STORE_NAME','CorpusPHP');
+INSERT INTO `config` VALUES ('','DEFAULT_META_DESC',''),('','DEFAULT_META_KEYS',''),('','DEFAULT_META_TITLE','CorpusPHP Base'),('','DEFAULT_META_TITLE_POST',' &mdash; CorpusPHP'),('','DEFAULT_META_TITLE_PRE',''),('','DISPLAY_DATE_FORMAT','M. j, Y'),('','DOCTYPE','<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\r\n	\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">'),('','GENERIC_DB_ERROR','An unspecified error occured, Please try again later.'),('','GENERIC_LOGIN_ERROR','Access Violation - You must be signed in'),('','GENERIC_PERM_ERROR','User lacks access rights'),('','GENERIC_USER_ERROR','The intergalactic space cat does not approve of your user'),('','HTMLATTR','xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\"'),('','PAGELOADS','12'),('','PATTERN_MODULE_CALL','/%([A-Za-z0-9_-]+?)\\[(.*?)\\]%/'),('','PATTERN_SEO_URL','([^a-zA-Z0-9_\\-\\.]+)'),('','STORE_NAME','CorpusPHP');
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `crux` (
@@ -103,12 +103,11 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL auto_increment,
-  `access` enum('admin','superadmin','freelancer','institution') NOT NULL default 'freelancer',
+  `access` enum('admin','superadmin','user') NOT NULL default 'user',
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
-  `institution` varchar(255) NOT NULL COMMENT 'Only applies to Institutions',
   `department` varchar(255) default NULL COMMENT 'Only applies to Institutions',
   `company` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -130,7 +129,7 @@ CREATE TABLE `users` (
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
-INSERT INTO `users` VALUES (1,'admin','admin@donatstudios.com','password','CorpusPHP','Admin','',NULL,'Ecreativeworks','','','','','','9529551670','','','',1,0);
+INSERT INTO `users` VALUES (1,'admin','admin@donatstudios.com','password','CorpusPHP','Admin',NULL,'Ecreativeworks','','','','','','9529551670','','','',1,0);
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `zones` (

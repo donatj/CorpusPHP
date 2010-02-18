@@ -2,7 +2,7 @@ conf.php files seemingly not executing when
 	-in root
 	-url is from the database
 	
-Explore idea of packaged logic, eg, folders that end in like .webpackage
+Explore idea of packaged logic, eg, folders that end in like .webpackage or .corpus
 
 More seperation of project from framework
 	-DBO in a seperate folder
@@ -11,3 +11,5 @@ More seperation of project from framework
 	
 Look into
 	-Class encapsulation / dynamic naming
+	
+Start documenting for eventual builder.
