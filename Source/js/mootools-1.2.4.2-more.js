@@ -1,18 +1,51 @@
 //MooTools More, <http://mootools.net/more>. Copyright (c) 2006-2009 Aaron Newton <http://clientcide.com/>, Valerio Proietti <http://mad4milk.net> & the MooTools team <http://mootools.net/developers>, MIT Style License.
 
+/*
+---
+
+script: More.js
+
+description: MooTools More
+
+license: MIT-style license
+
+authors:
+- Guillermo Rauch
+- Thomas Aylott
+- Scott Kyle
+
+requires:
+- core:1.2.4/MooTools
+
+provides: [MooTools.More]
+
+...
+*/
+
 MooTools.More = {
-	'version': '1.2.3.1'
+	'version': '1.2.4.2',
+	'build': 'bd5a93c0913cce25917c48cbdacde568e15e02ef'
 };
 
 /*
-Script: MooTools.Lang.js
-	Provides methods for localization.
+---
 
-	License:
-		MIT-style license.
+script: MooTools.Lang.js
 
-	Authors:
-		Aaron Newton
+description: Provides methods for localization.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Events
+- /MooTools.More
+
+provides: [MooTools.Lang]
+
+...
 */
 
 (function(){
@@ -98,14 +131,24 @@ Script: MooTools.Lang.js
 })();
 
 /*
-Script: Class.Refactor.js
-	Extends a class onto itself with new property, preserving any items attached to the class's namespace.
+---
 
-	License:
-		MIT-style license.
+script: Class.Refactor.js
 
-	Authors:
-		Aaron Newton
+description: Extends a class onto itself with new property, preserving any items attached to the class's namespace.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Class
+- /MooTools.More
+
+provides: [Class.refactor]
+
+...
 */
 
 Class.refactor = function(original, refactors){
@@ -126,18 +169,28 @@ Class.refactor = function(original, refactors){
 };
 
 /*
-Script: Class.Binds.js
-	Automagically binds specified methods in a class to the instance of the class.
+---
 
-	License:
-		MIT-style license.
+script: Class.Binds.js
 
-	Authors:
-		Aaron Newton
+description: Automagically binds specified methods in a class to the instance of the class.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Class
+- /MooTools.More
+
+provides: [Class.Binds]
+
+...
 */
 
 Class.Mutators.Binds = function(binds){
-	 return binds;
+    return binds;
 };
 
 Class.Mutators.initialize = function(initialize){
@@ -150,15 +203,27 @@ Class.Mutators.initialize = function(initialize){
 	};
 };
 
+
 /*
-Script: Class.Occlude.js
-	Prevents a class from being applied to a DOM element twice.
+---
 
-	License:
-		MIT-style license.
+script: Class.Occlude.js
 
-	Authors:
-		Aaron Newton
+description: Prevents a class from being applied to a DOM element twice.
+
+license: MIT-style license.
+
+authors:
+- Aaron Newton
+
+requires: 
+- core/1.2.4/Class
+- core:1.2.4/Element
+- /MooTools.More
+
+provides: [Class.Occlude]
+
+...
 */
 
 Class.Occlude = new Class({
@@ -166,27 +231,34 @@ Class.Occlude = new Class({
 	occlude: function(property, element){
 		element = document.id(element || this.element);
 		var instance = element.retrieve(property || this.property);
-		if (instance && !$defined(this.occluded)){
-			this.occluded = instance;
-		} else {
-			this.occluded = false;
-			element.store(property || this.property, this);
-		}
+		if (instance && !$defined(this.occluded))
+			return this.occluded = instance;
+
+		this.occluded = false;
+		element.store(property || this.property, this);
 		return this.occluded;
 	}
 
 });
 
 /*
-Script: Array.Extras.js
-	Extends the Array native object to include useful methods to work with arrays.
+---
 
-	License:
-		MIT-style license.
+script: Array.Extras.js
 
-	Authors:
-		Christoph Pojer
+description: Extends the Array native object to include useful methods to work with arrays.
 
+license: MIT-style license
+
+authors:
+- Christoph Pojer
+
+requires:
+- core:1.2.4/Array
+
+provides: [Array.Extras]
+
+...
 */
 Array.implement({
 
@@ -219,25 +291,47 @@ Array.implement({
 });
 
 /*
-Script: Date.js
-	Extends the Date native object to include methods useful in managing dates.
+---
 
-	License:
-		MIT-style license.
+script: Date.js
 
-	Authors:
-		Aaron Newton
-		Nicholas Barthelemy - https://svn.nbarthelemy.com/date-js/
-		Harald Kirshner - mail [at] digitarald.de; http://digitarald.de
-		Scott Kyle - scott [at] appden.com; http://appden.com
+description: Extends the Date native object to include methods useful in managing dates.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Nicholas Barthelemy - https://svn.nbarthelemy.com/date-js/
+- Harald Kirshner - mail [at] digitarald.de; http://digitarald.de
+- Scott Kyle - scott [at] appden.com; http://appden.com
+
+requires:
+- core:1.2.4/Array
+- core:1.2.4/String
+- core:1.2.4/Number
+- core:1.2.4/Lang
+- core:1.2.4/Date.English.US
+- /MooTools.More
+
+provides: [Date]
+
+...
 */
 
 (function(){
 
+var Date = this.Date;
+
 if (!Date.now) Date.now = $time;
 
-Date.Methods = {};
+Date.Methods = {
+	ms: 'Milliseconds',
+	year: 'FullYear',
+	min: 'Minutes',
+	mo: 'Month',
+	sec: 'Seconds',
+	hr: 'Hours'
+};
 
 ['Date', 'Day', 'FullYear', 'Hours', 'Milliseconds', 'Minutes', 'Month', 'Seconds', 'Time', 'TimezoneOffset',
 	'Week', 'Timezone', 'GMTOffset', 'DayOfYear', 'LastMonth', 'LastDayOfMonth', 'UTCDate', 'UTCDay', 'UTCFullYear',
@@ -245,19 +339,8 @@ Date.Methods = {};
 	Date.Methods[method.toLowerCase()] = method;
 });
 
-$each({
-	ms: 'Milliseconds',
-	year: 'FullYear',
-	min: 'Minutes',
-	mo: 'Month',
-	sec: 'Seconds',
-	hr: 'Hours'
-}, function(value, key){
-	Date.Methods[key] = value;
-});
-
-var zeroize = function(what, length){
-	return new Array(length - what.toString().length + 1).join('0') + what;
+var pad = function(what, length){
+	return new Array(length - String(what).length + 1).join('0') + what;
 };
 
 Date.implement({
@@ -320,23 +403,10 @@ Date.implement({
 		return this.set({hr: 0, min: 0, sec: 0, ms: 0});
 	},
 
-	diff: function(d, resolution){
-		resolution = resolution || 'day';
-		if ($type(d) == 'string') d = Date.parse(d);
-
-		switch (resolution){
-			case 'year':
-				return d.get('year') - this.get('year');
-			case 'month':
-				var months = (d.get('year') - this.get('year')) * 12;
-				return months + d.get('mo') - this.get('mo');
-			default:
-				var diff = d.get('time') - this.get('time');
-				if (Date.units[resolution]() > diff.abs()) return 0;
-				return ((d.get('time') - this.get('time')) / Date.units[resolution]()).round();
-		}
-
-		return null;
+	diff: function(date, resolution){
+		if ($type(date) == 'string') date = Date.parse(date);
+		
+		return ((date - this) / Date.units[resolution || 'day'](3, 3)).toInt(); // non-leap year, 30-day month
 	},
 
 	getLastDayOfMonth: function(){
@@ -364,7 +434,7 @@ Date.implement({
 
 	getGMTOffset: function(){
 		var off = this.get('timezoneOffset');
-		return ((off > 0) ? '-' : '+') + zeroize((off.abs() / 60).floor(), 2) + zeroize(off % 60, 2);
+		return ((off > 0) ? '-' : '+') + pad((off.abs() / 60).floor(), 2) + pad(off % 60, 2);
 	},
 
 	setAMPM: function(ampm){
@@ -394,23 +464,23 @@ Date.implement({
 		f = formats[f.toLowerCase()] || f; // replace short-hand with actual format
 		var d = this;
 		return f.replace(/%([a-z%])/gi,
-			function($1, $2){
-				switch ($2){
+			function($0, $1){
+				switch ($1){
 					case 'a': return Date.getMsg('days')[d.get('day')].substr(0, 3);
 					case 'A': return Date.getMsg('days')[d.get('day')];
 					case 'b': return Date.getMsg('months')[d.get('month')].substr(0, 3);
 					case 'B': return Date.getMsg('months')[d.get('month')];
 					case 'c': return d.toString();
-					case 'd': return zeroize(d.get('date'), 2);
-					case 'H': return zeroize(d.get('hr'), 2);
+					case 'd': return pad(d.get('date'), 2);
+					case 'H': return pad(d.get('hr'), 2);
 					case 'I': return ((d.get('hr') % 12) || 12);
-					case 'j': return zeroize(d.get('dayofyear'), 3);
-					case 'm': return zeroize((d.get('mo') + 1), 2);
-					case 'M': return zeroize(d.get('min'), 2);
+					case 'j': return pad(d.get('dayofyear'), 3);
+					case 'm': return pad((d.get('mo') + 1), 2);
+					case 'M': return pad(d.get('min'), 2);
 					case 'o': return d.get('ordinal');
 					case 'p': return Date.getMsg(d.get('ampm'));
-					case 'S': return zeroize(d.get('seconds'), 2);
-					case 'U': return zeroize(d.get('week'), 2);
+					case 'S': return pad(d.get('seconds'), 2);
+					case 'U': return pad(d.get('week'), 2);
 					case 'w': return d.get('day');
 					case 'x': return d.format(Date.getMsg('shortDate'));
 					case 'X': return d.format(Date.getMsg('shortTime'));
@@ -419,7 +489,7 @@ Date.implement({
 					case 'T': return d.get('GMTOffset');
 					case 'Z': return d.get('Timezone');
 				}
-				return $2;
+				return $1;
 			}
 		);
 	},
@@ -430,6 +500,7 @@ Date.implement({
 
 });
 
+Date.alias('toISOString', 'toJSON');
 Date.alias('diff', 'compare');
 Date.alias('format', 'strftime');
 
@@ -442,6 +513,7 @@ var formats = {
 	'long': '%B %d, %Y %H:%M'
 };
 
+var parsePatterns = [];
 var nativeParse = Date.parse;
 
 var parseWord = function(type, word, num){
@@ -467,7 +539,6 @@ var parseWord = function(type, word, num){
 
 	return (num) ? translated.indexOf(ret) : ret;
 };
-
 
 Date.extend({
 
@@ -497,7 +568,7 @@ Date.extend({
 	},
 
 	isLeapYear: function(year){
-		return new Date(year, 1, 29).get('date') == 29;
+		return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
 	},
 
 	parse: function(from){
@@ -508,9 +579,9 @@ Date.extend({
 		if (!from.length) return null;
 
 		var parsed;
-		Date.parsePatterns.some(function(pattern){
-			var r = pattern.re.exec(from);
-			return (r) ? (parsed = pattern.handler(r)) : false;
+		parsePatterns.some(function(pattern){
+			var bits = pattern.re.exec(from);
+			return (bits) ? (parsed = pattern.handler(bits)) : false;
 		});
 
 		return parsed || new Date(nativeParse(from));
@@ -526,12 +597,14 @@ Date.extend({
 
 	parseUTC: function(value){
 		var localDate = new Date(value);
-		var utcSeconds = Date.UTC(localDate.get('year'), 
-		localDate.get('mo'),
-		localDate.get('date'), 
-		localDate.get('hr'), 
-		localDate.get('min'), 
-		localDate.get('sec'));
+		var utcSeconds = Date.UTC(
+			localDate.get('year'),
+			localDate.get('mo'),
+			localDate.get('date'),
+			localDate.get('hr'),
+			localDate.get('min'),
+			localDate.get('sec')
+		);
 		return new Date(utcSeconds);
 	},
 
@@ -544,13 +617,13 @@ Date.extend({
 	},
 
 	defineFormats: function(formats){
-		for (var name in formats) Date.defineFormat(name, formats[f]);
+		for (var name in formats) Date.defineFormat(name, formats[name]);
 	},
 
-	parsePatterns: [],
+	parsePatterns: parsePatterns, // this is deprecated
 	
 	defineParser: function(pattern){
-		Date.parsePatterns.push( pattern.re && pattern.handler ? pattern : build(pattern) );
+		parsePatterns.push((pattern.re && pattern.handler) ? pattern : build(pattern));
 	},
 	
 	defineParsers: function(){
@@ -558,84 +631,96 @@ Date.extend({
 	},
 	
 	define2DigitYearStart: function(year){
-		yr_start = year % 100;
-		yr_base = year - yr_start;
+		startYear = year % 100;
+		startCentury = year - startYear;
 	}
 
 });
 
-var yr_base = 1900;
-var yr_start = 70;
+var startCentury = 1900;
+var startYear = 70;
+
+var regexOf = function(type){
+	return new RegExp('(?:' + Date.getMsg(type).map(function(name){
+		return name.substr(0, 3);
+	}).join('|') + ')[a-z]*');
+};
 
 var replacers = function(key){
 	switch(key){
 		case 'x': // iso8601 covers yyyy-mm-dd, so just check if month is first
-			return (Date.orderIndex('month') == 1) ? '%m[.-/]%d([.-/]%y)?' : '%d[.-/]%m([.-/]%y)?';
+			return ((Date.orderIndex('month') == 1) ? '%m[.-/]%d' : '%d[.-/]%m') + '([.-/]%y)?';
 		case 'X':
-			return '%H([.:]%M)?([.:]%S([.:]%s)?)?\\s?%p?\\s?%T?';
-		case 'o':
-			return '[^\\d\\s]*';
+			return '%H([.:]%M)?([.:]%S([.:]%s)?)? ?%p? ?%T?';
 	}
 	return null;
 };
 
 var keys = {
-	a: /[a-z]{3,}/,
 	d: /[0-2]?[0-9]|3[01]/,
 	H: /[01]?[0-9]|2[0-3]/,
 	I: /0?[1-9]|1[0-2]/,
 	M: /[0-5]?\d/,
 	s: /\d+/,
+	o: /[a-z]*/,
 	p: /[ap]\.?m\.?/,
 	y: /\d{2}|\d{4}/,
 	Y: /\d{4}/,
 	T: /Z|[+-]\d{2}(?::?\d{2})?/
 };
 
-keys.B = keys.b = keys.A = keys.a;
 keys.m = keys.I;
 keys.S = keys.M;
 
-var lang;
+var currentLanguage;
+
+var recompile = function(language){
+	currentLanguage = language;
+	
+	keys.a = keys.A = regexOf('days');
+	keys.b = keys.B = regexOf('months');
+	
+	parsePatterns.each(function(pattern, i){
+		if (pattern.format) parsePatterns[i] = build(pattern.format);
+	});
+};
 
 var build = function(format){
-	if (!lang) return {format: format}; // wait until language is set
+	if (!currentLanguage) return {format: format};
 	
-	var parsed = [null];
-
+	var parsed = [];
 	var re = (format.source || format) // allow format to be regex
 	 .replace(/%([a-z])/gi,
-		function($1, $2){
-			return replacers($2) || $1;
+		function($0, $1){
+			return replacers($1) || $0;
 		}
 	).replace(/\((?!\?)/g, '(?:') // make all groups non-capturing
 	 .replace(/ (?!\?|\*)/g, ',? ') // be forgiving with spaces and commas
 	 .replace(/%([a-z%])/gi,
-		function($1, $2){
-			var p = keys[$2];
-			if (!p) return $2;
-			parsed.push($2);
+		function($0, $1){
+			var p = keys[$1];
+			if (!p) return $1;
+			parsed.push($1);
 			return '(' + p.source + ')';
 		}
-	);
+	).replace(/\[a-z\]/gi, '[a-z\\u00c0-\\uffff]'); // handle unicode words
 
 	return {
 		format: format,
 		re: new RegExp('^' + re + '$', 'i'),
 		handler: function(bits){
+			bits = bits.slice(1).associate(parsed);
 			var date = new Date().clearTime();
-			for (var i = 1; i < parsed.length; i++)
-				date = handle.call(date, parsed[i], bits[i]);
+			if ('d' in bits) handle.call(date, 'd', 1);
+			if ('m' in bits) handle.call(date, 'm', 1);
+			for (var key in bits) handle.call(date, key, bits[key]);
 			return date;
 		}
 	};
 };
 
 var handle = function(key, value){
-	if (!value){
-		if (key == 'm' || key == 'd') value = 1;
-		else return this;
-	}
+	if (!value) return this;
 
 	switch(key){
 		case 'a': case 'A': return this.set('day', Date.parseDay(value, true));
@@ -651,13 +736,13 @@ var handle = function(key, value){
 		case 'Y': return this.set('year', value);
 		case 'y':
 			value = +value;
-			if (value < 100) value += yr_base + (value < yr_start ? 100 : 0);
+			if (value < 100) value += startCentury + (value < startYear ? 100 : 0);
 			return this.set('year', value);
 		case 'T':
 			if (value == 'Z') value = '+00';
 			var offset = value.match(/([+-])(\d{2}):?(\d{2})?/);
 			offset = (offset[1] + '1') * (offset[2] * 60 + (+offset[3] || 0)) + this.getTimezoneOffset();
-			return this.set('time', (this * 1) - offset * 60000);
+			return this.set('time', this - offset * 60000);
 	}
 
 	return this;
@@ -668,38 +753,63 @@ Date.defineParsers(
 	'%Y%m%d(T%H(%M%S?)?)?', // "19991231", "19991231T1159", compact
 	'%x( %X)?', // "12/31", "12.31.99", "12-31-1999", "12/31/2008 11:59 PM"
 	'%d%o( %b( %Y)?)?( %X)?', // "31st", "31st December", "31 Dec 1999", "31 Dec 1999 11:59pm"
-	'%b %d%o?( %Y)?( %X)?', // Same as above with month and day switched
-	'%b %Y' // "December 1999"
+	'%b( %d%o)?( %Y)?( %X)?', // Same as above with month and day switched
+	'%Y %b( %d%o( %X)?)?', // Same as above with year coming first
+	'%o %b %d %X %T %Y' // "Thu Oct 22 08:11:23 +0000 2009"
 );
 
 MooTools.lang.addEvent('langChange', function(language){
-	if (!MooTools.lang.get('Date')) return;
-
-	lang = language;
-	Date.parsePatterns.each(function(pattern, i){
-		if (pattern.format) Date.parsePatterns[i] = build(pattern.format);
-	});
-
+	if (MooTools.lang.get('Date')) recompile(language);
 }).fireEvent('langChange', MooTools.lang.getCurrentLanguage());
 
 })();
 
 /*
-Script: Date.Extras.js
-	Extends the Date native object to include extra methods (on top of those in Date.js).
+---
 
-	License:
-		MIT-style license.
+script: Date.Extras.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Date native object to include extra methods (on top of those in Date.js).
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+- Scott Kyle
+
+requires:
+- /Date
+
+provides: [Date.Extras]
+
+...
 */
 
 Date.implement({
 
 	timeDiffInWords: function(relative_to){
 		return Date.distanceOfTimeInWords(this, relative_to || new Date);
+	},
+
+	timeDiff: function(to, joiner){
+		if (to == null) to = new Date;
+		var delta = ((to - this) / 1000).toInt();
+		if (!delta) return '0s';
+		
+		var durations = {s: 60, m: 60, h: 24, d: 365, y: 0};
+		var duration, vals = [];
+		
+		for (var step in durations){
+			if (!delta) break;
+			if ((duration = durations[step])){
+				vals.unshift((delta % duration) + step);
+				delta = (delta / duration).toInt();
+			} else {
+				vals.unshift(delta + step);
+			}
+		}
+		
+		return vals.join(joiner || ':');
 	}
 
 });
@@ -716,21 +826,29 @@ Date.extend({
 		var suffix = (delta < 0) ? 'Until' : 'Ago';
 		if (delta < 0) delta *= -1;
 		
-		var msg = (delta < 60) ? 'lessThanMinute' :
-				  (delta < 120) ? 'minute' :
-				  (delta < (45 * 60)) ? 'minutes' :
-				  (delta < (90 * 60)) ? 'hour' :
-				  (delta < (24 * 60 * 60)) ? 'hours' :
-				  (delta < (48 * 60 * 60)) ? 'day' :
-				  'days';
+		var units = {
+			minute: 60,
+			hour: 60,
+			day: 24,
+			week: 7,
+			month: 52 / 12,
+			year: 12,
+			eon: Infinity
+		};
 		
-		switch(msg){
-			case 'minutes': delta = (delta / 60).round(); break;
-			case 'hours':   delta = (delta / 3600).round(); break;
-			case 'days': 	delta = (delta / 86400).round();
+		var msg = 'lessThanMinute';
+		
+		for (var unit in units){
+			var interval = units[unit];
+			if (delta < 1.5 * interval){
+				if (delta > 0.75 * interval) msg = unit;
+				break;
+			}
+			delta /= interval;
+			msg = unit + 's';
 		}
 		
-		return Date.getMsg(msg + suffix, delta).substitute({delta: delta});
+		return Date.getMsg(msg + suffix).substitute({delta: delta.round()});
 	}
 
 });
@@ -740,7 +858,7 @@ Date.defineParsers(
 
 	{
 		// "today", "tomorrow", "yesterday"
-		re: /^tod|tom|yes/i,
+		re: /^(?:tod|tom|yes)/i,
 		handler: function(bits){
 			var d = new Date().clearTime();
 			switch(bits[0]){
@@ -769,38 +887,101 @@ Date.defineParsers(
 
 
 /*
-Script: URI.js
-	Provides methods useful in managing the window location and uris.
+---
 
-	License:
-		MIT-style license.
+script: String.QueryString.js
 
-	Authors:
-		Sebastian Markbåge, Aaron Newton
+description: Methods for dealing with URI query strings.
+
+license: MIT-style license
+
+authors:
+- Sebastian MarkbÃ¥ge, Aaron Newton, Lennart Pilon, Valerio Proietti
+
+requires:
+- core:1.2.4/Array
+- core:1.2.4/String
+- /MooTools.More
+
+provides: [String.QueryString]
+
+...
+*/
+
+String.implement({
+
+	parseQueryString: function(){
+		var vars = this.split(/[&;]/), res = {};
+		if (vars.length) vars.each(function(val){
+			var index = val.indexOf('='),
+				keys = index < 0 ? [''] : val.substr(0, index).match(/[^\]\[]+/g),
+				value = decodeURIComponent(val.substr(index + 1)),
+				obj = res;
+			keys.each(function(key, i){
+				var current = obj[key];
+				if(i < keys.length - 1)
+					obj = obj[key] = current || {};
+				else if($type(current) == 'array')
+					current.push(value);
+				else
+					obj[key] = $defined(current) ? [current, value] : value;
+			});
+		});
+		return res;
+	},
+
+	cleanQueryString: function(method){
+		return this.split('&').filter(function(val){
+			var index = val.indexOf('='),
+			key = index < 0 ? '' : val.substr(0, index),
+			value = val.substr(index + 1);
+			return method ? method.run([key, value]) : $chk(value);
+		}).join('&');
+	}
+
+});
+
+/*
+---
+
+script: URI.js
+
+description: Provides methods useful in managing the window location and uris.
+
+license: MIT-style license
+
+authors:
+- Sebastian Markbåge
+- Aaron Newton
+
+requires:
+- core:1.2.4/Selectors
+- /String.QueryString
+
+provides: URI
+
+...
 */
 
 var URI = new Class({
 
 	Implements: Options,
 
-	/*
 	options: {
-		base: false
+		/*base: false*/
 	},
-	*/
 
 	regex: /^(?:(\w+):)?(?:\/\/(?:(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)?(\.\.?$|(?:[^?#\/]*\/)*)([^?#]*)(?:\?([^#]*))?(?:#(.*))?/,
 	parts: ['scheme', 'user', 'password', 'host', 'port', 'directory', 'file', 'query', 'fragment'],
-	schemes: { http: 80, https: 443, ftp: 21, rtsp: 554, mms: 1755, file: 0 },
+	schemes: {http: 80, https: 443, ftp: 21, rtsp: 554, mms: 1755, file: 0},
 
 	initialize: function(uri, options){
 		this.setOptions(options);
 		var base = this.options.base || URI.base;
-		uri = uri || base;
-		if (uri && uri.parsed)
-			this.parsed = $unlink(uri.parsed);
-		else
-			this.set('value', uri.href || uri.toString(), base ? new URI(base) : false);
+		if(!uri) uri = base;
+		
+		if (uri && uri.parsed) this.parsed = $unlink(uri.parsed);
+		else this.set('value', uri.href || uri.toString(), base ? new URI(base) : false);
 	},
 
 	parse: function(value, base){
@@ -863,7 +1044,7 @@ var URI = new Class({
 			case 'value': return this.combine(this.parsed, base ? base.parsed : false);
 			case 'data' : return this.getData();
 		}
-		return this.parsed[part] || undefined;
+		return this.parsed[part] || '';
 	},
 
 	go: function(){
@@ -882,9 +1063,9 @@ var URI = new Class({
 	},
 
 	setData: function(values, merge, part){
-		if ($type(arguments[0]) == 'string'){ 
-			values = this.getData(); 
-			values[arguments[0]] = arguments[1]; 
+		if (typeof values == 'string'){
+			values = this.getData();
+			values[arguments[0]] = arguments[1];
 		} else if (merge) {
 			values = $merge(this.getData(), values);
 		}
@@ -897,12 +1078,9 @@ var URI = new Class({
 
 });
 
-['toString', 'valueOf'].each(function(method){
-	URI.prototype[method] = function(){
-		return this.get('value');
-	};
-});
-
+URI.prototype.toString = URI.prototype.valueOf = function(){
+	return this.get('value');
+};
 
 URI.regs = {
 	endSlash: /\/$/,
@@ -910,24 +1088,35 @@ URI.regs = {
 	directoryDot: /\.\/|\.$/
 };
 
-URI.base = new URI($$('base[href]').getLast(), { base: document.location });
+URI.base = new URI(document.getElements('base[href]', true).getLast(), {base: document.location});
 
 String.implement({
 
-	toURI: function(options){ return new URI(this, options); }
+	toURI: function(options){
+		return new URI(this, options);
+	}
 
 });
 
 /*
-Script: Element.Forms.js
-	Extends the Element native object to include methods useful in managing inputs.
+---
 
-	License:
-		MIT-style license.
+script: Element.Forms.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include methods useful in managing inputs.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element
+- /MooTools.More
+
+provides: [Element.Forms]
+
+...
 */
 
 Element.implement({
@@ -956,9 +1145,10 @@ Element.implement({
 			pos.end = pos.start + range.text.length;
 		} else {
 			var value = this.get('value');
-			var offset = value.length - value.match(/[\n\r]*$/)[0].length;
+			var offset = value.length;
 			dup.moveToElementText(this);
 			dup.setEndPoint('StartToEnd', range);
+			if(dup.text.length) offset -= value.match(/[\n\r]*$/)[0].length;
 			pos.end = offset - dup.text.length;
 			dup.setEndPoint('StartToStart', range);
 			pos.start = offset - dup.text.length;
@@ -1035,19 +1225,27 @@ Element.implement({
 });
 
 /*
-Script: Element.Measure.js
-	Extends the Element native object to include methods useful in measuring dimensions.
+---
 
-	Element.measure / .expose methods by Daniel Steigerwald
-	License: MIT-style license.
-	Copyright: Copyright (c) 2008 Daniel Steigerwald, daniel.steigerwald.cz
+script: Element.Measure.js
 
-	License:
-		MIT-style license.
+description: Extends the Element native object to include methods useful in measuring dimensions.
 
-	Authors:
-		Aaron Newton
+credits: "Element.measure / .expose methods by Daniel Steigerwald License: MIT-style license. Copyright: Copyright (c) 2008 Daniel Steigerwald, daniel.steigerwald.cz"
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Style
+- core:1.2.4/Element.Dimensions
+- /MooTools.More
+
+provides: [Element.Measure]
+
+...
 */
 
 Element.implement({
@@ -1058,8 +1256,8 @@ Element.implement({
 		};
 		if (vis(this)) return fn.apply(this);
 		var parent = this.getParent(),
-			toMeasure = [], 
-			restorers = [];
+			restorers = [],
+			toMeasure = []; 
 		while (!vis(parent) && parent != document.body) {
 			toMeasure.push(parent.expose());
 			parent = parent.getParent();
@@ -1092,14 +1290,17 @@ Element.implement({
 		var getSize = function(el, options){
 			return (options.computeSize)?el.getComputedSize(options):el.getSize();
 		};
-		if (this.getStyle('display') == 'none'){
+		var parent = this.getParent('body');
+		if (parent && this.getStyle('display') == 'none'){
 			dim = this.measure(function(){
 				return getSize(this, options);
 			});
-		} else {
+		} else if (parent){
 			try { //safari sometimes crashes here, so catch it
 				dim = getSize(this, options);
 			}catch(e){}
+		} else {
+			dim = {x: 0, y: 0};
 		}
 		return $chk(dim.x) ? $extend(dim, {width: dim.x, height: dim.y}) : $extend(dim, {x: dim.width, y: dim.height});
 	},
@@ -1138,8 +1339,7 @@ Element.implement({
 		var subtracted = [];
 		$each(options.plains, function(plain, key){ //keys: width, height, plains: ['left', 'right'], ['top','bottom']
 			var capitalized = key.capitalize();
-			size['total' + capitalized] = 0;
-			size['computed' + capitalized] = 0;
+			size['total' + capitalized] = size['computed' + capitalized] = 0;
 			plain.each(function(edge){ //top, left, right, bottom
 				size['computed' + edge.capitalize()] = 0;
 				getStyles.each(function(style, i){ //padding, border, etc.
@@ -1174,14 +1374,24 @@ Element.implement({
 });
 
 /*
-Script: Element.Position.js
-	Extends the Element native object to include methods useful positioning elements relative to others.
+---
 
-	License:
-		MIT-style license.
+script: Element.Position.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include methods useful positioning elements relative to others.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Dimensions
+- /Element.Measure
+
+provides: [Elements.Position]
+
+...
 */
 
 (function(){
@@ -1195,6 +1405,8 @@ Element.implement({
 		if (options && ($defined(options.x) || $defined(options.y))) return original ? original.apply(this, arguments) : this;
 		$each(options||{}, function(v, k){ if (!$defined(v)) delete options[k]; });
 		options = $merge({
+			// minimum: { x: 0, y: 0 },
+			// maximum: { x: 0, y: 0},
 			relativeTo: document.body,
 			position: {
 				x: 'center', //left, center, right
@@ -1205,11 +1417,12 @@ Element.implement({
 			returnPos: false,
 			relFixedPosition: false,
 			ignoreMargins: false,
+			ignoreScroll: false,
 			allowNegative: false
 		}, options);
 		//compute the offset of the parent positioned element if this element is in one
-		var parentOffset = {x: 0, y: 0};
-		var parentPositioned = false;
+		var parentOffset = {x: 0, y: 0}, 
+				parentPositioned = false;
 		/* dollar around getOffsetParent should not be necessary, but as it does not return
 		 * a mootools extended element in IE, an error occurs on the call to expose. See:
 		 * http://mootools.lighthouseapp.com/projects/2706/tickets/333-element-getoffsetparent-inconsistency-between-ie-and-other-browsers */
@@ -1220,7 +1433,7 @@ Element.implement({
 			parentOffset = offsetParent.measure(function(){
 				return this.getPosition();
 			});
-			parentPositioned = true;
+			parentPositioned = offsetParent != document.id(options.relativeTo);
 			options.offset.x = options.offset.x - parentOffset.x;
 			options.offset.y = options.offset.y - parentOffset.y;
 		}
@@ -1246,26 +1459,19 @@ Element.implement({
 		}
 
 		this.setStyle('position', 'absolute');
-		var rel = document.id(options.relativeTo) || document.body;
-		var calc = rel == document.body ? window.getScroll() : rel.getPosition();
-		var top = calc.y;
-		var left = calc.x;
+		var rel = document.id(options.relativeTo) || document.body,
+				calc = rel == document.body ? window.getScroll() : rel.getPosition(),
+				top = calc.y, left = calc.x;
 
-		if (Browser.Engine.trident){
-			var scrolls = rel.getScrolls();
-			top += scrolls.y;
-			left += scrolls.x;
-		}
+		var scrolls = rel.getScrolls();
+		top += scrolls.y;
+		left += scrolls.x;
 
 		var dim = this.getDimensions({computeSize: true, styles:['padding', 'border','margin']});
-		if (options.ignoreMargins){
-			options.offset.x = options.offset.x - dim['margin-left'];
-			options.offset.y = options.offset.y - dim['margin-top'];
-		}
-		var pos = {};
-		var prefY = options.offset.y;
-		var prefX = options.offset.x;
-		var winSize = window.getSize();
+		var pos = {},
+				prefY = options.offset.y,
+				prefX = options.offset.x,
+				winSize = window.getSize();
 		switch(options.position.x){
 			case 'left':
 				pos.x = left + prefX;
@@ -1288,7 +1494,6 @@ Element.implement({
 				pos.y = top + ((rel == document.body ? winSize.y : rel.offsetHeight)/2) + prefY;
 				break;
 		}
-
 		if (options.edge){
 			var edgeOffset = {};
 
@@ -1300,7 +1505,7 @@ Element.implement({
 					edgeOffset.x = -dim.x-dim.computedRight-dim.computedLeft;
 					break;
 				default: //center
-					edgeOffset.x = -(dim.x/2);
+					edgeOffset.x = -(dim.totalWidth/2);
 					break;
 			}
 			switch(options.edge.y){
@@ -1311,22 +1516,47 @@ Element.implement({
 					edgeOffset.y = -dim.y-dim.computedTop-dim.computedBottom;
 					break;
 				default: //center
-					edgeOffset.y = -(dim.y/2);
+					edgeOffset.y = -(dim.totalHeight/2);
 					break;
 			}
-			pos.x = pos.x + edgeOffset.x;
-			pos.y = pos.y + edgeOffset.y;
+			pos.x += edgeOffset.x;
+			pos.y += edgeOffset.y;
 		}
 		pos = {
 			left: ((pos.x >= 0 || parentPositioned || options.allowNegative) ? pos.x : 0).toInt(),
 			top: ((pos.y >= 0 || parentPositioned || options.allowNegative) ? pos.y : 0).toInt()
 		};
+		var xy = {left: 'x', top: 'y'};
+		['minimum', 'maximum'].each(function(minmax) {
+			['left', 'top'].each(function(lr) {
+				var val = options[minmax] ? options[minmax][xy[lr]] : null;
+				if (val != null && pos[lr] < val) pos[lr] = val;
+			});
+		});
 		if (rel.getStyle('position') == 'fixed' || options.relFixedPosition){
 			var winScroll = window.getScroll();
-			pos.top = pos.top.toInt() + winScroll.y;
-			pos.left = pos.left.toInt() + winScroll.x;
+			pos.top+= winScroll.y;
+			pos.left+= winScroll.x;
 		}
-
+		if (options.ignoreScroll) {
+			var relScroll = rel.getScroll();
+			pos.top-= relScroll.y;
+			pos.left-= relScroll.x;
+		}
+		if (options.ignoreMargins) {
+			pos.left += (
+				options.edge.x == 'right' ? dim['margin-right'] : 
+				options.edge.x == 'center' ? -dim['margin-left'] + ((dim['margin-right'] + dim['margin-left'])/2) : 
+					- dim['margin-left']
+			);
+			pos.top += (
+				options.edge.y == 'bottom' ? dim['margin-bottom'] : 
+				options.edge.y == 'center' ? -dim['margin-top'] + ((dim['margin-bottom'] + dim['margin-top'])/2) : 
+					- dim['margin-top']
+			);
+		}
+		pos.left = Math.ceil(pos.left);
+		pos.top = Math.ceil(pos.top);
 		if (options.returnPos) return pos;
 		else this.setStyles(pos);
 		return this;
@@ -1337,21 +1567,36 @@ Element.implement({
 })();
 
 /*
-Script: Element.Shortcuts.js
-	Extends the Element native object to include some shortcut methods.
+---
 
-	License:
-		MIT-style license.
+script: Element.Shortcuts.js
 
-	Authors:
-		Aaron Newton
+description: Extends the Element native object to include some shortcut methods.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Element.Style
+- /MooTools.More
+
+provides: [Element.Shortcuts]
+
+...
 */
 
 Element.implement({
 
 	isDisplayed: function(){
 		return this.getStyle('display') != 'none';
+	},
+
+	isVisible: function(){
+		var w = this.offsetWidth,
+			h = this.offsetHeight;
+		return (w == 0 && h == 0) ? false : (w > 0 && h > 0) ? true : this.isDisplayed();
 	},
 
 	toggle: function(){
@@ -1361,10 +1606,10 @@ Element.implement({
 	hide: function(){
 		var d;
 		try {
-			//IE fails here if the element is not in the dom
-			if ('none' != this.getStyle('display')) d = this.getStyle('display');
+			// IE fails here if the element is not in the dom
+			if ((d = this.getStyle('display')) == 'none') d = null;
 		} catch(e){}
-
+		
 		return this.store('originalDisplay', d || 'block').setStyle('display', 'none');
 	},
 
@@ -1380,21 +1625,36 @@ Element.implement({
 
 
 /*
-Script: OverText.js
-	Shows text over an input that disappears when the user clicks into it. The text remains hidden if the user adds a value.
+---
 
-	License:
-		MIT-style license.
+script: OverText.js
 
-	Authors:
-		Aaron Newton
+description: Shows text over an input that disappears when the user clicks into it. The text remains hidden if the user adds a value.
+
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- core:1.2.4/Element.Event
+- /Class.Binds
+- /Class.Occlude
+- /Element.Position
+- /Element.Shortcuts
+
+provides: [OverText]
+
+...
 */
 
 var OverText = new Class({
 
 	Implements: [Options, Events, Class.Occlude],
 
-	Binds: ['reposition', 'assert', 'focus'],
+	Binds: ['reposition', 'assert', 'focus', 'hide'],
 
 	options: {/*
 		textOverride: null,
@@ -1411,7 +1671,8 @@ var OverText = new Class({
 			}
 		},
 		poll: false,
-		pollInterval: 250
+		pollInterval: 250,
+		wrap: false
 	},
 
 	property: 'OverText',
@@ -1437,14 +1698,29 @@ var OverText = new Class({
 			'class': 'overTxtLabel',
 			styles: {
 				lineHeight: 'normal',
-				position: 'absolute'
+				position: 'absolute',
+				cursor: 'text'
 			},
 			html: val,
 			events: {
-				click: this.hide.pass(true, this)
+				click: this.hide.pass(this.options.element == 'label', this)
 			}
 		}).inject(this.element, 'after');
-		if (this.options.element == 'label') this.text.set('for', this.element.get('id'));
+		if (this.options.element == 'label') {
+			if (!this.element.get('id')) this.element.set('id', 'input_' + new Date().getTime());
+			this.text.set('for', this.element.get('id'));
+		}
+
+		if (this.options.wrap) {
+			this.textHolder = new Element('div', {
+				styles: {
+					lineHeight: 'normal',
+					position: 'relative'
+				},
+				'class':'overTxtWrapper'
+			}).adopt(this.text).inject(this.element, 'before');
+		}
+
 		this.element.addEvents({
 			focus: this.focus,
 			blur: this.assert,
@@ -1453,6 +1729,13 @@ var OverText = new Class({
 		window.addEvent('resize', this.reposition.bind(this));
 		this.assert(true);
 		this.reposition();
+	},
+
+	wrap: function(){
+		if (this.options.element == 'label') {
+			if (!this.element.get('id')) this.element.set('id', 'input_' + new Date().getTime());
+			this.text.set('for', this.element.get('id'));
+		}
 	},
 
 	startPolling: function(){
@@ -1479,24 +1762,25 @@ var OverText = new Class({
 	},
 
 	focus: function(){
-		if (!this.text.isDisplayed() || this.element.get('disabled')) return;
+		if (this.text && (!this.text.isDisplayed() || this.element.get('disabled'))) return;
 		this.hide();
 	},
 
-	hide: function(suppressFocus){
-		if (this.text.isDisplayed() && !this.element.get('disabled')){
+	hide: function(suppressFocus, force){
+		if (this.text && (this.text.isDisplayed() && (!this.element.get('disabled') || force))){
 			this.text.hide();
 			this.fireEvent('textHide', [this.text, this.element]);
 			this.pollingPaused = true;
 			try {
-				if (!suppressFocus) this.element.fireEvent('focus').focus();
+				if (!suppressFocus) this.element.fireEvent('focus');
+				this.element.focus();
 			} catch(e){} //IE barfs if you call focus on hidden elements
 		}
 		return this;
 	},
 
 	show: function(){
-		if (!this.text.isDisplayed()){
+		if (this.text && !this.text.isDisplayed()){
 			this.text.show();
 			this.reposition();
 			this.fireEvent('textShow', [this.text, this.element]);
@@ -1516,8 +1800,8 @@ var OverText = new Class({
 
 	reposition: function(){
 		this.assert(true);
-		if (!this.element.getParent() || !this.element.offsetHeight) return this.stopPolling().hide();
-		if (this.test()) this.text.position($merge(this.options.positionOptions, {relativeTo: this.element}));
+		if (!this.element.isVisible()) return this.stopPolling().hide();
+		if (this.text && this.test()) this.text.position($merge(this.options.positionOptions, {relativeTo: this.element}));
 		return this;
 	}
 
@@ -1525,14 +1809,38 @@ var OverText = new Class({
 
 OverText.instances = [];
 
-OverText.update = function(){
+$extend(OverText, {
 
-	return OverText.instances.map(function(ot){
-		if (ot.element && ot.text) return ot.reposition();
-		return null; //the input or the text was destroyed
-	});
+	each: function(fn) {
+		return OverText.instances.map(function(ot, i){
+			if (ot.element && ot.text) return fn.apply(OverText, [ot, i]);
+			return null; //the input or the text was destroyed
+		});
+	},
+	
+	update: function(){
 
-};
+		return OverText.each(function(ot){
+			return ot.reposition();
+		});
+
+	},
+
+	hideAll: function(){
+
+		return OverText.each(function(ot){
+			return ot.hide(true, true);
+		});
+
+	},
+
+	showAll: function(){
+		return OverText.each(function(ot) {
+			return ot.show();
+		});
+	}
+
+});
 
 if (window.Fx && Fx.Reveal) {
 	Fx.Reveal.implement({
@@ -1541,14 +1849,24 @@ if (window.Fx && Fx.Reveal) {
 }
 
 /*
-Script: Fx.Slide.js
-	Effect to slide an element in and out of view.
+---
 
-	License:
-		MIT-style license.
+script: Fx.Slide.js
 
-	Authors:
-		Valerio Proietti
+description: Effect to slide an element in and out of view.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Fx Element.Style
+- /MooTools.More
+
+provides: [Fx.Slide]
+
+...
 */
 
 Fx.Slide = new Class({
@@ -1556,7 +1874,8 @@ Fx.Slide = new Class({
 	Extends: Fx,
 
 	options: {
-		mode: 'vertical'
+		mode: 'vertical',
+		hideOverflow: true
 	},
 
 	initialize: function(element, options){
@@ -1567,8 +1886,10 @@ Fx.Slide = new Class({
 		this.element = this.subject = document.id(element);
 		this.parent(options);
 		var wrapper = this.element.retrieve('wrapper');
+		var styles = this.element.getStyles('margin', 'position', 'overflow');
+		if (this.options.hideOverflow) styles = $extend(styles, {overflow: 'hidden'});
 		this.wrapper = wrapper || new Element('div', {
-			styles: $extend(this.element.getStyles('margin', 'position'), {overflow: 'hidden'})
+			styles: styles
 		}).wraps(this.element);
 		this.element.store('wrapper', this.wrapper).setStyle('margin', 0);
 		this.now = [];
@@ -1683,16 +2004,28 @@ Element.implement({
 
 
 /*
-Script: Drag.js
-	The base Drag Class. Can be used to drag and resize Elements using mouse events.
+---
 
-	License:
-		MIT-style license.
+script: Drag.js
 
-	Authors:
-		Valerio Proietti
-		Tom Occhinno
-		Jan Kassens
+description: The base Drag Class. Can be used to drag and resize Elements using mouse events.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Tom Occhinno
+- Jan Kassens
+
+requires:
+- core:1.2.4/Events
+- core:1.2.4/Options
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Style
+- /MooTools.More
+
+provides: [Drag]
+
 */
 
 var Drag = new Class({
@@ -1714,6 +2047,7 @@ var Drag = new Class({
 		handle: false,
 		invert: false,
 		preventDefault: false,
+		stopPropagation: false,
 		modifiers: {x: 'left', y: 'top'}
 	},
 
@@ -1751,7 +2085,9 @@ var Drag = new Class({
 	},
 
 	start: function(event){
+		if (event.rightClick) return;
 		if (this.options.preventDefault) event.preventDefault();
+		if (this.options.stopPropagation) event.stopPropagation();
 		this.mouse.start = event.page;
 		this.fireEvent('beforeStart', this.element);
 		var limit = this.options.limit;
@@ -1801,8 +2137,11 @@ var Drag = new Class({
 				}
 			}
 			if (this.options.grid[z]) this.value.now[z] -= ((this.value.now[z] - (this.limit[z][0]||0)) % this.options.grid[z]);
-			if (this.options.style) this.element.setStyle(this.options.modifiers[z], this.value.now[z] + this.options.unit);
-			else this.element[this.options.modifiers[z]] = this.value.now[z];
+			if (this.options.style) {
+				this.element.setStyle(this.options.modifiers[z], this.value.now[z] + this.options.unit);
+			} else {
+				this.element[this.options.modifiers[z]] = this.value.now[z];
+			}
 		}
 		this.fireEvent('drag', [this.element, event]);
 	},
@@ -1839,16 +2178,29 @@ Element.implement({
 
 
 /*
-Script: Drag.Move.js
-	A Drag extension that provides support for the constraining of draggables to containers and droppables.
+---
 
-	License:
-		MIT-style license.
+script: Drag.Move.js
 
-	Authors:
-		Valerio Proietti
-		Tom Occhinno
-		Jan Kassens*/
+description: A Drag extension that provides support for the constraining of draggables to containers and droppables.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Tom Occhinno
+- Jan Kassens
+- Aaron Newton
+- Scott Kyle
+
+requires:
+- core:1.2.4/Element.Dimensions
+- /Drag
+
+provides: [Drag.Move]
+
+...
+*/
 
 Drag.Move = new Class({
 
@@ -1867,14 +2219,20 @@ Drag.Move = new Class({
 
 	initialize: function(element, options){
 		this.parent(element, options);
+		element = this.element;
+		
 		this.droppables = $$(this.options.droppables);
 		this.container = document.id(this.options.container);
-		if (this.container && $type(this.container) != 'element') this.container = document.id(this.container.getDocument().body);
-
-		var position = this.element.getStyle('position');
-		if (position=='static') position = 'absolute';
-		if ([this.element.getStyle('left'), this.element.getStyle('top')].contains('auto')) this.element.position(this.element.getPosition(this.element.offsetParent));
-		this.element.setStyle('position', position);
+		
+		if (this.container && $type(this.container) != 'element')
+			this.container = document.id(this.container.getDocument().body);
+		
+		var styles = element.getStyles('left', 'right', 'position');
+		if (styles.left == 'auto' || styles.top == 'auto')
+			element.setPosition(element.getPosition(element.getOffsetParent()));
+		
+		if (styles.position == 'static')
+			element.setStyle('position', 'absolute');
 
 		this.addEvent('start', this.checkDroppables, true);
 
@@ -1882,41 +2240,80 @@ Drag.Move = new Class({
 	},
 
 	start: function(event){
-		if (this.container){
-			var ccoo = this.container.getCoordinates(this.element.getOffsetParent()), cbs = {}, ems = {};
-
-			['top', 'right', 'bottom', 'left'].each(function(pad){
-				cbs[pad] = this.container.getStyle('border-' + pad).toInt();
-				ems[pad] = this.element.getStyle('margin-' + pad).toInt();
-			}, this);
-
-			var width = this.element.offsetWidth + ems.left + ems.right;
-			var height = this.element.offsetHeight + ems.top + ems.bottom;
-
-			if (this.options.includeMargins) {
-				$each(ems, function(value, key) {
-					ems[key] = 0;
-				});
-			}
-			if (this.container == this.element.getOffsetParent()) {
-				this.options.limit = {
-					x: [0 - ems.left, ccoo.right - cbs.left - cbs.right - width + ems.right],
-					y: [0 - ems.top, ccoo.bottom - cbs.top - cbs.bottom - height + ems.bottom]
-				};
-			} else {
-				this.options.limit = {
-					x: [ccoo.left + cbs.left - ems.left, ccoo.right - cbs.right - width + ems.right],
-					y: [ccoo.top + cbs.top - ems.top, ccoo.bottom - cbs.bottom - height + ems.bottom]
-				};
-			}
-
-		}
+		if (this.container) this.options.limit = this.calculateLimit();
+		
 		if (this.options.precalculate){
-			this.positions = this.droppables.map(function(el) {
+			this.positions = this.droppables.map(function(el){
 				return el.getCoordinates();
 			});
 		}
+		
 		this.parent(event);
+	},
+	
+	calculateLimit: function(){
+		var offsetParent = this.element.getOffsetParent(),
+			containerCoordinates = this.container.getCoordinates(offsetParent),
+			containerBorder = {},
+			elementMargin = {},
+			elementBorder = {},
+			containerMargin = {},
+			offsetParentPadding = {};
+
+		['top', 'right', 'bottom', 'left'].each(function(pad){
+			containerBorder[pad] = this.container.getStyle('border-' + pad).toInt();
+			elementBorder[pad] = this.element.getStyle('border-' + pad).toInt();
+			elementMargin[pad] = this.element.getStyle('margin-' + pad).toInt();
+			containerMargin[pad] = this.container.getStyle('margin-' + pad).toInt();
+			offsetParentPadding[pad] = offsetParent.getStyle('padding-' + pad).toInt();
+		}, this);
+
+		var width = this.element.offsetWidth + elementMargin.left + elementMargin.right,
+			height = this.element.offsetHeight + elementMargin.top + elementMargin.bottom,
+			left = 0,
+			top = 0,
+			right = containerCoordinates.right - containerBorder.right - width,
+			bottom = containerCoordinates.bottom - containerBorder.bottom - height;
+
+		if (this.options.includeMargins){
+			left += elementMargin.left;
+			top += elementMargin.top;
+		} else {
+			right += elementMargin.right;
+			bottom += elementMargin.bottom;
+		}
+		
+		if (this.element.getStyle('position') == 'relative'){
+			var coords = this.element.getCoordinates(offsetParent);
+			coords.left -= this.element.getStyle('left').toInt();
+			coords.top -= this.element.getStyle('top').toInt();
+			
+			left += containerBorder.left - coords.left;
+			top += containerBorder.top - coords.top;
+			right += elementMargin.left - coords.left;
+			bottom += elementMargin.top - coords.top;
+			
+			if (this.container != offsetParent){
+				left += containerMargin.left + offsetParentPadding.left;
+				top += (Browser.Engine.trident4 ? 0 : containerMargin.top) + offsetParentPadding.top;
+			}
+		} else {
+			left -= elementMargin.left;
+			top -= elementMargin.top;
+			
+			if (this.container == offsetParent){
+				right -= containerBorder.left;
+				bottom -= containerBorder.top;
+			} else {
+				left += containerCoordinates.left + containerBorder.left;
+				top += containerCoordinates.top + containerBorder.top;
+			}
+		}
+		
+		return {
+			x: [left, right],
+			y: [top, bottom]
+		};
 	},
 
 	checkAgainst: function(el, i){
@@ -1960,14 +2357,23 @@ Element.implement({
 
 
 /*
-Script: Sortables.js
-	Class for creating a drag and drop sorting interface for lists of items.
+---
 
-	License:
-		MIT-style license.
+script: Sortables.js
 
-	Authors:
-		Tom Occhino
+description: Class for creating a drag and drop sorting interface for lists of items.
+
+license: MIT-style license
+
+authors:
+- Tom Occhino
+
+requires:
+- /Drag.Move
+
+provides: [Slider]
+
+...
 */
 
 var Sortables = new Class({
@@ -2051,7 +2457,7 @@ var Sortables = new Class({
 			position: 'absolute',
 			visibility: 'hidden',
 			'width': element.getStyle('width')
-		}).inject(this.list).position(element.getPosition(element.getOffsetParent()));
+		}).inject(this.list).setPosition(element.getPosition(element.getOffsetParent()));
 	},
 
 	getDroppables: function(){
@@ -2141,14 +2547,24 @@ var Sortables = new Class({
 
 
 /*
-Script: Assets.js
-	Provides methods to dynamically load JavaScript, CSS, and Image files into the document.
+---
 
-	License:
-		MIT-style license.
+script: Assets.js
 
-	Authors:
-		Valerio Proietti
+description: Provides methods to dynamically load JavaScript, CSS, and Image files into the document.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+
+requires:
+- core:1.2.4/Element.Event
+- /MooTools.More
+
+provides: [Assets]
+
+...
 */
 
 var Asset = {
@@ -2162,8 +2578,12 @@ var Asset = {
 
 		var script = new Element('script', {src: source, type: 'text/javascript'});
 
-		var load = properties.onload.bind(script), check = properties.check, doc = properties.document;
-		delete properties.onload; delete properties.check; delete properties.document;
+		var load = properties.onload.bind(script), 
+			check = properties.check, 
+			doc = properties.document;
+		delete properties.onload;
+		delete properties.check;
+		delete properties.document;
 
 		script.addEvents({
 			load: load,
@@ -2183,7 +2603,10 @@ var Asset = {
 
 	css: function(source, properties){
 		return new Element('link', $merge({
-			rel: 'stylesheet', media: 'screen', type: 'text/css', href: source
+			rel: 'stylesheet',
+			media: 'screen',
+			type: 'text/css',
+			href: source
 		}, properties)).inject(document.head);
 	},
 
@@ -2244,15 +2667,26 @@ var Asset = {
 };
 
 /*
-Script: Hash.Cookie.js
-	Class for creating, reading, and deleting Cookies in JSON format.
+---
 
-	License:
-		MIT-style license.
+script: Hash.Cookie.js
 
-	Authors:
-		Valerio Proietti
-		Aaron Newton
+description: Class for creating, reading, and deleting Cookies in JSON format.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Aaron Newton
+
+requires:
+- core:1.2.4/Cookie
+- core:1.2.4/JSON
+- /MooTools.More
+
+provides: [Hash.Cookie]
+
+...
 */
 
 Hash.Cookie = new Class({
@@ -2292,55 +2726,78 @@ Hash.each(Hash.prototype, function(method, name){
 });
 
 /*
-Script: Tips.js
-	Class for creating nice tips that follow the mouse cursor when hovering an element.
+---
 
-	License:
-		MIT-style license.
+script: Tips.js
 
-	Authors:
-		Valerio Proietti
-		Christoph Pojer
+description: Class for creating nice tips that follow the mouse cursor when hovering an element.
+
+license: MIT-style license
+
+authors:
+- Valerio Proietti
+- Christoph Pojer
+
+requires:
+- core:1.2.4/Options
+- core:1.2.4/Events
+- core:1.2.4/Element.Event
+- core:1.2.4/Element.Style
+- core:1.2.4/Element.Dimensions
+- /MooTools.More
+
+provides: [Tips]
+
+...
 */
 
-var Tips = new Class({
+(function(){
+
+var read = function(option, element){
+	return (option) ? ($type(option) == 'function' ? option(element) : element.get(option)) : '';
+};
+
+this.Tips = new Class({
 
 	Implements: [Events, Options],
 
 	options: {
-		onShow: function(tip){
-			tip.setStyle('visibility', 'visible');
+		/*
+		onAttach: $empty(element),
+		onDetach: $empty(element),
+		*/
+		onShow: function(){
+			this.tip.setStyle('display', 'block');
 		},
-		onHide: function(tip){
-			tip.setStyle('visibility', 'hidden');
+		onHide: function(){
+			this.tip.setStyle('display', 'none');
 		},
 		title: 'title',
-		text: function(el){
-			return el.get('rel') || el.get('href');
+		text: function(element){
+			return element.get('rel') || element.get('href');
 		},
 		showDelay: 100,
 		hideDelay: 100,
-		className: null,
+		className: 'tip-wrap',
 		offset: {x: 16, y: 16},
 		fixed: false
 	},
 
 	initialize: function(){
 		var params = Array.link(arguments, {options: Object.type, elements: $defined});
-		if (params.options && params.options.offsets) params.options.offset = params.options.offsets;
 		this.setOptions(params.options);
-		this.container = new Element('div', {'class': 'tip'});
-		this.tip = this.getTip();
+		document.id(this);
 		
 		if (params.elements) this.attach(params.elements);
 	},
 
-	getTip: function(){
-		return new Element('div', {
+	toElement: function(){
+		if (this.tip) return this.tip;
+		
+		this.container = new Element('div', {'class': 'tip'});
+		return this.tip = new Element('div', {
 			'class': this.options.className,
 			styles: {
-				visibility: 'hidden',
-				display: 'none',
 				position: 'absolute',
 				top: 0,
 				left: 0
@@ -2353,20 +2810,22 @@ var Tips = new Class({
 	},
 
 	attach: function(elements){
-		var read = function(option, element){
-			if (option == null) return '';
-			return $type(option) == 'function' ? option(element) : element.get(option);
-		};
 		$$(elements).each(function(element){
-			var title = read(this.options.title, element);
+			var title = read(this.options.title, element),
+				text = read(this.options.text, element);
+			
 			element.erase('title').store('tip:native', title).retrieve('tip:title', title);
-			element.retrieve('tip:text', read(this.options.text, element));
+			element.retrieve('tip:text', text);
+			this.fireEvent('attach', [element]);
 			
 			var events = ['enter', 'leave'];
 			if (!this.options.fixed) events.push('move');
 			
 			events.each(function(value){
-				element.addEvent('mouse' + value, element.retrieve('tip:' + value, this['element' + value.capitalize()].bindWithEvent(this, element)));
+				var event = element.retrieve('tip:' + value);
+				if (!event) event = this['element' + value.capitalize()].bindWithEvent(this, element);
+				
+				element.store('tip:' + value, event).addEvent('mouse' + value, event);
 			}, this);
 		}, this);
 		
@@ -2376,12 +2835,12 @@ var Tips = new Class({
 	detach: function(elements){
 		$$(elements).each(function(element){
 			['enter', 'leave', 'move'].each(function(value){
-				element.removeEvent('mouse' + value, element.retrieve('tip:' + value) || $empty);
+				element.removeEvent('mouse' + value, element.retrieve('tip:' + value)).eliminate('tip:' + value);
 			});
 			
-			element.eliminate('tip:enter').eliminate('tip:leave').eliminate('tip:move');
+			this.fireEvent('detach', [element]);
 			
-			if ($type(this.options.title) == 'string' && this.options.title == 'title'){
+			if (this.options.title == 'title'){ // This is necessary to check if we can revert the title
 				var original = element.retrieve('tip:native');
 				if (original) element.set('title', original);
 			}
@@ -2391,29 +2850,33 @@ var Tips = new Class({
 	},
 
 	elementEnter: function(event, element){
-		$A(this.container.childNodes).each(Element.dispose);
+		this.container.empty();
 		
 		['title', 'text'].each(function(value){
 			var content = element.retrieve('tip:' + value);
-			if (!content) return;
-			
-			this[value + 'Element'] = new Element('div', {'class': 'tip-' + value}).inject(this.container);
-			this.fill(this[value + 'Element'], content);
+			if (content) this.fill(new Element('div', {'class': 'tip-' + value}).inject(this.container), content);
 		}, this);
 		
-		this.timer = $clear(this.timer);
+		$clear(this.timer);
 		this.timer = this.show.delay(this.options.showDelay, this, element);
-		this.tip.setStyle('display', 'block');
-		this.position((!this.options.fixed) ? event : {page: element.getPosition()});
+		this.position((this.options.fixed) ? {page: element.getPosition()} : event);
 	},
 
 	elementLeave: function(event, element){
 		$clear(this.timer);
-		this.tip.setStyle('display', 'none');
 		this.timer = this.hide.delay(this.options.hideDelay, this, element);
+		this.fireForParent(event, element);
 	},
 
-	elementMove: function(event){
+	fireForParent: function(event, element){
+		if (!element) return;
+		parentNode = element.getParent();
+		if (parentNode == document.body) return;
+		if (parentNode.retrieve('tip:enter')) parentNode.fireEvent('mouseenter', event);
+		else this.fireForParent(parentNode, event);
+	},
+
+	elementMove: function(event, element){
 		this.position(event);
 	},
 
@@ -2436,26 +2899,37 @@ var Tips = new Class({
 		else element.adopt(contents);
 	},
 
-	show: function(el){
-		this.fireEvent('show', [this.tip, el]);
+	show: function(element){
+		this.fireEvent('show', [this.tip, element]);
 	},
 
-	hide: function(el){
-		this.fireEvent('hide', [this.tip, el]);
+	hide: function(element){
+		this.fireEvent('hide', [this.tip, element]);
 	}
 
 });
 
+})();
+
 /*
-Script: Date.English.US.js
-	Date messages for US English.
+---
 
-	License:
-		MIT-style license.
+script: Date.English.US.js
 
-	Authors:
-		Aaron Newton
+description: Date messages for US English.
 
+license: MIT-style license
+
+authors:
+- Aaron Newton
+
+requires:
+- /Lang
+- /Date
+
+provides: [Date.English.US]
+
+...
 */
 
 MooTools.lang.set('en-US', 'Date', {
@@ -2482,60 +2956,24 @@ MooTools.lang.set('en-US', 'Date', {
 	hoursAgo: 'about {delta} hours ago',
 	dayAgo: '1 day ago',
 	daysAgo: '{delta} days ago',
+	weekAgo: '1 week ago',
+	weeksAgo: '{delta} weeks ago',
+	monthAgo: '1 month ago',
+	monthsAgo: '{delta} months ago',
+	yearAgo: '1 year ago',
+	yearsAgo: '{delta} years ago',
 	lessThanMinuteUntil: 'less than a minute from now',
 	minuteUntil: 'about a minute from now',
 	minutesUntil: '{delta} minutes from now',
 	hourUntil: 'about an hour from now',
 	hoursUntil: 'about {delta} hours from now',
 	dayUntil: '1 day from now',
-	daysUntil: '{delta} days from now'
+	daysUntil: '{delta} days from now',
+	weekUntil: '1 week from now',
+	weeksUntil: '{delta} weeks from now',
+	monthUntil: '1 month from now',
+	monthsUntil: '{delta} months from now',
+	yearUntil: '1 year from now',
+	yearsUntil: '{delta} years from now'
 
-});
-
-//
-// Konami_Mootools Class 1.0
-//
-// http://www.schlaeps.com/libraries/konomi_mootools/
-//
-// Written by Jonathan Schlaepfer
-// 
-//
-
-var Konami = new Class({
-
-	code: ["up","up","down","down","left","right","left","right","b","a"],
-	 
-	step: 0,
-
-	initialize: function(func1,func2,func3){
-		if($defined(func2))
-			this.func2 = func2;
-		if($defined(func3))
-			this.func3 = func3;
-		this.func = func1;
-		window.addEvent('keyup',this.keystroke.bind(this));
-	},
-	 
-	keystroke: function(e){
-		ev = new Event(e);
-		
-		if(ev.key == this.code[this.step]){
-			if($defined(this.func2))
-				this.func2.attempt(this.step);
-			this.step++;
-			if(this.step == this.code.length){
-				this.step = 0;
-				this.func.attempt();
-			}
-		} else {
-			this.step = 0;
-			if($defined(this.func3))
-				this.func3.attempt();
-		}
-	}
-	 
-});
-
-new Konami(function(){
-	window.location = 'easteregg';
 });
