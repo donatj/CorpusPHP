@@ -13,6 +13,7 @@ IF NOT DEFINED mysqlusername SET /P mysqlusername=MySQL Username:
 IF NOT DEFINED mysqlpassword SET /P mysqlpassword=MySQL Password:
 IF NOT DEFINED mysqldb SET /P mysqldb=MySQL Database:
 
+%mysqlpath%\mysql --host=%mysqlhost% --user=%mysqlusername% --password=%mysqlpassword% %mysqldb% -e "source canonization.sql"
 %mysqlpath%\mysqldump --opt --compact --host=%mysqlhost% --user=%mysqlusername% --password=%mysqlpassword% %mysqldb% > ../corpus.sql
 
 ECHO Completed Database Dump

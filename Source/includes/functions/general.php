@@ -252,32 +252,22 @@ function htmlS($string, $quote_style = ENT_COMPAT, $charset = "UTF-8" ) {
 }
 
 /**
-* UTF-8 Wrapper for htmlentities
+* UTF-8 Wrapper for htmlentities supporting arrays as well as strings
 *
-* @param string $string
+* @param string|array $content
 * @param constant $quote_style
 * @param string $charset
-* @return string entitalized string
+* @return string|array entitalized string
 */
-function htmlE( $string, $quote_style = ENT_COMPAT, $charset = "UTF-8" ) {
-	return htmlentities($string, $quote_style, $charset);
-}
-
-/**
-* Runs HTML entities on an array
-*
-* @todo make recursive on multidimensional arrays
-* @param array $array
-* @param constant $quote_style
-* @param string $charset
-* @return array entitalized array of strings
-*/
-function htmlEA( $array, $quote_style = ENT_COMPAT, $charset = "UTF-8" ) {
-	if( !is_array($array) ) { return false; }
-	foreach($array as &$v) {
-		$v = htmlE($v, $quote_style, $charset);
+function htmlE( $content, $quote_style = ENT_COMPAT, $charset = "UTF-8" ) {
+	if( is_array($content) ) {
+		foreach($content as &$v) {
+			$v = htmlE($v, $quote_style, $charset);
+		}
+		return $content;
+	}else{
+		return htmlentities($content, $quote_style, $charset);
 	}
-	return $array;
 }
 
 /**
