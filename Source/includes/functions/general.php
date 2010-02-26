@@ -6,6 +6,7 @@ $___Urls = false;
 /**
 * cu = Clean Up, reloads the page without any current GETs
 *
+* @todo Not very corpusy- although very useful
 * @param string|bool $params
 */
 function _cu($params = false) {

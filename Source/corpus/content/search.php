@@ -42,7 +42,7 @@ if( !$shutup ) :
 			}
 
 			echo '<h3><a href="'.href( $row['categories_id'] ).'">' . $row['name'] . '</a></h3>';
-			echo '<div>' . $content . '</div><hr>';
+			echo '<div>' . $content . '…</div><hr>';
 		}
 
 		echo '<br />';

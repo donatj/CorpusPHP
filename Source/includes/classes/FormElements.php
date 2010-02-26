@@ -59,9 +59,7 @@ class fe extends FormElements {} class FormElements {
 	* @param bool|string $blank Value for an initial blank value, does not display if false
 	*/
 	static function DropdownFromSql($sql, $name, $selected, $params = '', $blank = false) {
-		$qry = db::query($sql);
-		$data = array();
-		while( $row = mysql_fetch_array($qry) ) { $data[ $row[0] ] = $row[1]; }
+		$data = db::fetch( $sql, db::KEYVALUE );
 		return self::DropdownFromArray( $data, $name, $selected, $params, $blank, true );
 	}
 

@@ -3,8 +3,11 @@
 *
 * @package CorpusPHP
 * @license http://opensource.org/licenses/mit-license.php
-* @version 1.8
+* @version .9a
 * @author Jesse G. Donat
+* 
+* @link http://donatstudios.com/CorpusPHP
+* @link http://github.com/donatj/CorpusPHP
 *
 * Corpus Motto:
 *  It is one thing to insult a man on his character,
