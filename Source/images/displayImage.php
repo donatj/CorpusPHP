@@ -51,9 +51,14 @@ if( !file_exists($cacheName) ) {
 }
 
 $fp = fopen($cacheName, 'rb');
+header("Pragma: public");
+header("X-Powered-By: CorpusPHP");
+header('Expires: ' . gmdate('D, d M Y H:i:s', time() + (60*60*24*14) ) . ' GMT');
 header("Last-Modified: ".gmdate( "D, d M Y H:i:s", filemtime($cacheName) )." GMT");
 header("OrigHeight: " . (int)$orig[0]);
 header("OrigWidth: " . (int)$orig[1]);
 header('Content-type: image/jpeg');
+header("Content-Transfer-Encoding:  binary"); 
+header("Content-Length: " . filesize($cacheName) ); 
 header('X-Time-Taken: ' . microtime(true) - $s_time);
 fpassthru($fp);

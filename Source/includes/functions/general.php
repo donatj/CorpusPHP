@@ -1,7 +1,6 @@
 <?
 //cache arrays, need to be here
 $___Urls = false;
-/* $___Images = false; DELETE */
 
 /**
 * cu = Clean Up, reloads the page without any current GETs

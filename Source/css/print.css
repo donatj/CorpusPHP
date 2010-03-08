@@ -2,10 +2,6 @@ body {
 	border: none;	
 }
 
-h1, h2, h3, h4, h5 {
-	border-bottom: 3px solid #c0ab74;	
-}
-
 #headerbar, #search {
 	display: none;	
 }
