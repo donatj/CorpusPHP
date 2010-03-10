@@ -45,7 +45,7 @@ if( is_array($_POST['Comment']) ) {
 $comments = db::fetch( "Select * From comments Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id );
 
 //$default = "http://oasisband.net/images/tear.png";
-$size = 36;
+$size = 48;
 
 
 ?>
@@ -56,7 +56,7 @@ foreach( $comments as $comment ) {
 	
 	$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . 
 		md5( strtolower( $comment['email'] ) ). "&default=" . 
-		urlencode($default) . "&size=".$size;
+		urlencode($default) . "&s=".$size . '&r=x';
 	
 ?>
 	<a name="Comment<?= $comment['comment_id'] ?>"></a>

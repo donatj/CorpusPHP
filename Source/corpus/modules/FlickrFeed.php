@@ -2,7 +2,6 @@
 
 $_meta['name'] = 'FlickrFeed';
 $_meta['callable'] = true;
-$cacheDir = 'cache/';
 
 if( !$shutup ) :
 
@@ -39,7 +38,7 @@ if( !$_cache->isExpired( $cacheKey ) ) {
 $flickr = unserialize($feed);
 echo '<div class="'. $_config->DIVCLASS .'">';
 foreach( $flickr['items'] as $flick ) {
-	$cacheFName = $cacheDir . md5( $flick['l_url'] ) . '.flickr.jpg';
+	$cacheFName = $_config->CACHEDIR . md5( $flick['l_url'] ) . '.flickr.jpg';
 	if( !file_exists( $cacheFName ) ) {
 		copy( $flick['l_url'], $cacheFName );
 	}
