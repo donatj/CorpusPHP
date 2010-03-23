@@ -21,7 +21,7 @@ $username = urlencode( firstNotEmpty( $data[0], $_config->USERNAME ) );
 $photoWidth = firstNotEmpty( $data[1], $_config->IMGWIDTH );
 $numberToDisplay = (int)firstNotEmpty( $data[2], $_config->IMGCOUNT );
 
-$feedUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?id=' . $username . '&format=php_serial';
+$feedUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?id=' . $username . '&format=json&nojsoncallback=1';
 $cacheKey = md5($feedUrl);
 
 if( !$_cache->isExpired( $cacheKey ) ) {
@@ -35,12 +35,13 @@ if( !$_cache->isExpired( $cacheKey ) ) {
 	}
 }
 
-$flickr = unserialize($feed);
+$flickr = json_decode($feed, true);
 echo '<div class="'. $_config->DIVCLASS .'">';
 foreach( $flickr['items'] as $flick ) {
-	$cacheFName = $_config->CACHEDIR . md5( $flick['l_url'] ) . '.flickr.jpg';
+
+	$cacheFName = $_config->CACHEDIR . md5( $flick['media']['m'] ) . '.flickr.jpg';
 	if( !file_exists( $cacheFName ) ) {
-		copy( $flick['l_url'], $cacheFName );
+		copy( $flick['media']['m'], $cacheFName );
 	}
 	
 	echo '<div class="'. $_config->IMGCLASS .'" title="'.htmlE( $flick['title'] ).'">
