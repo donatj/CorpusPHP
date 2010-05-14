@@ -78,13 +78,16 @@ class _ extends Core {} class Core {
 	* @param string|int|bool $url The URL to Standardize.  If an int will check the URL cache, if false/blank returns the current page
 	* @param mixed $encode whether or not to encode entities
 	* @param mixed $strict
+	* @param bool|null $ssl enable/disable ssl, if null - auto
 	* @return string
 	*/
-	public static function href($url = false, $encode = true, $strict = false) {
+	public static function href($url = false, $encode = true, $strict = false, $ssl = null) {
 		global $___Urls, $_meta;
 		if($url === false) { 
 			$url = $_meta['page']['path']; 
-		}/* elseif( strpos($url, './') === 0 ){
+		}
+		
+		/* elseif( strpos($url, './') === 0 ){
 			$url = $_meta['page']['path'] . substr($url, 1);
 		}*/
 		
@@ -97,13 +100,18 @@ class _ extends Core {} class Core {
 			}
 		}
 
-		if(!$strict && strpos( strtolower($url) , 'http://') === false && strpos( strtolower($url) , 'http://') === false) {
+		if(!$strict && strpos( strtolower($url) , 'http://') === false && strpos( strtolower($url) , 'https://') === false) {
 			if($url[0] == '/') {
 				$url = DWS_DOMAIN . $url;
 			}else{
 				$url = DWS_BASE . $url; //a full path;
 			}
 		}
+		
+		if( $ssl === true || ( strtolower($_SERVER['HTTPS']) == 'on' && $ssl === null ) ) {
+			$url = str_ireplace( 'http://', 'https://', $url );
+		}
+		
 		if($encode){ $url = htmlE($url); }
 		return $url;
 	}

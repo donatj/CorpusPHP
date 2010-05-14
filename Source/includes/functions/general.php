@@ -47,10 +47,11 @@ function stopbrowser( $fatal = true ){
 * @param int|string $url if an id integer will return the seo url of the category. if a string, the full path of the address
 * @param bool $encode whether to encode the url
 * @param bool $strict if true, will not attempt to full path the url
+* @param bool|null $ssl enable/disable ssl, if null - auto
 * @return string generated URL
 */
-function href($url = false, $encode = true, $strict = false) {
-	return _::href($url, $encode, $strict);
+function href($url = false, $encode = true, $strict = false, $ssl = null) {
+	return _::href($url, $encode, $strict, $ssl);
 }
 
 /**

@@ -11,7 +11,11 @@ else:
 	define('DB_PASSWORD', '--password--');
 	define('DB_DATABASE', '--database--');
 	define('DFS_DB_BACKUP', 'admin/db_backups/');
-	define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+	if( strtolower($_SERVER['HTTPS']) == 'on' ) {
+		define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+	}else{
+		define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+	}
 	define('DWS_ADMIN', DWS_BASE . 'admin/');
 	define('DWS_DOMAIN', 'http://' . $_SERVER['HTTP_HOST']);
 
