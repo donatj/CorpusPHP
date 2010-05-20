@@ -155,8 +155,12 @@ class co extends Corpus {} class Corpus {
 
 		$module = self::$metaSupreme['modules']['calls'][ $m[1] ];
 		if( strlen( $module ) > 0 ) {
-			$m[2] = str_replace( "'", '"', $m[2] );
-			$data = json_decode( '[' . $m[2] . ']' );
+			$m[3] = str_replace( "'", '"', $m[3] );
+			if( $m[2] == '[' ) {
+				$data = json_decode( '[' . $m[3] . ']', true );
+			}else{
+				$data = json_decode( '{' . $m[3] . '}', true );
+			}
 			return self::module( $module, $data );
 		}else{
 			$_ms->add( 'Call ' . $m[1] . ' not set', true );
