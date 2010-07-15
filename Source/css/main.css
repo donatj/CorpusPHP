@@ -6,10 +6,6 @@ body {
 	background: #a1b360;
 }
 
-/* * Basics * */
-
-td { vertical-align: top; }
-
 /* * Layout * */
 
 #wrap {
@@ -189,14 +185,6 @@ div.message_stack_thanks {
 	line-height: 20px;	
 }
 
-.announcement {
-	background-color:#E3F1F2;
-	border:1px solid #00828A;
-	height:250px;
-	overflow:auto;
-	vertical-align:middle;
-}
-
 /* * Last.fm Module * */
 
 .LastFMimg {
@@ -269,7 +257,7 @@ div.message_stack_thanks {
 	float: right;
 }
 
-/* * Comments * */
+/* * Comments Module * */
 
 #Comments {
 	font-size: .9em;
@@ -277,12 +265,9 @@ div.message_stack_thanks {
 }
 
 #Comments div.Comment {
-/*	-moz-border-radius-topleft: 11px;
-	-webkit-border-top-left-radius: 11px; */
 	background: #D9E9ED url(images/box_shadow.png) repeat-x bottom;
 	border-bottom: 1px solid #0092B4;
 	padding: 22px;
-/*	margin: 0 -21px; */
 }
 
 #Comments div.Comment img {
