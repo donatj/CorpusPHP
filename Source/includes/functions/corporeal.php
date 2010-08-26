@@ -23,7 +23,7 @@ function draw_category_tree($class_prefix = "nav_", $root_id = "nav", $cat_id = 
 				c2.categories_id > 0 as hasChildren
 				from categories c
 				left join categories c2 on c.categories_id = c2.parent_id
-				where c.status = 1 And c.categories_id > 0
+				where c.status = 1 And c.categories_id > 0 And c.list > 0
 				And c.parent_id = " . (int)$cat_id . "
 				group by c.categories_id
 				order by c.sort, c.name");
