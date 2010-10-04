@@ -29,6 +29,7 @@ else:
 	define('DWS_TEMPLT', DWS_CORPUS . 'templates/');
 	define('DWS_CONTENT', DWS_CORPUS . 'content/');
 	define('DWS_MODULES', DWS_CORPUS . 'modules/');
+	define('DFS_DB_BACKUP', DWS_CONTENT . 'admin/db_backups/');
 
 	define('STORE_OWNER_EMAIL_ADDRESS', 'noreply@donatstudios.com');
 	define('STORE_GENERIC_FROM', 'noreply@donatstudios.com');

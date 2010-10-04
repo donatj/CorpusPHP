@@ -4,6 +4,7 @@ require_once('includes/configure.php');
 
 //Load DBO --MUST BE BEFORE INIT--
 require_once(DWS_DBO . 'User.php');
+require_once(DWS_DBO . 'Admin.php');
 
 require_once(DWS_INCL . 'init.php');
 
@@ -49,7 +50,7 @@ if(isset( $_GET['login'] )) {
 			$_nh->Reset('login');
 			redirect($url);
 		}else{
-			redirect('application');
+			redirect(DWS_ADMIN);
 		}
 	}else{
 		$_ms->add("Error Logging In", true);

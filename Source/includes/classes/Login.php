@@ -29,7 +29,7 @@ class Login {
 		if(!$this->IsLoggedIn()) {
 			$_ms->add(GENERIC_LOGIN_ERROR, true);
 			$this->Logout();
-			$_nh->SetSnapshot('application/index.php', 'login');
+			$_nh->SetSnapshot(DWS_ADMIN, 'login');
 			redirect('login.php');
 		}
 	}
