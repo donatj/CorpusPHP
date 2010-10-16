@@ -257,6 +257,7 @@ class XSpreadsheet {
 		}
 
 		echo $this->xmlDoc;
+		die();
 		
 	}
 	
