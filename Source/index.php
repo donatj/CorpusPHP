@@ -3,7 +3,7 @@
 *
 * @package CorpusPHP
 * @license http://opensource.org/licenses/mit-license.php
-* @version .9a
+* @version .98
 * @author Jesse G. Donat
 * 
 * @link http://donatstudios.com/CorpusPHP
@@ -14,7 +14,8 @@
 * 	but to insult a man on his grade of rice,
 * 	that's another thing entirely.
 *
-* 	June 16, 2009
+* 	Initial Release - June 16, 2009
+*   Updated         - October 16, 2010
 *
 **/
 
