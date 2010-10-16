@@ -4,6 +4,7 @@ RewriteEngine On
 RewriteRule ^images/w/([0-9]+)/h/([0-9]+)/(.+)$ images/displayImage.php?w=$1&h=$2&src=$3 [l]
 RewriteRule ^images/w/([0-9]+)/(.+)$ images/displayImage.php?w=$1&src=$2 [l]
 RewriteRule ^images/h/([0-9]+)/(.+)$ images/displayImage.php?h=$1&src=$2 [l]
+RewriteRule ^ajax/([a-zA-Z0-9_.-]+)$ ajax.php?___ajax_call=$1&%{QUERY_STRING} [l]
 RewriteRule ^css/images/(.*)$ images/site/$1?%{QUERY_STRING} [l]
 
 # CorpusPHP Prefers You to use non-www Domains
@@ -11,6 +12,7 @@ RewriteRule ^css/images/(.*)$ images/site/$1?%{QUERY_STRING} [l]
 # RewriteRule ^(.*)$ http://donatstudios.com/$1 [L,R=301]
 
 RewriteRule ^favicon.ico$ images/site/favicon.ico [l]
+RewriteCond %{REQUEST_FILENAME} ^ajax.php$
 RewriteRule ^([a-zA-Z0-9_.-]+)$ index.php?url=$1&%{QUERY_STRING} [l]
 
 # 404 Handler

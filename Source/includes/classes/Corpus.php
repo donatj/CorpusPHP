@@ -33,6 +33,7 @@ class co extends Corpus {} class Corpus {
 		
 		foreach( self::$metaSupreme['modules']['meta'] as $k => $v ) {
 			if( $v['callable'] === true ) { self::$metaSupreme['modules']['calls'][$v['name']] = $k; }
+			if( $v['ajax']     === true ) { self::$metaSupreme['modules']['ajax'][ $v['name']]  = $k; }
 		}
 		
 	}
@@ -193,9 +194,18 @@ class co extends Corpus {} class Corpus {
 		self::$workingLayout = false;
 	}
 
-	public static function module($name, $data = false, &$_meta = false) {
+	public static function module($name, $data = false, &$_meta = false ) {
 		if($_meta == false) { $_meta = array(); } //modules should not set the global meta unless otherwise passed the global meta manually
 		return self::__load(DWS_MODULES . $name, false, $data, false, $_meta);
+	}
+	
+	public static function ajax($call, $data = false ) {
+		$_meta = array(); //ajax should not set the global meta probably at all
+		unset( $data['___ajax_call'] );
+		if( isset( self::$metaSupreme['modules']['ajax'][ $call ] ) ) {
+			return self::__load(DWS_MODULES . self::$metaSupreme['modules']['ajax'][ $call ], false, $data, false, $_meta);
+		}
+		return false;	
 	}
 
 	public static function content_info() {
