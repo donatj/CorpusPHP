@@ -21,7 +21,7 @@ $username = urlencode( firstNotEmpty( $data[0], $_config->USERNAME ) );
 $count = (int)firstNotEmpty( $data[1], $_config->TWEETCOUNT );
 
 
-$feedUrl = 'http://twitter.com/statuses/user_timeline/' . $username . '.json?count=' . $count;
+$feedUrl = 'http://twitter.com/statuses/user_timeline/' . $username . '.json?count=' . $count * 2;
 $cacheKey = md5($feedUrl);
 
 if( !$_cache->isExpired( $cacheKey ) ) {
@@ -46,6 +46,7 @@ if( is_array( $twitter ) ) {
 		echo '<br /><small>' . date( $_config->DATEFORMAT, strtotime( $tweet['created_at'] ) ) . 
 			' &ndash; <a href="http://twitter.com/'.$username.'/status/' . $tweet['id'] . '" target="_blank">Link</a></small>';
 		echo '</p>';
+		if( ++$j >= $count ) break;
 	}
 	echo '</div>';
 }else{

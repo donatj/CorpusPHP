@@ -68,7 +68,8 @@ foreach($Albums as $Album) {
 		
 		foreach( $albumImages as $aImg ){ 
 			if( $aImg->hasAttribute('size') && $aImg->getAttribute('size') == 'extralarge' && nempty($aImg->nodeValue) ) {
-				copy( $aImg->nodeValue, $cacheFName );
+				if( !@copy( $aImg->nodeValue, $cacheFName ) ) {
+				}
 				break;
 			}
 		}

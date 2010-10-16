@@ -4,7 +4,7 @@ $base_file = 'site/button.png';
 $side_pad = 15;
 
 //text
-$font = 'fonts/Helvetica.ttf';
+$font = 'fonts/Vera.ttf';
 $font_size = 10;
 $font_color = '#211';
 $font_alpha = 30; //0-127, somewhere around 60 makes for a nice blend

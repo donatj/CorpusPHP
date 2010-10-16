@@ -44,8 +44,8 @@ if( is_array($_POST['Comment']) ) {
 
 $comments = db::fetch( "Select * From comments Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id );
 
-//$default = "http://oasisband.net/images/tear.png";
-$size = 48;
+$default = "monsterid";
+$size = 64;
 
 
 ?>

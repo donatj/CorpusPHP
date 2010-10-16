@@ -11,6 +11,8 @@ error_reporting( E_ALL ^ E_NOTICE );
 
 if( !file_exists($_GET['src']) ) {
 	header("HTTP/1.0 404 Not Found");
+	header('Content-Type: image/gif');
+	echo base64_decode('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 	die();	
 }
 

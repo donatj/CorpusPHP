@@ -94,7 +94,7 @@ class _ extends Core {} class Core {
 
 		if( is_numeric($url) ) {
 			if( strlen($___Urls[$url]) > 1 ) {
-				$url = $___Urls[$url];
+				$url = urlencode($___Urls[$url]);
 			}else{
 				$url = '?id=' . (int)$url;
 			}
