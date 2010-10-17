@@ -7,6 +7,7 @@ require_once(DWS_DBO . 'User.php');
 
 require_once(DWS_INCL . 'init.php');
 
+require_once(DWS_CLASS . 'AssetStack.php');
 require_once(DWS_CLASS . 'MessageStack.php');
 $_ms = new MessageStack;
 
