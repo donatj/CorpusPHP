@@ -42,7 +42,7 @@ if( is_array($_POST['Comment']) ) {
 }
 
 
-$comments = db::fetch( "Select * From comments Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id );
+$comments = db::fetch( "Select * From comments Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By comment_date ASC" );
 
 $default = "monsterid";
 $size = 64;
