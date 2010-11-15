@@ -96,7 +96,9 @@ class co extends Corpus {} class Corpus {
 			ob_start();
 			require($fname);
 			$content = ob_get_clean();
-			if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false ) { self::exec_module_calls( $content ); }
+			if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false  && $_meta['execRemoveCalls'] !== true ) { self::exec_module_calls( $content ); }
+      
+      			if($_meta['execRemoveCalls']) { $content = preg_replace(PATTERN_MODULE_CALL,'',$content); }
 
 			if(!$lname || $_meta['raw']) {
 				return $content;
