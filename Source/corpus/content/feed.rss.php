@@ -53,17 +53,15 @@ if( !$shutup ) {
 
 	$channel->appendChild($channel_image);
 
-	$qry = mysql_query("SELECT categories_id FROM categories WHERE list > 0 and template > 0 ORDER BY creation_date desc limit 75");
-	while($row = mysql_fetch_array($qry)) {
-		$_data = _::data( $row['categories_id'] );
-		//print_r($_data);
+	$qry = mysql_query("SELECT * FROM categories WHERE list > 0 and template > 0 ORDER BY creation_date desc limit 75");
+	while($_data = mysql_fetch_array($qry)) {
 		$item = $doc->createElement('item');
-		$item->appendChild($doc->createElement('guid', href($row['categories_id']) ));
+		$item->appendChild($doc->createElement('guid', href($_data['categories_id']) ));
 		//$item->appendChild($doc->createElement('title')->appendChild( $doc->createTextNode( $_data['name'] . ' ' ) ));
 		$item->appendChild($doc->createElement('title'))->appendChild( $doc->createTextNode( $_data['name'] ) );
 		$item->appendChild($doc->createElement('author',  STORE_GENERIC_FROM .'('. STORE_NAME .')' ) );
 		$item->appendChild($doc->createElement('pubDate',  date("D, d M Y H:i:s", max( strtotime($_data['creation_date']), strtotime($_data['update_date']) ) ).' CST' ) );
-		$item->appendChild($doc->createElement('link',  href($row['categories_id']) ) );
+		$item->appendChild($doc->createElement('link',  href($_data['categories_id']) ) );
 		self::exec_module_calls($_data['large_description']);
 		$item->appendChild($doc->createElement('description'))->appendChild( $doc->createCDATASection( __rss_desc_cleanup( $_data['large_description']) ) );
 		$channel->appendChild($item);
