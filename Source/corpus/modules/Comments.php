@@ -61,7 +61,7 @@ foreach( $comments as $comment ) {
 ?>
 	<a name="Comment<?= $comment['comment_id'] ?>"></a>
 	<h3>Comment by: <strong><?= $comment['name'] ?></strong> on <dfn title="<?= date('r', $ts) ?>"><?= date('M jS, Y', $ts) ?></dfn></h3>
-	<div class="Comment"><img src="<?= $grav_url ?>" /><?= $comment['comment'] ?><br clear="all" /></div>
+	<div class="Comment"><img src="<?= $grav_url ?>" /><?= nl2br($comment['comment']) ?><br clear="all" /></div>
 <? 
 } 
 ?>
