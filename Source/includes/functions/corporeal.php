@@ -73,7 +73,7 @@ function getParent( $id ) {
 	return false;
 }
 
-function breadcrumb( $id ) {
+function breadcrumb( $id, $seperator = ' &raquo; ' ) {
 	//if( $id < 1 ) return false;
 	global $_meta;
 	if( !$_meta['hide_breadcrumb'] ) {
@@ -95,7 +95,7 @@ function breadcrumb( $id ) {
 		$data[] = '<a href="'.DWS_BASE.'">Home</a>';
 		$data = array_reverse($data);
 		$i = count($data);
-		return '<div class="breadcrumb">' . implode( ' &raquo; ', $data ) . '</div>';
+		return '<div class="breadcrumb">' . implode( $seperator, $data ) . '</div>';
 	}
 }
 
