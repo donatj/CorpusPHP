@@ -26,7 +26,7 @@ $transparent = imagecolorallocatealpha($img, 0, 0, 0, 127);
 imagefill($img, 0, 0, $transparent);
 
 //set up background
-imagecopyresized( $img, $base_image, $base_width / 2, 0, $base_width / 2, 0, $width - ($base_width / 2), $base_height, 1, $base_height);
+imagecopyresized( $img, $base_image, $base_width / 2, 0, $base_width / 2, 0, $width - $base_width, $base_height, 1, $base_height);
 imagecopy($img, $base_image, 0,0,0,0,$base_width / 2, $base_height);
 imagecopy($img, $base_image, $width - $base_width / 2,0,$base_width / 2,0,$base_width / 2 + 1, $base_height);
 
