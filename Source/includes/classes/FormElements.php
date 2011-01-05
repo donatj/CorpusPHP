@@ -17,13 +17,15 @@ class fe extends FormElements {} class FormElements {
 	*
 	* @param string $type the type of input
 	* @param string $name the name of the input
-	* @param string|bool $value the value of the input, if boolean true autopopulates from $_POST
+	* @param string|bool|array $value the value of the input, if an array the value of the key of $name, if boolean true autopopulates from $_POST
 	* @param bool $checked whether the input is checked
 	* @param string $params extra html paramaters
 	* @param bool $raw whether
 	*/
 	static private function __input($type, $name, $value, $checked, $params, $raw) {
-		if( $value === true ) { $value = $_POST[$name]; }
+		if(is_array( $value ) ) { $value = $value[$name]; }
+		elseif($value === true) { $value = $_POST[$name]; }
+		
 		if( !$raw ) $value = htmlE($value);
 		return '<input name="'.$name.'" '.( $checked ? 'checked="checked"' : '').' type="'.$type.'" value="'.$value.'" '.$params.' />' . "\n";
 	}
@@ -34,12 +36,15 @@ class fe extends FormElements {} class FormElements {
 	*
 	* @param array $data_array array of key value pairs whereas the key is the option value, and value is the innerHTML
 	* @param string $name
-	* @param string $selected
+	* @param string|bool|array $selected the value of the selected option, if an array the value of the key of $name, if boolean true autopopulates from $_POST
 	* @param string $params
 	* @param bool|string $blank Value for an initial blank value, does not display if false
 	* @param bool $strict determines whether an int value should be considered an auto and not a value, or ignored
 	*/
 	static function DropdownFromArray($data_array, $name, $selected, $params = '', $blank = false, $strict = false) {
+		if(is_array( $selected ) ) { $selected = $selected[$name]; }
+		elseif($selected === true) { $selected = $_POST[$name]; }
+		
 		if( $blank ) $str = '<option value="">'.$blank.'</option>';
 		foreach($data_array as $k => $v) {
 			if(is_int($k) && !$strict) { $value = $v; } else{ $value = $k; }
@@ -51,12 +56,10 @@ class fe extends FormElements {} class FormElements {
 
 	/**
 	* Builds a dropdown from a Query
+	* 
+	* @see self::DropdownFromArray()
 	*
-	* @param string|resource $sql Query whereas the first column is the value and second column is the innerHTML
-	* @param string $name
-	* @param string $selected
-	* @param string $params
-	* @param bool|string $blank Value for an initial blank value, does not display if false
+	* @param resource|string $sql Query or Query Resource where the first column is used as the option value and the second the option text
 	*/
 	static function DropdownFromSql($sql, $name, $selected, $params = '', $blank = false) {
 		$data = db::fetch( $sql, db::KEYVALUE );
@@ -82,10 +85,7 @@ class fe extends FormElements {} class FormElements {
 	/**
 	* Outputs a Dropdown of States...
 	*
-	* @param string $name
-	* @param string $selected
-	* @param string $params
-	* @param bool|string $blank
+	* @see self::DropdownFromArray() 
 	*/
 	static function StatesDropdown($name, $selected, $params = '', $blank = false) {
 		return self::DropdownFromSql("select zone_code, zone_name From zones Where zone_country_id = 223 And us_territory = 0 Order By zone_name", $name, $selected, $params, $blank);
@@ -158,14 +158,16 @@ class fe extends FormElements {} class FormElements {
 	* Builds a Textarea
 	* 
 	* @param string $name
-	* @param string|bool $value
+	* @param string|bool|array $value
 	* @param string $params
 	* @param integer $rows
 	* @param integer $cols
 	* @param bool $raw
 	*/
 	static function Textarea($name, $value, $params = '', $rows = 3, $cols = 40, $raw = false) {
-		if( $value === true ) { $value = $_POST[$name]; }
+		if(is_array( $value ) ) { $value = $value[$name]; }
+		elseif($value === true) { $value = $_POST[$name]; }
+		
 		if( !$raw ) $value = htmlE($value);
 		return '<textarea name="'.$name.'" rows="'.(int)$rows.'" cols="'.(int)$cols.'" '.$params.' >'.$value.'</textarea>';
 	}
