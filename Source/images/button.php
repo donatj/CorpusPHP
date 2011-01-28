@@ -5,9 +5,9 @@ $side_pad = 15;
 
 //text
 $font = 'fonts/Vera.ttf';
-$font_size = 10;
-$font_color = '#211';
-$font_alpha = 30; //0-127, somewhere around 60 makes for a nice blend
+$font_size = 11;
+$font_color = '#FFF';
+$font_alpha = 0; //0-127, somewhere around 60 makes for a nice blend
 
 list($base_width, $base_height) = getimagesize($base_file);
 $base_image = imagecreatefromstring( file_get_contents( $base_file ) );
