@@ -23,7 +23,7 @@ $username = firstNotEmpty( $data[0], $_config->USERNAME );
 $albumWidth = firstNotEmpty( $data[1], $_config->IMGWIDTH );
 $numberToDisplay = firstNotEmpty( $data[2], $_config->IMGCOUNT );
 
-$feedUrl = "http://ws.audioscrobbler.com/1.0/user/{$username}/weeklyalbumchart.xml";
+$feedUrl = "http://ws.audioscrobbler.com/2.0/user/{$username}/weeklyalbumchart.xml";
 $cacheKey = md5($feedUrl);
 
 if( $_cache->isCached( $cacheKey ) ) {
