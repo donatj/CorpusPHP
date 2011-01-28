@@ -13,7 +13,7 @@
 <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.rss"/>
 
-<script src="js/mootools.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/mootools/1.3.0/mootools-yui-compressed.js" type="text/javascript"></script>
 <script src="js/mootools.more.js" type="text/javascript"></script>
 <script src="js/general.js" type="text/javascript"></script>
 <?= $_meta['header'] //for extra special meta stuff, eg contact page ?>
