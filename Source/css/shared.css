@@ -27,7 +27,7 @@ img { border: none; }
 
 h1, h2, h3, h4, h5, legend {
 	font-family: "trebuchet ms",arial,helvetica,clean,sans-serif;
-	clear: both;
+/*	clear: both; */
 	margin: 2px 0;
 	line-height: 1.4em;
 }

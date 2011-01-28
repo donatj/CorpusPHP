@@ -42,10 +42,10 @@ if( is_array($_POST['Comment']) ) {
 }
 
 
-$comments = db::fetch( "Select * From comments Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By comment_date ASC" );
+$comments = db::fetch( "Select c.*, u.access From comments c Left Join users u Using( user_id ) Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By comment_date ASC" );
 
-$default = "monsterid";
-$size = 64;
+$default = "retro";
+$size = 80;
 
 
 ?>
@@ -55,13 +55,13 @@ foreach( $comments as $comment ) {
 	$ts = strtotime( $comment['comment_date'] );
 	
 	$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . 
-		md5( strtolower( $comment['email'] ) ). "&default=" . 
+		md5( strtolower( firstNotEmpty($comment['email'], $comment['comment_ip']) ) ). "&default=" . 
 		urlencode($default) . "&s=".$size . '&r=x';
 	
 ?>
 	<a name="Comment<?= $comment['comment_id'] ?>"></a>
 	<h3>Comment by: <strong><?= $comment['name'] ?></strong> on <dfn title="<?= date('r', $ts) ?>"><?= date('M jS, Y', $ts) ?></dfn></h3>
-	<div class="Comment"><img src="<?= $grav_url ?>" /><?= nl2br($comment['comment']) ?><br clear="all" /></div>
+	<div class="Comment<?= $comment['access'] ? ' CommentsUser_' . $comment['access'] : '' ?>"><img src="<?= $grav_url ?>" /><?= nl2br($comment['comment']) ?><br clear="all" /></div>
 <? 
 } 
 ?>

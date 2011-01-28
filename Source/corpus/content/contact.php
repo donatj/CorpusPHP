@@ -50,7 +50,7 @@ if($_POST) {
 
 }
 ?>
-<h1><?= $data['name'] ?></h1>
+
 <?= $x_message_stack->draw() ? '<br clear="all" />' : '' ?>
 
 <div style="float: right; width: 320px; text-align: right">
@@ -77,7 +77,7 @@ if($_POST) {
 	<br clear="all"/>
 
 	<label>&nbsp;</label>
-	<?= button('Contact Donat Studios', true) ?>
+	<?= button('Contact Us', true) ?>
 	<br clear="all"/>
 
 <?= fe::HiddenField('Wolfsbane', '') ?>

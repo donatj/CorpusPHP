@@ -1,9 +1,10 @@
 <div id="header">
 	<div id="header_inner">
-		<a href="<?= DWS_BASE ?>"><img src="images/site/logo.png" alt="<?= STORE_NAME ?>" id="logo" /></a>
+		<a href="<?= DWS_BASE ?>" id="logo">Corpus<span>PHP</span></a>
 		<div id="headerbar">
 			<?= draw_category_tree('header', 'nav') ?>
 		</div>
+		<a href="feed.rss" id="feed_icon"><img src="images/site/feed.png" alt="RSS Feed" title="Subscribe to our Blog" /></a>
 		<?= breadcrumb( $_meta['id'] ) ?>
 	</div>
 </div>

@@ -6,6 +6,10 @@ body {
 	background: #a1b360;
 }
 
+/* * Basics * */
+
+td { vertical-align: top; }
+
 /* * Layout * */
 
 #wrap {
@@ -13,7 +17,17 @@ body {
 }
 
 #logo {
-	margin: 27px 0;
+	color: #0092B4;
+	font: 62px/1em Helvetica,Arial;
+	letter-spacing: -3px;
+	font-weight: bold;
+	position: absolute;
+	top: 22px;
+	left: 22px;
+}
+
+#logo span {
+	color: #211;
 }
 
 #moustache {
@@ -36,11 +50,16 @@ body {
 	position: relative;
 }
 
+#feed_icon {
+	margin-top: 22px;
+	float: right;
+}
+
 #pageBody {
-	color: black;
+	color: #211;
 	padding-top: 22px;
 	padding-bottom: 22px;
-	background: url(images/pagebody.png) left repeat-y;
+	background: #d3cfcf url(images/pagebody.png) left repeat-y;
 	font-size: 1.2em;
 	line-height: 1.6em;
 }
@@ -95,8 +114,8 @@ address {
 /* * Headerbar * */
 
 #headerbar {
-	font-family: "myriad pro","trebuchet ms",arial,helvetica,clean,sans-serif;
-	font-size: 1.4em;
+	font-family: "trebuchet ms",arial,helvetica,clean,sans-serif;
+	font-size: 1.3em;
 	position: absolute;
 	right: 23px;
 	bottom: 1px;
@@ -111,7 +130,7 @@ address {
 #nav li {
 	display: block;	
 	float: left;
-	padding: 0 10px;
+	padding: 0 0 0 22px;
 }
 
 #nav li a {
@@ -152,9 +171,10 @@ address {
 /* * Breadcrumbs * */
 
 .breadcrumb {
-	font-family: "myriad pro","trebuchet ms",arial,helvetica,clean,sans-serif;	
+	font-family: "trebuchet ms",arial,helvetica,clean,sans-serif;	
 	font-size: 1.2em;
-	padding-top: 3px;
+	position: absolute;
+	top: 105px;
 }
 
 .breadcrumb a {
@@ -207,43 +227,12 @@ div.message_stack_thanks {
 	padding:0 0 22px 0;
 }
 
-#leftContent {
-	float: left;
-	width: 573px;
-}
-
-#leftContent div.postSmall {
-	font-size: .7em;
-	float: left;
-	width: 275px;
-	margin-right: 22px;
-}
-
-#leftContent div.post0 {
-	margin-bottom: 11px;
-	padding-bottom: 11px;
-	border-bottom: 3px solid #211;
-}
-
-#leftContent div.post2 {
-	margin-right: 0;
-}
-
-#rightContent {
-	float: right;
-	width: 240px;	
-}
-
-#rightContent h3 {
-	background: #D9E9ED;
-	border-bottom: 3px solid #0092B4;
-	padding-left: 22px;
-	margin: 0 -27px 22px -22px;
-	clear: both;
-	line-height: 1.8em;
-}
 
 /* * FlickrFeed Module * */
+
+.FlickrWrap {
+	height: 240px;	
+}
 
 .FlickrImg {
 	float: left;
@@ -270,9 +259,15 @@ div.message_stack_thanks {
 	padding: 22px;
 }
 
+#Comments div.Comment blockquote {
+	background-color: #cadde2;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
 #Comments div.Comment img {
 	float: right;
 	border: 3px solid #CEDCE0;
+	margin: 0 0 10px 10px;
 }
 
 #Comments h3 {
@@ -304,7 +299,7 @@ div.message_stack_thanks {
 #Comments fieldset input { width: 193px; }
 #Comments fieldset textarea { width: 500px; height: 150px; }
 #Comments fieldset div.column { float: left; padding-right: 22px }
-#Comments fieldset div.last { padding-left: 22px; border-left: 1px solid #211 }
+#Comments fieldset div.last { padding-left: 22px; padding-right: 0; border-left: 1px solid #211 }
 #Comments div.messages { margin: 22px 0 -44px 0; }
 
 input, textarea {
@@ -315,16 +310,21 @@ input, textarea {
 	margin: 0;
 }
 
+pre, code {
+	background: url(images/box_shadow.png) bottom repeat-x #dfdfd7;
+	font-family: Consolas,"Courier New",Courier,monospace;
+}
+
 pre {
-	background: #dfdfd7;
+	display: block;
 	white-space: -moz-pre-wrap; /* Mozilla, supported since 1999 */
 	white-space: -pre-wrap; /* Opera 4 - 6 */
 	white-space: -o-pre-wrap; /* Opera 7 */
 	white-space: pre-wrap; /* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
-	font-family: Consolas,"Courier New",Courier,monospace;
 	word-wrap: break-word; /* IE 5.5+ */
 	font-size: .9em;
 	padding: 22px;
+	line-height: 1em;
 }
 
 div.entryMeta {

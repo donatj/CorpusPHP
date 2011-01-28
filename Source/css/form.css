@@ -26,6 +26,7 @@ fieldset {
 	border: 1px solid #ccc;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	margin: 0;
 	margin-top: 5px;
 }
 
