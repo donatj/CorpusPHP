@@ -8,7 +8,7 @@
 * @todo full on rewrite of this, its inherrited from OSC and frankly a mess
 */
 class SplitPageResults {
-	var $sql_query, $number_of_rows, $current_page_number, $number_of_pages, $number_of_rows_per_page, $page_name, $link;
+	var $sql_query, $number_of_rows, $current_page_number, $number_of_pages, $number_of_rows_per_page, $page_no_get, $link;
 
 	/**
 	* Constucts the pagination, determines number of pages, all that good stuff :-)
@@ -23,6 +23,7 @@ class SplitPageResults {
 	function __construct($query, $max_rows, $link, $page_holder = 'page') {
 		/* should the need arise for multiple splits per page, impliment the page holder func.  May need some changes to app_top */
 		global $page;
+		$this->page_no_get = $page_holder;
 		$this->link = $link;
 		$this->sql_query = $query;
 
@@ -54,11 +55,34 @@ class SplitPageResults {
 	function getLinks($parms = '') {
 		
 		$str = '<div class="pagination">';
+		$set = ceil( $this->current_page_number / 5 );
+		$fiveoffset = 5 * ($set-1);
+		$str .= '<div>';
+		
+		if( $fiveoffset > 1 ) {
+			$str .= '<a href="'.$this->link.'?'.$this->page_no_get.'='. $fiveoffset .'&'.$parms.'">&hellip;</a>&nbsp;&nbsp;';
+		}
+		
+		for( $i = 1 + $fiveoffset; $i <= min( $this->number_of_pages, 5 + $fiveoffset ); $i++ ) {
+			if( $i != $this->current_page_number ) {
+				$str .= '<a href="'.$this->link.'?'.$this->page_no_get.'='.$i.'&'.$parms.'">'.$i.'</a>&nbsp;&nbsp;';
+			}else{
+				$str .= '<strong>' . $i . '</strong>&nbsp;&nbsp;';
+			}
+		}
+		
+		if( $i < $this->number_of_pages ) {
+			$str .= '<a href="'.$this->link.'?'.$this->page_no_get.'='.$i.'&'.$parms.'">&hellip;</a>';
+		}
+		
+		$str .= '</div>';
+		
+		
 		if($this->current_page_number > 2) $str .= '<a href="'.$this->link.'?'.$parms.'">&laquo; First Page</a> &mdash; ';
-		if($this->current_page_number > 1) $str .= '<a href="'.$this->link.'?page='.($this->current_page_number-1).'&'.$parms.'" class="n">Previous</a> &ndash; ';
+		if($this->current_page_number > 1) $str .= '<a href="'.$this->link.'?'.$this->page_no_get.'='.($this->current_page_number-1).'&'.$parms.'" class="n">Previous</a> &ndash; ';
 		$str .= 'Page <strong>' . $this->current_page_number . '</strong> of ' . $this->number_of_pages;
-		if($this->current_page_number < $this->number_of_pages) $str .= ' &ndash; <a href="'.$this->link.'?page='.($this->current_page_number+1).'&'.$parms.'" class="o">Next</a>';
-		if($this->current_page_number < $this->number_of_pages) $str .= ' &mdash; <a href="'.$this->link.'?page='.($this->number_of_pages).'&'.$parms.'">Last Page &raquo;</a>';
+		if($this->current_page_number < $this->number_of_pages) $str .= ' &ndash; <a href="'.$this->link.'?'.$this->page_no_get.'='.($this->current_page_number+1).'&'.$parms.'" class="o">Next</a>';
+		if($this->current_page_number < $this->number_of_pages) $str .= ' &mdash; <a href="'.$this->link.'?'.$this->page_no_get.'='.($this->number_of_pages).'&'.$parms.'">Last Page &raquo;</a>';
 		$str .= '</div>';
 		return $str;
 		
