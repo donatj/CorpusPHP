@@ -15,10 +15,33 @@ class Login {
 	public $user;
 
 	function __construct() {
+		global $_nh;
+
 		if( $_SESSION['corpus']['user'] instanceof User ) {
 			$this->user =& $_SESSION['corpus']['user'];
 		}else{
 			$this->user = false;
+		}
+
+		if(isset($_GET['logout'])){
+			$_nh->Reset('login');
+			$_lg->Logout();
+			redirect(DWS_BASE);
+		}
+
+		if(isset( $_GET['login'] )) {
+			if( $this->attempt( $_POST['username'], $_POST['password'] ) ) {
+				$url = $_nh->RestoreURL('login');
+				if($url) {
+					$_nh->Reset('login');
+					redirect($url);
+				}else{
+					redirect( href() );
+				}
+			}else{
+				$_ms->add("Error Logging In", true);
+				redirect('login.php');
+			}
 		}
 	}
 
@@ -37,9 +60,9 @@ class Login {
 	function Logout() { unset($_SESSION['corpus']['user']); }
 
 	function attempt($user,$pass) {
-		
+
 		$uinfo = db::fetch("Select user_id, access From users WHERE email = '".db::input(trim($user))."' AND PASSWORD(password) = PASSWORD('".db::input(trim($pass))."')", db::ROW);
-		
+
 		if($uinfo['user_id'] > 0) {
 			$dbo_name = ucwords($uinfo['access']);
 			if( class_exists($dbo_name) && is_subclass_of($dbo_name, 'User') ) {

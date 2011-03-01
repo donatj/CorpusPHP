@@ -32,5 +32,7 @@ else:
 
 	define('STORE_OWNER_EMAIL_ADDRESS', 'noreply@donatstudios.com');
 	define('STORE_GENERIC_FROM', 'noreply@donatstudios.com');
+	
+	$__autoload_paths = array( DWS_CLASS, DWS_DBO );
 
 endif;

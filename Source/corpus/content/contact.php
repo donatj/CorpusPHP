@@ -5,8 +5,6 @@ if( !$shutup ) :
 //hide from sitemap
 $_meta['header'] = '<link rel="stylesheet" href="css/form.css" type="text/css" charset="utf-8" />';
 
-require(DWS_CLASS . 'class.FormUtility.php');
-require(DWS_CLASS . 'class.phpmailer.php');
 $x_message_stack = new MessageStack('contact_us');
 $thanks_stack = new MessageStack('thanks');
 
