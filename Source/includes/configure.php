@@ -21,12 +21,12 @@ else:
 
 	define('DWS_INCL', 'includes/');
 	define('DWS_CLASS', DWS_INCL . 'classes/');
-	define('DWS_DBO', DWS_INCL . 'dbo/');
 	define('DWS_FUNC', DWS_INCL . 'functions/');
 
 	define('DWS_CORPUS', 'corpus/');
-	define('DWS_LAYOUT', DWS_CORPUS . 'layout/');
-	define('DWS_TEMPLT', DWS_CORPUS . 'templates/');
+	define('DWS_DBO',     DWS_CORPUS . 'dbo/');
+	define('DWS_LAYOUT',  DWS_CORPUS . 'layout/');
+	define('DWS_TEMPLT',  DWS_CORPUS . 'templates/');
 	define('DWS_CONTENT', DWS_CORPUS . 'content/');
 	define('DWS_MODULES', DWS_CORPUS . 'modules/');
 
