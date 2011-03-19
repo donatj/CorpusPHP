@@ -5,8 +5,11 @@ function __autoload($class) {
 	foreach( $__autoload_paths as $path ) {
 		if( file_exists($path . $class . '.php') ) {
 			include($path . $class  . '.php');
+			return true;
 		}
 	}
+	
+	die('Failed to dynamically load class "' . $class . '"');
 }
 
 session_name(md5(DWS_BASE));
