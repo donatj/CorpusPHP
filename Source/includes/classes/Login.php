@@ -15,7 +15,7 @@ class Login {
 	public $user;
 
 	function __construct() {
-		global $_nh;
+		global $_nh, $_ms;
 
 		if( $_SESSION['corpus']['user'] instanceof User ) {
 			$this->user =& $_SESSION['corpus']['user'];
