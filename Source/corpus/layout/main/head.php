@@ -17,4 +17,5 @@
 <script src="js/mootools.more.js" type="text/javascript"></script>
 <script src="js/general.js" type="text/javascript"></script>
 <?= $_meta['header'] //for extra special meta stuff, eg contact page ?>
+<?= $_data['head'] //HEAD data from the content ?>
 
