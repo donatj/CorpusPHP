@@ -66,7 +66,7 @@ class fe extends FormElements {} class FormElements {
 		return self::DropdownFromArray( $data, $name, $selected, $params, $blank, true );
 	}
 
-	static function ChecboxesFromSql($sql, $name, $selected, $labelParams = '', $label_post = '<br clear="all"/>', $labelAfter = true ) {
+	static function ChecboxesFromSql($sql, $name, $selected, $labelParams = '', $label_post = '<br style="clear: both;"/>', $labelAfter = true ) {
 		$qry = db::query($sql);
 		$data = array();
 		while( $row = mysql_fetch_array($qry) ) {

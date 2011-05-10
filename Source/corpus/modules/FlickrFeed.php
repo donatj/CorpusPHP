@@ -50,5 +50,5 @@ foreach( $flickr['items'] as $flick ) {
 	if(++$count >= $numberToDisplay) break 1;
 }
 echo '</div>';
-echo '<br clear="all" />';
+echo '<br style="clear: both;" />';
 endif;

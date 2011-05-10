@@ -26,7 +26,7 @@
 		</li>
 	</ul>
 	
-	<br clear="all" />
+	<br style="clear: both;" />
 	
 	</div>
 </div>
