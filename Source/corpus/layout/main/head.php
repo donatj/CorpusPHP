@@ -3,7 +3,7 @@
 <? /* * Before you do any SEO Hacking, consult Jesse, 
 	there is an elegant way to do anything you're trying, I built it, 
 	and it is freaking awesome, don't screw it up in the name of laze * */ ?>
-<title><?= DEFAULT_META_TITLE_PRE ?><?= htmlE( firstNotEmpty($_meta['title'], $_data['meta_title'], $_data['title'], DEFAULT_META_TITLE) ) ?><?= DEFAULT_META_TITLE_POST ?></title>
+<title><?= DEFAULT_META_TITLE_PRE ?><?= htmlE( firstNotEmpty($_meta['title'], $_data['meta_title'], $_data['title'], $_data['name'], DEFAULT_META_TITLE) ) ?><?= DEFAULT_META_TITLE_POST ?></title>
 <meta name="Description" content="<?= htmlE( firstNotEmpty($_meta['description'], $_data['meta_description'], DEFAULT_META_DESC) ) ?>" />
 <meta name="Keywords" content="<?= htmlE( firstNotEmpty($_meta['keywords'], $_data['meta_keywords'], DEFAULT_META_KEYS) ) ?>" />
 <base href="<?= DWS_BASE ?>" />
