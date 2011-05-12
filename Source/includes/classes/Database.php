@@ -21,7 +21,7 @@ class db extends Database {} class Database {
 	/**
 	* Creates connection to the database, checks the database character set, and sets the database to work in UTF-8
 	*/
-	function __construct(){
+	function __construct() {
 		global $_ms;
 		$this->link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 		if(!$this->link) $_ms->add('Error Connecting to Database', true);
