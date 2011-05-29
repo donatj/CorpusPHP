@@ -16,7 +16,11 @@ class _ extends Core {} class Core {
 		$this->cacheUrls();
 		self::$id = (int)$_GET['id'];
 		self::$url = trim($_GET['url']);
-
+		
+		if( self::$url == '' ) {
+			self::$url = 'index.php';
+		}
+		
 		//SEO Urls
 		if( self::$id <= 0 && isset($___Urls[ self::$url ]) ){
 			self::$id = $___Urls[ self::$url ];
