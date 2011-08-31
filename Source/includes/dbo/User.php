@@ -1,6 +1,6 @@
 <?
 
-Class User {
+class User {
 	
 	public $info;
 	var $id;

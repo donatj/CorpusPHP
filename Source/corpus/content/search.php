@@ -12,9 +12,9 @@ if( !$shutup ) :
 	<h1>Search Results</h1>
 	<?
 
-	$ss = implodePre(" concat(name,description,large_description,details) like '%", $searchA, "%' OR ", "%'");
+	$ss = implodePre(" concat_ws(' ',name,description,large_description,details) like '%", $searchA, "%' OR ", "%'");
 
-	$spr = new SplitPageResults("SELECT *, concat(name,description,large_description,details) as Data, Match(name,description,large_description,details) Against ( '".$search."' ) score
+	$spr = new SplitPageResults("SELECT *, concat_ws(' ',name,description,large_description,details) as Data, Match(name,description,large_description,details) Against ( '".$search."' ) score
 		From categories
 		Where list = 1 AND (template > 0 OR template = -2) AND
 		( Match(name,description,large_description,details) Against ( '".$search."' ) > 0

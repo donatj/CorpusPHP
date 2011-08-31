@@ -113,7 +113,6 @@ function button( $text, $link = false, $linkParams = '', $buttonParams = '', $ty
 }
 
 function keywordExpansion( $searchedFor ) {
-	require_once(DWS_CLASS . 'Inflector.php');
 	$inf = new Inflector();
 
 	$search = trim( $searchedFor );

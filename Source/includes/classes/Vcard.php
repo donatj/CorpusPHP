@@ -6,7 +6,7 @@
 * 
 */
 
-class vcard {
+class Vcard {
 	var $log;
 	var $data;  //array of this vcard's contact data
 	var $filename; //filename for download file naming
@@ -17,7 +17,7 @@ class vcard {
 	/*
 	The class constructor. You can set some defaults here if desired.
 	*/
-	function vcard() {
+	function __construct() {
 		$this->log = "New vcard() called<br />";
 		$this->data = array(
 		"display_name"=>null

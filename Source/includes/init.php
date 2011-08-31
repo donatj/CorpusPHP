@@ -1,22 +1,16 @@
 <?
 
-/*
-
-TODO: auto dbo loader needs a way to prioritize the order things are loaded
-
-function __dbo_loader() {
-	$root_classes = get_declared_classes();
-	$dbofs = scandir( DWS_DBO );
-	foreach( $dbofs as $dbof ) {
-		if( is_file( DWS_DBO . $dbof ) ) {
-			echo DWS_DBO . $dbof;
-			include( DWS_DBO . $dbof );
+function __autoload($class) {
+	global $__autoload_paths;
+	foreach( $__autoload_paths as $path ) {
+		if( file_exists($path . $class . '.php') ) {
+			include($path . $class  . '.php');
+			return true;
 		}
 	}
-	print_r($root_classes);
+	
+	die('Failed to dynamically load class "' . $class . '"');
 }
-__dbo_loader();
-*/
 
 session_name(md5(DWS_BASE));
 session_start();
