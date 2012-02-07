@@ -32,3 +32,25 @@ function _errorTracer($waitForFunct = false, $startAtFile = false) {
 	}
 	return false;
 }
+
+function drop() {
+	call_user_func_array('see', func_get_args());
+	die();
+}
+
+function see() {
+	$data = $args = "";
+	$eol = "\n\r";
+	$arguments = func_get_args();
+	if (is_array($arguments) && !empty($arguments)) {
+		foreach ($arguments as $i => $argument) {
+			$args .= ">>>>>>>>>>>>> Arg No. {$i} >>>>>>>>>>>>>" . $eol . $eol;
+			$argument = is_null($argument) ? "(null)null" : $argument;
+			$argument = $argument === false ? "(bool)false" : $argument;
+			$argument = $argument === true ? "(bool)true" : $argument;
+			$args .= print_r($argument, true) . $eol . $eol;
+		} $args .= ">>>>>>>>>>>>>>> EOF >>>>>>>>>>>>>>>>>";
+		$final = "<pre>{$eol}{$args}{$eol}</pre>";
+		die($final);
+	} return "";
+}

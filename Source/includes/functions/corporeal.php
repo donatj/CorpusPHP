@@ -17,52 +17,59 @@ function addressFormat($data, $html=true) {
 	return $str;
 }
 
-function draw_category_tree($class_prefix = "nav_", $root_id = "nav", $cat_id = 0, $depth = 0, $colapse = false) {
+function draw_category_tree($class_prefix = "nav_", $root_id = "nav", $cat_id = 0, $depth = 0, &$child_selected = false, $cat_data = false) {
 	global $_id;
-	$qry = db::query("select c.categories_id, c.name, c.parent_id, c.redirect, c.template,
-				c2.categories_id > 0 as hasChildren
-				from categories c
-				left join categories c2 on c.categories_id = c2.parent_id
-				where c.status = 1 And c.categories_id > 0 And c.list > 0
-				And c.parent_id = " . (int)$cat_id . "
-				group by c.categories_id
-				order by c.sort, c.name");
 
-	if(mysql_num_rows($qry) > 0) {
-		$src = '';
-		while($row = mysql_fetch_array($qry)) {
+	if( $cat_data === false ) {
+		$cat_data = category_struct();
+	}
 
-			$src .= "\n" . str_repeat("\t", $depth + 1); //pretty html formating
-			$src .= '<li>';
-			$link = '';
+	$src = '';
+	if(is_array( $cat_data[$cat_id]['children'] )) {
+		$src .= '<ul'.($depth == 0 ? ' id="'.$root_id.'"' : '').' class="'.$class_prefix. (int)$depth.'">';
+		foreach( $cat_data[$cat_id]['children'] as $cat ) {
+			if(!$cat['data']['list'] || !$cat['data']['status']) { continue; }
+			$child_selected_sub = false;
 
-			if( $row['template'] == -1 ) {
-				$link = '#';
-			}elseif( $row['template'] == -2 ){
-				$link = href( $row['redirect'] );
-			}else{
-				$link = href( $row['categories_id'] );
-			}
+			$csrc = draw_category_tree( $class_prefix, $root_id, $cat['data']['categories_id'], $depth + 1, $child_selected_sub,  $cat_data[$cat_id]['children'] );
+			$child_selected |= ( $selected = ( $cat['data']['categories_id'] == $_id || $child_selected_sub ) );
 
-
-			$src .= '<a href="' . $link .
-				'" class="'. ( $row['categories_id'] == $_id ? 'selected' : '') . ($colapse ? ' colapse' . (int)$colapse : '' ) .
-				' template'.(int)$row['template'].'">';
-			$src .= htmlE($row['name']);
+			$src .= PHP_EOL . str_repeat("\t", $depth) . '<li class="'. ( $selected ? 'selected' : '') .'">';
+			$src .= '<a href="' .href($cat['data']['categories_id']) . '">'; 
+			$src .= $cat['data']['name'];
 			$src .= '</a>';
-			if($colapse > 1) { $src .= '</li>'; }
-			if( $row['hasChildren'] ) {
-			$src .= draw_category_tree($class_prefix, $root_id, $row['categories_id'], $depth+1, max(0, $colapse - 1));
-			}
-			if($colapse <= 1) { $src .= '</li>'; }
-		}
 
-		if( $colapse < 1 || $depth == 0 ) {
-			$src = '<ul'.($depth == 0 ? ' id="'.$root_id.'"' : '').' class="'.$class_prefix. (int)$depth.'">' . $src . '</ul>';
+			$src .= $csrc;
+			$src .= '</li>';
 		}
+		$src .= '</ul>';
 	}
 	return $src;
 }
+
+function category_struct() {
+	static $data = false;
+
+	if( $data === false ) {
+		$data = array();	
+		$cats = db::fetch("SELECT
+			c.categories_id, c.name, c.parent_id, c.redirect, c.template, c.status, c.list
+		FROM
+			categories c
+		GROUP BY
+			c.categories_id
+		ORDER BY
+			c.parent_id, c.sort, c.name");
+
+		foreach($cats as $row) {	
+			$data[ $row['categories_id'] ]['data'] = $row;
+			$data[ $row['parent_id'] ]['children'][ $row['categories_id'] ] =& $data[ $row['categories_id'] ];
+	  		$data[ $row['categories_id'] ]['parent'] =& $data[ $row['categories_id'] ];
+	 	}
+ 	}
+	return $data;
+}
+  
 
 function getParent( $id ) {
 	$qry = db::query("Select parent_id From categories Where categories_id = " . (int)$id);
