@@ -130,18 +130,6 @@ class db extends Database {} class Database {
 	}
 
 	/**
-	* Get a JSON encoded result from a query
-	*
-	* @param string|resource $qry query
-	* @param bool $flat whether to flatten the array
-	* @param bool $trim whether to trim each result
-	* @return string JSON encoded result set
-	*/
-	static function fetchJson($qry, $type = false, $trim = true) {
-		return json_encode( self::fetch($qry, $type, $trim ) );
-	}
-
-	/**
 	* Return from a query.  Note, this is *not* simply mysql_fetch_array wrapper
 	*
 	* @todo rename to prevent mysql_fetch_array name confusion
