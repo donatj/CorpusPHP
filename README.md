@@ -3,11 +3,13 @@ CorpusPHP: The PHP Framework for the Rest of Us
 
 More information available at the [CorpusPHP](http://donatstudios.com/CorpusPHP) homepage.
 
+Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+
 Overview
 --------
 
-Many PHP scripts today have a major portability issue, a dependency on global variables.  
-The purpose of CoprusPHP is to resolve this by encapsulting scripts into modules.
+Most PHP scripts today have major portability issues, caused largely by a dependency on global variables.  
+The purpose of CoprusPHP is to resolve this by encapsulting todays procedural scripts into modules outside the global namespace.
 
 CorpusPHP can be used as a framework, or as an Application to build off.
 

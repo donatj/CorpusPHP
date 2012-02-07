@@ -21,6 +21,7 @@ CREATE TABLE `categories` (
   `name` text,
   `description` text,
   `large_description` text,
+  `head` text,
   `details` text,
   `status` smallint(1) NOT NULL default '1',
   `list` smallint(1) default '1',
@@ -41,7 +42,7 @@ CREATE TABLE `categories` (
   FULLTEXT KEY `fts` (`name`,`description`,`large_description`,`details`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
-INSERT INTO `categories` VALUES (1,0,'Home',NULL,'test',NULL,1,1,1,NULL,-2,NULL,NULL,NULL,'index.php',NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,0,'CorpusPHP',NULL,'CorpusPHP is setting out to be a world class PHP Framework. The aim is to provide simple encapsulation, modularization, and helpful tools, all without changing the way you write PHP.\n<br /><br />\n<strong>Project Information, documentation, and GIT repository coming soon.</strong>',NULL,1,1,4,NULL,1,NULL,NULL,NULL,NULL,'CorpusPHP','0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,0,'Contact',NULL,NULL,NULL,1,1,5,NULL,-2,NULL,NULL,NULL,'contact',NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES (1,0,'Home',NULL,'test',NULL,NULL,1,1,1,NULL,-2,NULL,NULL,NULL,'index.php',NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,0,'CorpusPHP',NULL,'CorpusPHP is setting out to be a world class PHP Framework. The aim is to provide simple encapsulation, modularization, and helpful tools, all without changing the way you write PHP.\n<br /><br />\n<strong>Project Information, documentation, and GIT repository coming soon.</strong>',NULL,NULL,1,1,4,NULL,1,NULL,NULL,NULL,NULL,'CorpusPHP','0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,0,'Contact',NULL,NULL,NULL,NULL,1,1,5,NULL,-2,NULL,NULL,NULL,'contact',NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `categories_tags` (

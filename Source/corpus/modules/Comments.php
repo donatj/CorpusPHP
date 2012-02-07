@@ -55,13 +55,13 @@ foreach( $comments as $comment ) {
 	$ts = strtotime( $comment['comment_date'] );
 	
 	$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . 
-		md5( strtolower( firstNotEmpty($comment['email'], $comment['comment_ip']) ) ). "&default=" . 
-		urlencode($default) . "&s=".$size . '&r=x';
+		md5( strtolower( firstNotEmpty($comment['email'], $comment['comment_ip']) ) ). "&amp;default=" . 
+		urlencode($default) . "&amp;s=".$size . '&amp;r=x';
 	
 ?>
 	<a name="Comment<?= $comment['comment_id'] ?>"></a>
 	<h3>Comment by: <strong><?= $comment['name'] ?></strong> on <dfn title="<?= date('r', $ts) ?>"><?= date('M jS, Y', $ts) ?></dfn></h3>
-	<div class="Comment<?= $comment['access'] ? ' CommentsUser_' . $comment['access'] : '' ?>"><img src="<?= $grav_url ?>" /><?= nl2br($comment['comment']) ?><br clear="all" /></div>
+	<div class="Comment<?= $comment['access'] ? ' CommentsUser_' . $comment['access'] : '' ?>"><img src="<?= $grav_url ?>" /><?= nl2br($comment['comment']) ?><br style="clear: both;" /></div>
 <? 
 } 
 ?>
@@ -72,12 +72,12 @@ foreach( $comments as $comment ) {
 		
 		<label class="required">Name</label>
 		<?= fe::Textbox("Comment[name]", $_POST['Comment']['name'] ) ?>
-		<br clear="all" />
+		<br style="clear: both;" />
 		
 		<label>Email</label>
 		<?= fe::Textbox("Comment[email]", $_POST['Comment']['email'] ) ?>
-		<br clear="all" />
-		<br clear="all" />
+		<br style="clear: both;" />
+		<br style="clear: both;" />
 		
 		<label>&nbsp;</label>
 		<?= button('Post Comments', true) ?>

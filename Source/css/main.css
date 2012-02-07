@@ -114,7 +114,7 @@ address {
 /* * Headerbar * */
 
 #headerbar {
-	font-family: "trebuchet ms",arial,helvetica,clean,sans-serif;
+	font-family: arial,helvetica,clean,sans-serif;
 	font-size: 1.3em;
 	position: absolute;
 	right: 23px;

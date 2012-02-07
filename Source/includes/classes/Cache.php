@@ -24,6 +24,7 @@ class Cache {
 	private $module;
 	
 	function __construct($module = false) {
+		self::cleanup();
 		$this->module = $module;
 		$qry = db::query("Select `expires`, `autoclear` From cache Where module = '".db::input($this->module)."' ", true);
 		
