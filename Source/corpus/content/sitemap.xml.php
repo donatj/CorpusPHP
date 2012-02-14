@@ -16,10 +16,11 @@ if( !$shutup ) {
 	$urlset->setAttribute('xsi:schemaLocation','http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 	$urlset = $doc->appendChild($urlset);
 
-	$qry = db::query("select categories_id from categories where categories_id > 0 and list = 1 and template > 0");
+	$cat_data = category_struct();
 
-	//each database page
-	while($row = mysql_fetch_array($qry)) {
+	foreach( $cat_data as $cat ) {
+		$row = $cat['data'];
+		if(!$cat['data']['list'] || !$cat['data']['status']) { continue; }
 		$url = $doc->createElement('url');
 		$url->appendChild($doc->createElement('loc', href($row['categories_id']) ));
 		$url->appendChild($doc->createElement( 'lastmod', date('Y-m-d', strtotime('Last Week') ) ) );
