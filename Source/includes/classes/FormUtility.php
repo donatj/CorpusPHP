@@ -67,7 +67,7 @@ class FormUtility {
 	 */
 	function validateEmail($email) {
 		if($this->requiredField($email)){
-			if(!ereg('[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,6}', $this->filtered[$email])) {
+			if(!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', $this->filtered[$email])) {
 				$this->errorMessage .= "Email is not in the correct format.<br/>\n";
 				return false;
 			}
