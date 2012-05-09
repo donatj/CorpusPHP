@@ -9,7 +9,7 @@ $x_message_stack = new MessageStack('contact_us');
 $thanks_stack = new MessageStack('thanks');
 
 if($_POST) {
-	$formUtil = new formUtility;
+	$formUtil = new FormUtility;
 	$formUtil->requiredFields(array('name'));
 	$formUtil->validateEmail('email');
 
