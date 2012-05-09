@@ -9,6 +9,7 @@ require_once(DWS_CLASS . 'Corpus.php');
 require_once(DWS_CLASS . 'Core.php');
 require_once(DWS_CLASS . 'Database.php');
 require_once(DWS_CLASS . 'FormElements.php');
+require_once(DWS_CLASS . 'FormUtility.php');
 
 require_once(DWS_FUNC . 'error.php');
 require_once(DWS_FUNC . 'general.php');
