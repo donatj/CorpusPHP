@@ -1,5 +1,5 @@
-<?= DOCTYPE ?>
-<html <?= HTMLATTR ?>>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<?= co::layout('head') ?>
 </head>
