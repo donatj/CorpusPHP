@@ -86,7 +86,7 @@ function href($url = false, $encode = true, $strict = false, $ssl = null) {
 * );
 * AuthNetProcess( $submit_data );
 * </code>
-* @todo merge into Creditcard class gracefully
+* @todo merge into Credit Card class gracefully
 * @param array $ProcessData array of data to send to
 * @param array $rr response array return by reference
 * @param MessageStack $ms An optional message stack to use for errors
