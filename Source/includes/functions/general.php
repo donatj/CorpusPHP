@@ -59,34 +59,34 @@ function href($url = false, $encode = true, $strict = false, $ssl = null) {
 *
 * <code>
 * $submit_data = array(
-*	x_amount => (double)$pricing_data['price'],
-*	x_card_num => $_POST['cc_number'],
-*	x_exp_date => (int)$_POST['cc_expir_month'] . substr( (int)$_POST['cc_expir_year'] , -2),
-*	x_card_code => $_POST['ccv'],
-*	x_cust_id => (int)$login->user_id,
-*	x_invoice_num => $new_order_id,  //we need to calculate this
-*	x_first_name => $_POST['fname'],
-*	x_last_name => $_POST['lname'],
-*	x_company => '',
-*	x_address => $_POST['address'] . ', ' . $_POST['address2'],
-*	x_city => $_POST['city'],
-*	x_state => $_POST['state'],
-*	x_zip => $_POST['zip'],
-*	x_country => 'USA', //may want to change if we do more
-*	x_phone => '',
-*	x_email => $login->email,
-*	x_ship_to_first_name => $_POST['fname'],
-*	x_ship_to_last_name => $_POST['lname'],
-*	x_ship_to_address => $_POST['address'] . ', ' . $_POST['address2'],
-*	x_ship_to_city => $_POST['city'],
-*	x_ship_to_state => $_POST['state'],
-*	x_ship_to_zip => $_POST['zip'],
-*	x_ship_to_country => (!is_array($order->delivery['country'])) ? $order->delivery['country'] : $order->delivery['country']['title'],
-*	x_description => $description,
+*	'x_amount'             => (double)$pricing_data['price'],
+*	'x_card_num'           => $_POST['cc_number'],
+*	'x_exp_date'           => (int)$_POST['cc_expir_month'] . substr( (int)$_POST['cc_expir_year'] , -2),
+*	'x_card_code'          => $_POST['ccv'],
+*	'x_cust_id'            => (int)$login->user_id,
+*	'x_invoice_num'        => $new_order_id,  //we need to calculate this
+*	'x_first_name'         => $_POST['fname'],
+*	'x_last_name'          => $_POST['lname'],
+*	'x_company'            => '',
+*	'x_address'            => $_POST['address'] . ', ' . $_POST['address2'],
+*	'x_city'               => $_POST['city'],
+*	'x_state'              => $_POST['state'],
+*	'x_zip'                => $_POST['zip'],
+*	'x_country'            => 'USA', //may want to change if we do more
+*	'x_phone'              => '',
+*	'x_email'              => $login->email,
+*	'x_ship_to_first_name' => $_POST['fname'],
+*	'x_ship_to_last_name'  => $_POST['lname'],
+*	'x_ship_to_address'    => $_POST['address'] . ', ' . $_POST['address2'],
+*	'x_ship_to_city'       => $_POST['city'],
+*	'x_ship_to_state'      => $_POST['state'],
+*	'x_ship_to_zip'        => $_POST['zip'],
+*	'x_ship_to_country'    => (!is_array($order->delivery['country'])) ? $order->delivery['country'] : $order->delivery['country']['title'],
+*	'x_description'        => $description,
 * );
 * AuthNetProcess( $submit_data );
 * </code>
-* @todo merge into Creditcard class gracefully
+* @todo merge into Credit Card class gracefully
 * @param array $ProcessData array of data to send to
 * @param array $rr response array return by reference
 * @param MessageStack $ms An optional message stack to use for errors
@@ -95,21 +95,22 @@ function href($url = false, $encode = true, $strict = false, $ssl = null) {
 function AuthNetProcess( $ProcessData, &$rr = false, &$ms = false ) {
 	
 	$StdData = array(
-		x_login => AUTHORIZENET_AIM_LOGIN, // The login name as assigned to you by authorize.net
-		x_tran_key => AUTHORIZENET_AIM_TXNKEY,  // The Transaction Key (16 digits) is generated through the merchant interface
-		x_relay_response => 'FALSE', // AIM uses direct response, not relay response
-		x_delim_data => 'TRUE', // The default delimiter is a comma
-		x_version => '3.1',  // 3.1 is required to use CVV codes
-		x_type => AUTHORIZENET_AIM_AUTHORIZATION_TYPE,
-		x_method => 'CC', //MODULE_PAYMENT_AUTHORIZENET_AIM_METHOD == 'Credit Card' ? 'CC' : 'ECHECK',
-		x_trans_id => (isset($authnet_trans_id)) ? $authnet_trans_id : '',
-		x_email_customer => 'FALSE',
-		x_email_merchant => 'FALSE',
+		'x_login'          => AUTHORIZENET_AIM_LOGIN, // The login name as assigned to you by authorize.net
+		'x_tran_key'       => AUTHORIZENET_AIM_TXNKEY,  // The Transaction Key (16 digits) is generated through the merchant interface
+		'x_relay_response' => 'FALSE', // AIM uses direct response, not relay response
+		'x_delim_data'     => 'TRUE', // The default delimiter is a comma
+		'x_version'        => '3.1',  // 3.1 is required to use CVV codes
+		'x_type'           => AUTHORIZENET_AIM_AUTHORIZATION_TYPE,
+		'x_method'         => 'CC', //MODULE_PAYMENT_AUTHORIZENET_AIM_METHOD == 'Credit Card' ? 'CC' : 'ECHECK',
+		'x_trans_id'       => (isset($authnet_trans_id)) ? $authnet_trans_id : '',
+		'x_email_customer' => 'FALSE',
+		'x_email_merchant' => 'FALSE',
+
 		// Merchant defined variables go here
-		Date => date('r'),
-		IP => $_SERVER['REMOTE_ADDR'],
-		Session => session_id(),
-		x_test_request => 'FALSE',
+		'Date'             => date('r'),
+		'IP'               => $_SERVER['REMOTE_ADDR'],
+		'Session'          => session_id(),
+		'x_test_request'   => 'FALSE',
 	);
 
 	$submit_data = array_merge( $StdData, $ProcessData );
