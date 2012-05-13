@@ -2,16 +2,11 @@
 
 class User {
 	
-	public $info;
-	var $id;
+	protected static $_table = 'users';
+	protected static $_pk    = 'user_id';
 	
-	function __construct( $user_id ) {
-		$this->id = (int)$user_id;
-		$this->refresh();
-	}
-	
-	function refresh() {
-		$this->info = db::fetch("Select * From users Where user_id = " . $this->id, db::ROW );
+	function __construct($id) {
+		$this->id = (int)$id;
 	}
 	
 }
