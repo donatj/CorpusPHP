@@ -306,6 +306,7 @@ function dateSplit( $date, &$day = false, &$month = false, &$year = false, &$hou
 	/**
 	*@todo add remaining logic
 	*/
+}
 
 **
 * Parses a user agent string into its important parts
@@ -387,4 +388,16 @@ function parse_user_agent( $u_agent = null ) {
 
 	return $data;
 
+}
+
+function startsWith($haystack, $needle) {
+	return (substr( $haystack, 0, strlen($needle) ) === $needle);
+}
+
+function endsWith($haystack, $needle) {
+	$length = strlen($needle);
+	if ($length == 0) { return true; }
+
+	$start  = $length * -1; //negative
+	return (substr($haystack, $start) === $needle);
 }
