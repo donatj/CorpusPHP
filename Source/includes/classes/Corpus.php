@@ -78,7 +78,7 @@ class co extends Corpus {} class Corpus {
 	* @param bool $__execConf
 	* @return string the compiled result
 	*/
-	private static function __load( $fname,  $lname = '', $data = false, $shutup = false, &$_meta = false, $__execModuleCalls = true, $__execConf = true, &$__route = null ) {
+	private static function __load( $fname,  $lname = '', $data = false, $shutup = false, &$_meta = false, $__execModuleCalls = true, $__execConf = false, &$__route = null ) {
 		global $_ms, $_lg, $_nh;
 		$fname = self::__get_filename($fname);
 		if( $_meta === false ) { global $_meta; }
@@ -174,7 +174,7 @@ class co extends Corpus {} class Corpus {
 	}
 
 	public static function content($name, $shutup = false, &$_meta = false) {
-		return self::__load(DWS_CONTENT . $name, $name, false, $shutup, $_meta);
+		return self::__load(DWS_CONTENT . $name, $name, false, $shutup, $_meta, true, true);
 	}
 
 	public static function layout($name, $data = false, $layout = false, &$_meta = false) {
