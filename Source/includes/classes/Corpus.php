@@ -78,7 +78,7 @@ class co extends Corpus {} class Corpus {
 	* @param bool $__execConf
 	* @return string the compiled result
 	*/
-	private static function __load( $fname,  $lname = '', $data = false, $shutup = false, &$_meta = false, $__execModuleCalls = true, $__execConf = true ) {
+	private static function __load( $fname,  $lname = '', $data = false, $shutup = false, &$_meta = false, $__execModuleCalls = true, $__execConf = true, &$__route = null ) {
 		global $_ms, $_lg, $_nh;
 		$fname = self::__get_filename($fname);
 		if( $_meta === false ) { global $_meta; }
@@ -116,14 +116,14 @@ class co extends Corpus {} class Corpus {
 	* @param string $fname filename
 	* @param mixed $_meta
 	*/
-	private static function __conf_load( $fname, &$_meta ) {
+	private static function __conf_load( &$fname, &$_meta ) {
 		$pathA = explode( '/', preg_replace('%^'.preg_quote(DWS_CONTENT).'%','', pathinfo($fname, PHP_URL_PATH), 1, $is_content) );
 		if( $is_content ) {
 			foreach( $pathA as $pathSub ) {
 				$path .= $pathSub . '/';
 				if( is_file(  DWS_CONTENT . $path . 'conf.php' ) ) {
 					//needs to not shutup because its the only way to tell from scan at current
-					self::__load( DWS_CONTENT . $path . 'conf.php', false, false, false, $_meta, false, false );
+					self::__load( DWS_CONTENT . $path . 'conf.php', false, false, false, $_meta, false, false, $fname );
 				}
 			}
 		}

@@ -18,6 +18,8 @@ $_db  = new Database;
 $_cfg = new Configuration;
 $_cfg->PAGELOADS += 1;
 
+date_default_timezone_set($_cfg->DEFAULT_TIMEZONE);
+
 new Corpus;
 $_nh = new NavigationHistory;
 $_lg = new Login;

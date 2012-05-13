@@ -59,34 +59,34 @@ function href($url = false, $encode = true, $strict = false, $ssl = null) {
 *
 * <code>
 * $submit_data = array(
-*	x_amount => (double)$pricing_data['price'],
-*	x_card_num => $_POST['cc_number'],
-*	x_exp_date => (int)$_POST['cc_expir_month'] . substr( (int)$_POST['cc_expir_year'] , -2),
-*	x_card_code => $_POST['ccv'],
-*	x_cust_id => (int)$login->user_id,
-*	x_invoice_num => $new_order_id,  //we need to calculate this
-*	x_first_name => $_POST['fname'],
-*	x_last_name => $_POST['lname'],
-*	x_company => '',
-*	x_address => $_POST['address'] . ', ' . $_POST['address2'],
-*	x_city => $_POST['city'],
-*	x_state => $_POST['state'],
-*	x_zip => $_POST['zip'],
-*	x_country => 'USA', //may want to change if we do more
-*	x_phone => '',
-*	x_email => $login->email,
-*	x_ship_to_first_name => $_POST['fname'],
-*	x_ship_to_last_name => $_POST['lname'],
-*	x_ship_to_address => $_POST['address'] . ', ' . $_POST['address2'],
-*	x_ship_to_city => $_POST['city'],
-*	x_ship_to_state => $_POST['state'],
-*	x_ship_to_zip => $_POST['zip'],
-*	x_ship_to_country => (!is_array($order->delivery['country'])) ? $order->delivery['country'] : $order->delivery['country']['title'],
-*	x_description => $description,
+*	'x_amount'             => (double)$pricing_data['price'],
+*	'x_card_num'           => $_POST['cc_number'],
+*	'x_exp_date'           => (int)$_POST['cc_expir_month'] . substr( (int)$_POST['cc_expir_year'] , -2),
+*	'x_card_code'          => $_POST['ccv'],
+*	'x_cust_id'            => (int)$login->user_id,
+*	'x_invoice_num'        => $new_order_id,  //we need to calculate this
+*	'x_first_name'         => $_POST['fname'],
+*	'x_last_name'          => $_POST['lname'],
+*	'x_company'            => '',
+*	'x_address'            => $_POST['address'] . ', ' . $_POST['address2'],
+*	'x_city'               => $_POST['city'],
+*	'x_state'              => $_POST['state'],
+*	'x_zip'                => $_POST['zip'],
+*	'x_country'            => 'USA', //may want to change if we do more
+*	'x_phone'              => '',
+*	'x_email'              => $login->email,
+*	'x_ship_to_first_name' => $_POST['fname'],
+*	'x_ship_to_last_name'  => $_POST['lname'],
+*	'x_ship_to_address'    => $_POST['address'] . ', ' . $_POST['address2'],
+*	'x_ship_to_city'       => $_POST['city'],
+*	'x_ship_to_state'      => $_POST['state'],
+*	'x_ship_to_zip'        => $_POST['zip'],
+*	'x_ship_to_country'    => (!is_array($order->delivery['country'])) ? $order->delivery['country'] : $order->delivery['country']['title'],
+*	'x_description'        => $description,
 * );
 * AuthNetProcess( $submit_data );
 * </code>
-* @todo merge into Creditcard class gracefully
+* @todo merge into Credit Card class gracefully
 * @param array $ProcessData array of data to send to
 * @param array $rr response array return by reference
 * @param MessageStack $ms An optional message stack to use for errors
@@ -95,21 +95,22 @@ function href($url = false, $encode = true, $strict = false, $ssl = null) {
 function AuthNetProcess( $ProcessData, &$rr = false, &$ms = false ) {
 	
 	$StdData = array(
-		x_login => AUTHORIZENET_AIM_LOGIN, // The login name as assigned to you by authorize.net
-		x_tran_key => AUTHORIZENET_AIM_TXNKEY,  // The Transaction Key (16 digits) is generated through the merchant interface
-		x_relay_response => 'FALSE', // AIM uses direct response, not relay response
-		x_delim_data => 'TRUE', // The default delimiter is a comma
-		x_version => '3.1',  // 3.1 is required to use CVV codes
-		x_type => AUTHORIZENET_AIM_AUTHORIZATION_TYPE,
-		x_method => 'CC', //MODULE_PAYMENT_AUTHORIZENET_AIM_METHOD == 'Credit Card' ? 'CC' : 'ECHECK',
-		x_trans_id => (isset($authnet_trans_id)) ? $authnet_trans_id : '',
-		x_email_customer => 'FALSE',
-		x_email_merchant => 'FALSE',
+		'x_login'          => AUTHORIZENET_AIM_LOGIN, // The login name as assigned to you by authorize.net
+		'x_tran_key'       => AUTHORIZENET_AIM_TXNKEY,  // The Transaction Key (16 digits) is generated through the merchant interface
+		'x_relay_response' => 'FALSE', // AIM uses direct response, not relay response
+		'x_delim_data'     => 'TRUE', // The default delimiter is a comma
+		'x_version'        => '3.1',  // 3.1 is required to use CVV codes
+		'x_type'           => AUTHORIZENET_AIM_AUTHORIZATION_TYPE,
+		'x_method'         => 'CC', //MODULE_PAYMENT_AUTHORIZENET_AIM_METHOD == 'Credit Card' ? 'CC' : 'ECHECK',
+		'x_trans_id'       => (isset($authnet_trans_id)) ? $authnet_trans_id : '',
+		'x_email_customer' => 'FALSE',
+		'x_email_merchant' => 'FALSE',
+
 		// Merchant defined variables go here
-		Date => date('r'),
-		IP => $_SERVER['REMOTE_ADDR'],
-		Session => session_id(),
-		x_test_request => 'FALSE',
+		'Date'             => date('r'),
+		'IP'               => $_SERVER['REMOTE_ADDR'],
+		'Session'          => session_id(),
+		'x_test_request'   => 'FALSE',
 	);
 
 	$submit_data = array_merge( $StdData, $ProcessData );
@@ -305,4 +306,98 @@ function dateSplit( $date, &$day = false, &$month = false, &$year = false, &$hou
 	/**
 	*@todo add remaining logic
 	*/
+}
+
+**
+* Parses a user agent string into its important parts
+* 
+* @author Jesse G. Donat <donatj@gmail.com>
+* @link https://github.com/donatj/PhpUserAgent
+* @param string $u_agent
+* @return array an array with browser, version and platform keys
+*/
+function parse_user_agent( $u_agent = null ) { 
+	if(is_null($u_agent)) $u_agent = $_SERVER['HTTP_USER_AGENT'];
+
+	$data = array(
+		'platform' => null,
+		'browser'  => null,
+		'version'  => null,
+	);
+
+	if( preg_match('/\((.*?)\)/im', $u_agent, $regs) ) {
+
+		# (?<platform>Android|iPhone|iPad|Windows|Linux|Macintosh|Windows Phone OS|Silk|linux-gnu|BlackBerry)(?: x86_64)?(?: NT)?(?:[ /][0-9._]+)*(;|$)
+		preg_match_all('%(?P<platform>Android|iPhone|iPad|Windows|Linux|Macintosh|Windows Phone OS|Silk|linux-gnu|BlackBerry)(?: x86_64)?(?: NT)?(?:[ /][0-9._]+)*(;|$)%im', $regs[1], $result, PREG_PATTERN_ORDER);
+		$result['platform'] = array_unique($result['platform']);
+		if( count($result['platform']) > 1 ) {
+			if( ($key = array_search( 'Android', $result['platform'] )) !== false ) {
+				$data['platform']  = $result['platform'][$key];
+			}
+		}elseif(isset($result['platform'][0])){
+			$data['platform'] = $result['platform'][0];
+		}
+
+	}
+
+	# (?<browser>Camino|Kindle|Firefox|Safari|MSIE|AppleWebKit|Chrome|IEMobile|Opera|Silk|Lynx|Version|Wget)(?:[/ ])(?<version>[0-9.]+)
+	preg_match_all('%(?P<browser>Camino|Kindle|Firefox|Safari|MSIE|AppleWebKit|Chrome|IEMobile|Opera|Silk|Lynx|Version|Wget|curl)(?:[/ ])(?P<version>[0-9.]+)%im', $u_agent, $result, PREG_PATTERN_ORDER);
+
+	if( $data['platform'] == 'linux-gnu' ) { $data['platform'] = 'Linux'; }
+
+	if( ($key = array_search( 'Kindle', $result['browser'] )) !== false || ($key = array_search( 'Silk', $result['browser'] )) !== false ) {
+		$data['browser']  = $result['browser'][$key];
+		$data['platform'] = 'Kindle';
+		$data['version']  = $result['version'][$key];
+	}elseif( $result['browser'][0] == 'AppleWebKit' ) {
+		if( ( $data['platform'] == 'Android' && !($key = 0) ) || $key = array_search( 'Chrome', $result['browser'] ) ) {
+			$data['browser'] = 'Chrome';
+			if( ($vkey = array_search( 'Version', $result['browser'] )) !== false ) { $key = $vkey; }
+		}elseif( $data['platform'] == 'BlackBerry' ) {
+			$data['browser'] = 'BlackBerry Browser';
+			if( ($vkey = array_search( 'Version', $result['browser'] )) !== false ) { $key = $vkey; }
+		}elseif( $key = array_search( 'Kindle', $result['browser'] ) ) {
+			$data['browser'] = 'Kindle';
+		}elseif( $key = array_search( 'Safari', $result['browser'] ) ) {
+			$data['browser'] = 'Safari';
+			if( ($vkey = array_search( 'Version', $result['browser'] )) !== false ) { $key = $vkey; }
+		}else{
+			$key = 0;
+		}
+
+		$data['version'] = $result['version'][$key];
+	}elseif( ($key = array_search( 'Opera', $result['browser'] )) !== false ) {
+		$data['browser'] = $result['browser'][$key];
+		$data['version'] = $result['version'][$key];
+		if( ($key = array_search( 'Version', $result['browser'] )) !== false ) { $data['version'] = $result['version'][$key]; }
+	}elseif( $result['browser'][0] == 'MSIE' ){
+		if( $key = array_search( 'IEMobile', $result['browser'] ) ) {
+			$data['browser'] = 'IEMobile';
+		}else{
+			$data['browser'] = 'MSIE';
+			$key = 0;
+		}
+		$data['version'] = $result['version'][$key];
+	}elseif( $key = array_search( 'Kindle', $result['browser'] ) ) {
+		$data['browser'] = 'Kindle';
+		$data['platform'] = 'Kindle';
+	}else{
+		$data['browser'] = $result['browser'][0];
+		$data['version'] = $result['version'][0];
+	}
+
+	return $data;
+
+}
+
+function startsWith($haystack, $needle) {
+	return (substr( $haystack, 0, strlen($needle) ) === $needle);
+}
+
+function endsWith($haystack, $needle) {
+	$length = strlen($needle);
+	if ($length == 0) { return true; }
+
+	$start  = $length * -1; //negative
+	return (substr($haystack, $start) === $needle);
 }
