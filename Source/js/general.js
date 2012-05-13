@@ -1,18 +1,6 @@
 window.addEvent('domready', function() {
 	
 	$$('a.layout-1').addEvent('click', function(e){ e.stop(); });
-	//alert( $$('button').get('text') ); 
-	//$$('button').
-	$$('button').each(function(e){
-		if( e.get('rel') != 'ignore' ) {
-		e.setStyle('background','none');
-		e.setStyle('border','none');
-		e.setStyle('padding','0');
-		e.setStyle('margin','0');
-		e.set('html','<img src="images/button.php?text=' + escape( e.get('text') ) + '" />');
-		}
-		//e.addEvent('click',function(){ this.form.submit(); });
-	});
 	
 	var logo = $('logo');
 	var logoSpan = $$('#logo span')[0];
