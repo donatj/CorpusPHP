@@ -82,7 +82,12 @@ class co extends Corpus {} class Corpus {
 		global $_ms, $_lg, $_nh;
 		$fname = self::__get_filename($fname);
 		if( $_meta === false ) { global $_meta; }
-		if( $__execConf ) { self::__conf_load($fname, $_meta); }
+		if( $__execConf ) { 
+			self::__conf_load($fname, $_meta);
+			if( !startsWith($fname, DWS_CONTENT) ) {
+				$fname = DWS_CONTENT . $fname;
+			}
+		}
 		if( !$shutup ) { 
 			$_premeta = self::__premeta( $fname ); 
 			if( $_premeta['name'] ) {
