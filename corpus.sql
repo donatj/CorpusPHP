@@ -76,7 +76,7 @@ CREATE TABLE `config` (
   PRIMARY KEY  (`module`,`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Set as InnoDB for efficency puproses, keeps keys tidy.';
 SET character_set_client = @saved_cs_client;
-INSERT INTO `config` VALUES ('','DEFAULT_META_DESC',''),('','DEFAULT_META_KEYS',''),('','DEFAULT_META_TITLE','CorpusPHP Base'),('','DEFAULT_META_TITLE_POST',' &mdash; CorpusPHP'),('','DEFAULT_META_TITLE_PRE',''),('','DISPLAY_DATE_FORMAT','M. j, Y'),('','GENERIC_DB_ERROR','An unspecified error occured, Please try again later.'),('','GENERIC_LOGIN_ERROR','Access Violation - You must be signed in'),('','GENERIC_PERM_ERROR','User lacks access rights'),('','GENERIC_USER_ERROR','The intergalactic space cat does not approve of your user'),('','PAGELOADS','0'),('','PATTERN_MODULE_CALL','/%([A-Za-z0-9_-]+?)([\\[{])(.*?)[\\]}]%/'),('','PATTERN_SEO_URL','([^a-zA-Z0-9_\\-\\.]+)'),('','STORE_NAME','CorpusPHP');
+INSERT INTO `config` VALUES ('','DEFAULT_META_DESC',''),('','DEFAULT_META_KEYS',''),('','DEFAULT_META_TITLE','CorpusPHP Base'),('','DEFAULT_META_TITLE_POST',' &mdash; CorpusPHP'),('','DEFAULT_META_TITLE_PRE',''),('','DISPLAY_DATE_FORMAT','M. j, Y'),('','GENERIC_DB_ERROR','An unspecified error occured, Please try again later.'),('','GENERIC_LOGIN_ERROR','Access Violation - You must be signed in'),('','GENERIC_PERM_ERROR','User lacks access rights'),('','GENERIC_USER_ERROR','The intergalactic space cat does not approve of your user'),('','PAGELOADS','0'),('','PATTERN_MODULE_CALL','/%([A-Za-z0-9_-]+?)([\\[{])(.*?)[\\]}]%/'),('','PATTERN_SEO_URL','([^a-zA-Z0-9_\\-\\.]+)'),('','STORE_NAME','CorpusPHP'),('','DEFAULT_TIMEZONE','America/Chicago');
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `crux` (
