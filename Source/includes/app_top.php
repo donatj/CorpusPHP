@@ -14,7 +14,6 @@ require_once(DWS_FUNC . 'error.php');
 require_once(DWS_FUNC . 'general.php');
 require_once(DWS_FUNC . 'corporeal.php');
 
-$_db  = new Database;
 $_cfg = new Configuration;
 $_cfg->PAGELOADS += 1;
 

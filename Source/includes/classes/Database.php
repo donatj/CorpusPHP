@@ -9,9 +9,9 @@
 * @author Jon Henderson
 * @version 1.2
 */
-class db extends Database {} class Database {
+abstract class Database {
 
-	var $link;
+	public static $link;
 	
 	/**
 	* Constants for use with ::fetch
@@ -21,10 +21,10 @@ class db extends Database {} class Database {
 	/**
 	* Creates connection to the database, checks the database character set, and sets the database to work in UTF-8
 	*/
-	function __construct() {
+	public static function make_connection() {
 		global $_ms;
-		$this->link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-		if(!$this->link) $_ms->add('Error Connecting to Database', true);
+		self::$link = mysql_connect(static::$_host, static::$_user, static::$_password);
+		if(!self::$link) $_ms->add('Error Connecting to Database', true);
 		if(!mysql_select_db(DB_DATABASE)) $_ms->add('Cannot Locate Database: ' . DB_DATABASE, true);
 
 		//Check if the database is UTF-8 because we're responsible like that.
@@ -32,9 +32,8 @@ class db extends Database {} class Database {
 			die( '<span style="color:red">Fatal Error:</span> The database\'s default encoding is not UTF-8. Please correctly configure your database and reimport to prevent corruption.' );
 		}
 
-		//Tell the DB we're doing it new school, because we're cool like that
-		mysql_query( "SET NAMES utf8" );
-		mysql_query( "SET CHARACTER SET utf8" );
+		mysql_query( "SET NAMES "         . static::$_charset );
+		mysql_query( "SET CHARACTER SET " . static::$_charset );
 	}
 
 	/**
@@ -45,6 +44,8 @@ class db extends Database {} class Database {
 	* @return string escaped/trimmed string
 	*/
 	static function input($str, $trim = true) {
+		if(!self::$link) { self::make_connection(); }
+		
 		if($trim) $str = trim($str);
 		return mysql_real_escape_string($str);
 	}
@@ -58,6 +59,8 @@ class db extends Database {} class Database {
 	* @return resource the returned query resource
 	*/
 	static function query($query, $fatal = true, $display = false) {
+		if(!self::$link) { self::make_connection(); }
+
 		if( is_resource($query) ) { return $query; } 
 		$qry = mysql_query($query);
 		if(!$qry) self::error($query, mysql_error(), $fatal, $display);
