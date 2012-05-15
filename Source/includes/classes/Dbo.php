@@ -2,50 +2,63 @@
 
 abstract class Dbo {
 	
-	protected $_table;
-	protected $_pk;
 	protected $_id;
+	private static $data_cache;
 	
 //	static $data_cache;
 	
 	public function __set($name, $value) {
-		global $_dbo_data_cache;
 		
 		if( $name == 'id' ) {
 			$this->_id = $value;
-			if( !isset( $_dbo_data_cache[ $this->_table ][ $this->_id ] ) ) {
-				$_dbo_data_cache[ $this->_table ][ $this->_id ] = null;
-			}
+			self::$data_cache[ static::$_table ][ $this->_id ] = null;
 		}
 	}
 	
 	public function __get($name) {
-		global $_dbo_data_cache;
-		
+
+		if( $name == 'id') {
+			return $this->_id;
+		}
+
+		if( !isset( self::$data_cache[ static::$_table ][ $this->_id ] ) ) {
+			self::$data_cache[ static::$_table ][ $this->_id ] = null;
+		}
+
 		$this->_lazyLoad();
-		print_r( $data_cache );
+
+		if( !isset( self::$data_cache[ static::$_table ][ $this->_id ] ) ) {
+			die('oh no');
+		}
 		
-		return $_dbo_data_cache[ $this->_table ][ $this->_id ][ $name ];
+		return self::$data_cache[ static::$_table ][ $this->_id ][ $name ];
+	}
+
+	public static function __callStatic($name, $args) {
+
+		if(startsWith($name, 'by_')) {
+
+		}else{
+			die('Undefined Static Method');
+		}
+
 	}
 	
 	private function _lazyLoad() {
-		global $_dbo_data_cache;
-		
-		$load = array();		
-		foreach( $_dbo_data_cache[ $this->_table ] as $key => $value ) {
+		$load = array();
+		foreach( self::$data_cache[ static::$_table ] as $key => $value ) {
 			if( $value === null ) {
 				$load[] = $key;
 			}
 		}
 		
 		if( count($load) > 0 ) {
-			$query_str = 'Select * From `'.$this->_table.'` WHERE `'.$this->_pk.'` in ('.implode( ',', $load ).')';
+			$query_str = 'Select * From `'.static::$_table.'` WHERE `'. static::$_pk.'` in ("'.implode( '","', $load ).'")';
 			$query = db::query( $query_str );
 			while( $load_row = mysql_fetch_array( $query ) ) {
-				$_dbo_data_cache[ $this->_table ][ $load_row[$this->_pk] ] = $load_row;
+				self::$data_cache[ static::$_table ][ $load_row[static::$_pk] ] = $load_row;
 			}
 		}
-		
 	}
 	
 }
