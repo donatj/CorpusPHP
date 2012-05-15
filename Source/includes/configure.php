@@ -28,6 +28,7 @@ else:
 	define('DWS_LAYOUT',  DWS_CORPUS . 'layout/');
 	define('DWS_TEMPLT',  DWS_CORPUS . 'templates/');
 	define('DWS_CONTENT', DWS_CORPUS . 'content/');
+	define('DWS_DATABASES', DWS_CORPUS . 'databases/');
 	define('DWS_MODULES', DWS_CORPUS . 'modules/');
 
 	define('STORE_OWNER_EMAIL_ADDRESS', 'noreply@donatstudios.com');
