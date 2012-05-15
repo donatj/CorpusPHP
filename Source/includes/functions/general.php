@@ -308,7 +308,7 @@ function dateSplit( $date, &$day = false, &$month = false, &$year = false, &$hou
 	*/
 }
 
-**
+/**
 * Parses a user agent string into its important parts
 * 
 * @author Jesse G. Donat <donatj@gmail.com>
