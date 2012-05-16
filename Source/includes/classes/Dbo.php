@@ -27,11 +27,13 @@ abstract class Dbo {
 
 		$this->_lazyLoad();
 
-		if( !isset( self::$data_cache[ static::$_table ][ $this->_id ] ) ) {
+		if( self::$data_cache[ static::$_table ][ $this->_id ][ $name ] !== NULL ) {
+			return self::$data_cache[ static::$_table ][ $this->_id ][ $name ];	
+		}elseif(method_exists($this, $name)){
+			return call_user_func_array( array($this, $name), array() );
+		}else{
 			die('oh no');
 		}
-		
-		return self::$data_cache[ static::$_table ][ $this->_id ][ $name ];
 	}
 
 	public static function __callStatic($name, $args) {
