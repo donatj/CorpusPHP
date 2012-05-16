@@ -1,6 +1,8 @@
 <?
 
 function __autoload($class) {
+	$class_bits = explode("\\", $class);
+	$class = array_pop($class_bits);
 	global $__autoload_paths;
 	foreach( $__autoload_paths as $path ) {
 		if( file_exists($path . $class . '.php') ) {
@@ -8,7 +10,7 @@ function __autoload($class) {
 			return true;
 		}
 	}
-	
+
 	die('Failed to dynamically load class "' . $class . '"');
 }
 
