@@ -6,7 +6,7 @@
 <body>
 	<?= co::layout('header') ?>
 	<div id="wrap">
-		<div id="pageBody">
+		<div class="inner">
 			<?= $data ?>
 			<div style="clear:both;"></div>
 		</div>
