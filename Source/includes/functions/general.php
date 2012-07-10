@@ -401,3 +401,18 @@ function endsWith($haystack, $needle) {
 	$start  = $length * -1; //negative
 	return (substr($haystack, $start) === $needle);
 }
+
+/**
+ * Returns headers_list as an associative array
+ * 
+ * @see http://us.php.net/manual/en/function.headers-list.php
+ * @return array
+ */
+function headers_list_assoc() {
+	$headers = headers_list();
+	foreach($headers as $header) {
+		$h = explode(':', $header, 2);
+		$hdata[$h[0]] = trim($h[1]);
+	}
+	return $hdata;
+}

@@ -1,4 +1,3 @@
-
 --
 -- Not dumping tablespaces as no INFORMATION_SCHEMA.FILES table on this server
 --
@@ -130,7 +129,7 @@ CREATE TABLE `users` (
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
-INSERT INTO `users` VALUES (1,'admin','admin@donatstudios.com','password','CorpusPHP','Admin',NULL,'Ecreativeworks','','','','','','9529551670','','','',1,0);
+INSERT INTO `users` VALUES (1,'admin','admin@donatstudios.com','password','CorpusPHP','Admin',NULL,'Donat Studios','','','','','','','','','',1,0);
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `zones` (
