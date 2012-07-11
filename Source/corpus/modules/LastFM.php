@@ -81,7 +81,6 @@ foreach($Albums as $Album) {
 			<img src="' . htmlE( 'images/displayImage.php?src=../'.$cacheFName.'&w='.(int)$albumWidth ) .'" alt="' . $title . '" title="' . $title . '" /></div>';
 		
 		if(++$count >= $numberToDisplay) break 1;
-		if($count % 3 == 0) echo '<br style="clear: both;" />';
 	}
 }
 

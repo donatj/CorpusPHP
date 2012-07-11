@@ -93,16 +93,16 @@ function breadcrumb( $id, $seperator = ' &raquo; ' ) {
 					$data[] = '<strong>' . $row['name'] . '</strong>';
 				}else{
 					if($id2 > 0) {
-						$data[] = '<a href="'.href($id2).'" class="template'.(int)$row['template'].'">' . $row['name'] . '</a>';
+						$data[] = '<a itemprop="url" href="'.href($id2).'" class="template'.(int)$row['template'].'"><span itemprop="title">' . $row['name'] . '</span></a>';
 					}
 				}
 			} while( $id2 = $row['parent_id'] );
 		}
 		$data = firstNotEmpty($_meta['breadcrumbs'], $data, array('<strong>' . $_meta['title'] . '</strong>'));
-		$data[] = '<a href="'.DWS_BASE.'">Home</a>';
+		$data[] = '<a itemprop="url" href="'.DWS_BASE.'"><span itemprop="title">Home</span></a>';
 		$data = array_reverse($data);
 		$i = count($data);
-		return '<div class="breadcrumb">' . implode( $seperator, $data ) . '</div>';
+		return '<div class="breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">' . implode( $seperator, $data ) . '</div>';
 	}
 }
 
