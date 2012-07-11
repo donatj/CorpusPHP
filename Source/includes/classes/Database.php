@@ -23,9 +23,9 @@ abstract class Database {
 	*/
 	public static function make_connection() {
 		global $_ms;
-		self::$link = mysql_connect(static::$_host, static::$_user, static::$_password);
-		if(!self::$link) $_ms->add('Error Connecting to Database', true);
-		if(!mysql_select_db(DB_DATABASE)) $_ms->add('Cannot Locate Database: ' . DB_DATABASE, true);
+		self::$link = @mysql_connect(static::$_host, static::$_user, static::$_password);
+		if(!self::$link) trigger_error('Error Connecting to Database', E_USER_ERROR);
+		if(!mysql_select_db(DB_DATABASE)) trigger_error('Cannot Locate Database: ' . DB_DATABASE, E_USER_ERROR);
 
 		//Check if the database is UTF-8 because we're responsible like that.
 		if( mysql_fetch_object( self::query( "Show Variables Like 'character_set_database'" ) )->Value != 'utf8' ) {
