@@ -127,7 +127,9 @@ class _ extends Core {} class Core {
 	* @return array
 	*/
 	public static function data($id) {
-		return db::fetch( "Select * From categories Where categories_id = " . (int)$id, db::ROW );
+		$data = db::fetch( "Select * From categories Where categories_id = " . (int)$id, db::ROW );
+		$data['supplementary'] = json_decode($data['supplementary'], true);
+		return $data;
 	}
 
 }
