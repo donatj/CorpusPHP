@@ -52,6 +52,7 @@ CREATE TABLE `categories_tags` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comments` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
   `grouping` varchar(255) NOT NULL DEFAULT 'default',
   `grouping_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -61,6 +62,7 @@ CREATE TABLE `comments` (
   `comment_date` datetime NOT NULL,
   `comment_ip` varchar(255) NOT NULL,
   `enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`comment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

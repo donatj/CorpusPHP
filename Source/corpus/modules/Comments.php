@@ -41,33 +41,56 @@ if( is_array($_POST['Comment']) ) {
 	
 }
 
-
+/*
 $comments = db::fetch( "Select c.*, u.access From comments c Left Join users u Using( user_id ) Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By comment_date ASC" );
+*/
 
-$default = "retro";
-$size = 80;
+
+$comments = db::fetch("Select c.*, u.access From comments c Left Join users u Using( user_id ) Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By parent_id, comment_date ASC");
+
+foreach( $comments as $comment ) {
+	$comment_data[ $comment['comment_id'] ]['data'] = $comment;
+	$comment_data[ $comment['parent_id'] ]['children'][ $comment['comment_id'] ] =& $comment_data[ $comment['comment_id'] ];
+	$comment_data[ $comment['comment_id'] ]['parent'] =& $comment_data[ $comment['parent_id'] ];
+}
+
+if( !function_exists('draw_comment_tree') ) {
+	function draw_comment_tree($comment_data, $class_prefix = "nav_", $root_id = "nav", $comment_id = 0, $depth = 0) {
+	
+		$src = '';
+		if(is_array( $comment_data[$comment_id]['children'] )) {
+
+			foreach( $comment_data[$comment_id]['children'] as $comment ) {
+	
+				$csrc = draw_comment_tree( $comment_data[$comment_id]['children'], $class_prefix, $root_id, $comment['data']['comment_id'], $depth + 1 );
+				$ts = strtotime( $comment['data']['comment_date'] );
+				
+				$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . 
+					md5( strtolower( firstNotEmpty($comment['data']['email'], $comment['data']['comment_ip']) ) ). "&amp;default=" . 
+					urlencode("retro") . '&amp;s=64&amp;r=x';
+					
+				$src .= '<div'.($depth > 0 ? ' style="margin-left: '.($depth * 22).'px;"' : '' ).' id="Comment' . $comment['data']['comment_id'] .'">';
+				$src .= '<h3>Comment by: <strong>' . $comment['data']['name'] .'</strong> on <time class="entryDate" title="' . date(DATE_W3C, $ts) . '" datetime="' . date(DATE_W3C, $ts) . '">' . date( DISPLAY_DATE_FORMAT , $ts) . '</time></h3>';
+				$src .= '<div class="Comment' . ( $comment['data']['access'] ? ' CommentsUser_' . $comment['data']['access'] : '' ) . '"><img alt="' . htmlE( $comment['data']['name'] ).' Gravatar" src="'. $grav_url .'" />' . nl2br($comment['data']['comment']) .'<br style="clear: both;" /></div>';
+				$src .= '</div>';
+
+				$src .= $csrc;
+			}
+		}
+		return $src;
+	}
+}
+
 
 
 ?>
 <div id="Comments">
 <? 
-foreach( $comments as $comment ) { 
-	$ts = strtotime( $comment['comment_date'] );
-	
-	$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . 
-		md5( strtolower( firstNotEmpty($comment['email'], $comment['comment_ip']) ) ). "&amp;default=" . 
-		urlencode($default) . "&amp;s=".$size . '&amp;r=x';
-	
-?>
-	<a name="Comment<?= $comment['comment_id'] ?>"></a>
-	<h3>Comment by: <strong><?= $comment['name'] ?></strong> on <dfn title="<?= date('r', $ts) ?>"><?= date('M jS, Y', $ts) ?></dfn></h3>
-	<div class="Comment<?= $comment['access'] ? ' CommentsUser_' . $comment['access'] : '' ?>"><img src="<?= $grav_url ?>" /><?= nl2br($comment['comment']) ?><br style="clear: both;" /></div>
-<? 
-} 
+echo draw_comment_tree($comment_data);
 ?>
 <form method="post" action="<?= href() ?>#MakeComment">
 <? $_cs->draw(); ?>
-<fieldset>
+<fieldset id="MakeComment">
 	<div class="column">
 		
 		<label class="required">Name</label>
@@ -78,15 +101,13 @@ foreach( $comments as $comment ) {
 		<?= fe::Textbox("Comment[email]", $_POST['Comment']['email'] ) ?>
 		<br style="clear: both;" />
 		<br style="clear: both;" />
-		
-		<label>&nbsp;</label>
-		<?= button('Post Comments', true) ?>
-		
+				
 	</div>
 	<div class="column last">
 		<?= fe::Textarea( 'Comment[comment]', $_POST['Comment']['comment'] ) ?>
 	</div>
-	<a name="MakeComment"></a>
+	<label>&nbsp;</label>
+	<?= button('Post Comments', true) ?>
 </fieldset>
 <?= fe::HiddenField('Wolfsbane', '') ?>
 </form>
