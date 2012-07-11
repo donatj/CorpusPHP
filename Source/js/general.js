@@ -1,6 +1,6 @@
 window.addEvent('domready', function() {
 	
-	$$('a.layout-1').addEvent('click', function(e){ e.stop(); });
+	$$('a.template-1').addEvent('click', function(e){ e.stop(); });
 	
 	var logo = $('logo');
 	var logoSpan = $$('#logo span')[0];
