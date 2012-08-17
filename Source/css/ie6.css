@@ -1,25 +1,14 @@
 /* IE6 is a terrible browser */
 address { position: absolute; }
+
 address.iefix { left: 0; }
 
-#sidenav ol, #sidenav ul, #subMenusContainer2 ul, #subMenusContainer2 ol {
-	width: 208px;	
-}
+#sidenav ol, #sidenav ul, #subMenusContainer2 ul, #subMenusContainer2 ol { width: 208px; }
 
-#nav ol, #nav ul, #subMenusContainer ul, #subMenusContainer ol {
-	width: 208px;	
-}
+#nav ol, #nav ul, #subMenusContainer ul, #subMenusContainer ol { width: 208px; }
 
-#subMenusContainer li a{
-	position:relative;
-}
+#subMenusContainer li a { position: relative; }
 
-#subMenusContainer2 li, #subnav li{
-	margin-bottom:-0.99em;
-	width: 200px;
-	height: 30px;
-}
-#subMenusContainer2 li a{
-	position:relative;
-	width: 200px;
-}
+#subMenusContainer2 li, #subnav li { margin-bottom: -0.99em; width: 200px; height: 30px; }
+
+#subMenusContainer2 li a { position: relative; width: 200px; }

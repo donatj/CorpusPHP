@@ -14,3 +14,5 @@ Thumbs.db
 #MacOS Files
 .DS_Store
 ._*
+
+/.sass-cache/
