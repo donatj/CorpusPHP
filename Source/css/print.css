@@ -1,19 +1,9 @@
-body {
-	border: none;	
-}
+body { border: none; }
 
-#headerbar, #search {
-	display: none;	
-}
+#headerbar, #search { display: none; }
 
-#sidebar {
-	width: 20%;	
-}
+#sidebar { width: 20%; }
 
-#main {
-	width: 75%;
-}
+#main { width: 75%; }
 
-.noPrint {
-	display: none;	
-}
+.noPrint { display: none; }

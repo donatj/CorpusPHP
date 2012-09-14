@@ -5,11 +5,6 @@ conf.php files seemingly not executing when
 Explore idea of packaged logic, eg, folders that end in like .webpackage or .corpus
 
 More seperation of project from framework
-	-DBO in a seperate folder
-	-DBO autoloading
-	-Default User Clsases
 	
 Look into
 	-Class encapsulation / dynamic naming
-	
-Start documenting for eventual builder.
