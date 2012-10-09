@@ -1,4 +1,4 @@
-<?
+<?php
 
 function __autoload($class) {
 	$class_bits = explode("\\", $class);
