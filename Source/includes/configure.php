@@ -21,6 +21,7 @@ else:
 
 	define('DWS_INCL', 'includes/');
 	define('DWS_CLASS', DWS_INCL . 'classes/');
+	define('DWS_FILT', DWS_INCL . 'filters/');
 	define('DWS_FUNC', DWS_INCL . 'functions/');
 
 	define('DWS_CORPUS', 'corpus/');
@@ -34,6 +35,6 @@ else:
 	define('STORE_OWNER_EMAIL_ADDRESS', 'noreply@donatstudios.com');
 	define('STORE_GENERIC_FROM', 'noreply@donatstudios.com');
 	
-	$__autoload_paths = array( DWS_CLASS, DWS_DBO );
+	$__autoload_paths = array( DWS_DATABASES, DWS_CLASS, DWS_DBO );
 
 endif;
