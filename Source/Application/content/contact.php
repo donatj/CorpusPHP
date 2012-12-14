@@ -19,7 +19,7 @@ if($_POST) {
 		$mail->IsHTML(true);
 		$mail->From = $formUtil->filtered['email']; // the email field of the form
 		$mail->FromName = $formUtil->filtered['name']; // the name field of the form
-		$mail->AddAddress(STORE_OWNER_EMAIL_ADDRESS); // the form will be sent to this address
+		$mail->AddAddress(GENERIC_FROM_EMAIL); // the form will be sent to this address
 		$mail->Subject = 'Contact Us Form Submission'; // the subject of email
 
 		$mail->Body = 	'<table cell-padding="10" cell-spacing="0">' . "\n" .

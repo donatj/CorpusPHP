@@ -19,7 +19,7 @@
 *
 **/
 
-include("includes/app_top.php");
+require("CorpusPHP/app_top.php");
 
 $_content = _::content();
 

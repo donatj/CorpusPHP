@@ -8,7 +8,7 @@
 */
 class _ extends Core {} class Core {
 
-	static $id = false;
+	static $id  = false;
 	static $url = false;
 
 	function __construct() {
@@ -56,18 +56,14 @@ class _ extends Core {} class Core {
 		if( self::$id > 0 ) { //loads databased pages
 			if( $_data = self::data( self::$id ) ) {
 
-				if($_data['template'] == -1) { //if the page is a pass through, redirect to its parent
-					redirect( href( getParent( self::$id ) ), 301 );
-				}elseif($_data['template'] == -2){ //if the page is a redirect... do as such
-					redirect( $_data['redirect'], 301 );
-				}elseif( self::$url != $___Urls[ self::$id ] && isset($___Urls[ self::$id ]) ) { //if the SEO Url isn't prefect, correct it
+				if( $_data['template'][0] != '_' && self::$url != $___Urls[ self::$id ] && isset($___Urls[ self::$id ]) ) { //if the SEO Url isn't prefect, correct it
 					redirect( href( self::$id ), 301 );
 				}
 				
 				$_meta['layout'] = $_data['layout'];
 				$_content = co::template($_data['template'], $_data);
 			}
-		}elseif( strlen(self::$url) > 0 ){ //loads things like forms / search page from layout/content/ folder
+		}elseif( strlen(self::$url) > 0 ){ //loads things like forms / search page from content/ folder
 			$_content = co::content( self::$url );
 		}
 

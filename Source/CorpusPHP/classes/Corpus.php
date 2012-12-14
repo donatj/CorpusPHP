@@ -101,7 +101,10 @@ class co extends Corpus {} class Corpus {
 			ob_start();
 			require($fname);
 			$content = ob_get_clean();
-			if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false ) { self::exec_module_calls( $content ); }
+			if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false ) {
+				$mc = include(DWS_FILT . 'module_exec.php');
+				$content = $mc( $content );
+			}
 
 			if(!$lname || $_meta['raw']) {
 				return $content;
@@ -132,46 +135,6 @@ class co extends Corpus {} class Corpus {
 				}
 			}
 		}
-	}
-
-	/**
-	* Executes modules within content via a regex callback
-	*
-	* @param string $content the content the modules are to be executed upon by reference
-	*/
-	private static function exec_module_calls( &$content ) {
-
-		if( is_callable( array(  get_class(), '___modules_exec___' ), true, $call ) ) {
-			$content = preg_replace_callback( PATTERN_MODULE_CALL, $call, $content );
-		}else{
-			die('Module Call Error');
-		}
-
-	}
-
-	/**
-	* executes the modules
-	*
-	* @param array $m the data array passed to the callback
-	* @return string the result of the module call
-	*/
-	private static function ___modules_exec___( $m ) {
-		global $_ms;
-
-		$module = self::$metaSupreme['modules']['calls'][ $m[1] ];
-		if( strlen( $module ) > 0 ) {
-			$m[3] = str_replace( "'", '"', $m[3] );
-			if( $m[2] == '[' ) {
-				$data = json_decode( '[' . $m[3] . ']', true );
-			}else{
-				$data = json_decode( '{' . $m[3] . '}', true );
-			}
-			return self::module( $module, $data );
-		}else{
-			$_ms->add( 'Call ' . $m[1] . ' not set', true );
-		}
-
-		return false;
 	}
 
 	public static function template($name, $data = false, &$_meta = false) {
@@ -205,6 +168,10 @@ class co extends Corpus {} class Corpus {
 
 	public static function content_info() {
 		return self::$metaSupreme['content']['meta'];
+	}
+	
+	public static function module_info() {
+		return self::$metaSupreme['modules'];
 	}
 
 	/**

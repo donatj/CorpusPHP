@@ -1,14 +1,15 @@
 <?
 error_reporting(E_ALL ^ E_NOTICE);
-require_once('includes/configure.php');
-require_once(DWS_INCL . 'init.php');
+
+require_once('configure.php');
+require_once('init.php');
 
 $_ms = new MessageStack;
 
-require_once(DWS_CLASS . 'Corpus.php');
-require_once(DWS_CLASS . 'Core.php');
-require_once(DWS_CLASS . 'Database.php');
-require_once(DWS_CLASS . 'FormElements.php');
+require_once(DWS_CLASSES . 'Corpus.php');
+require_once(DWS_CLASSES . 'Core.php');
+require_once(DWS_CLASSES . 'Database.php');
+require_once(DWS_CLASSES . 'FormElements.php');
 
 require_once(DWS_FUNC . 'error.php');
 require_once(DWS_FUNC . 'general.php');

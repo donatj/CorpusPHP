@@ -21,7 +21,7 @@ $username = urlencode( firstNotEmpty( $data[0], $_config->USERNAME ) );
 $count = (int)firstNotEmpty( $data[1], $_config->TWEETCOUNT );
 
 
-$feedUrl = 'http://twitter.com/statuses/user_timeline/' . $username . '.json?count=' . $count * 2;
+$feedUrl = 'http://api.twitter.com/1/statuses/user_timeline.json?screen_name=' . $username . '&count=' . $count * 2;
 $cacheKey = md5($feedUrl);
 
 if( !$_cache->isExpired( $cacheKey ) ) {
