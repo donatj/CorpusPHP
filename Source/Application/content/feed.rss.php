@@ -59,7 +59,7 @@ if( !$shutup ) {
 		$item->appendChild($doc->createElement('guid', href($_data['categories_id']) ));
 		//$item->appendChild($doc->createElement('title')->appendChild( $doc->createTextNode( $_data['name'] . ' ' ) ));
 		$item->appendChild($doc->createElement('title'))->appendChild( $doc->createTextNode( $_data['name'] ) );
-		$item->appendChild($doc->createElement('author',  STORE_GENERIC_FROM .'('. STORE_NAME .')' ) );
+		$item->appendChild($doc->createElement('author',  GENERIC_FROM_EMAIL .'('. STORE_NAME .')' ) );
 		$item->appendChild($doc->createElement('pubDate',  date("D, d M Y H:i:s", max( strtotime($_data['creation_date']), strtotime($_data['update_date']) ) ).' CST' ) );
 		$item->appendChild($doc->createElement('link',  href($_data['categories_id']) ) );
 		self::exec_module_calls($_data['large_description']);

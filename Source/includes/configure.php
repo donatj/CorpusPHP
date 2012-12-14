@@ -33,7 +33,6 @@ define('DWS_CONTENT',   DWS_APP . 'content/');
 define('DWS_DATABASES', DWS_APP . 'databases/');
 define('DWS_MODULES',   DWS_APP . 'modules/');
 
-define('STORE_OWNER_EMAIL_ADDRESS', 'noreply@donatstudios.com');
-define('STORE_GENERIC_FROM',        'noreply@donatstudios.com');
+define('GENERIC_FROM_EMAIL',        'noreply@donatstudios.com');
 
 $__autoload_paths = array( DWS_DATABASES, DWS_CLASS, DWS_DBO );
