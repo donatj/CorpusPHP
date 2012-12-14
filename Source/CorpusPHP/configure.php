@@ -23,16 +23,16 @@ define('DWS_DOMAIN', 'http://' . $_SERVER['HTTP_HOST']);
 define('DWS_INCL', 'includes/');
 define('DWS_VENDOR', 'Vendor/');
 define('DWS_CORPUS', 'CorpusPHP/');
-define('DWS_FILT',  DWS_INCL . 'filters/');
-define('DWS_FUNC',  DWS_INCL . 'functions/');
+define('DWS_FILT',  DWS_CORPUS . 'filters/');
+define('DWS_FUNC',  DWS_CORPUS . 'functions/');
 
 define('DWS_APP', 'Application/');
-define('DWS_DBO',       DWS_APP . 'dbo/');
-define('DWS_LAYOUT',    DWS_APP . 'layout/');
-define('DWS_TEMPLT',    DWS_APP . 'templates/');
-define('DWS_CONTENT',   DWS_APP . 'content/');
-define('DWS_DATABASES', DWS_APP . 'databases/');
-define('DWS_MODULES',   DWS_APP . 'modules/');
+	define('DWS_DBO',       DWS_APP . 'dbo/');
+	define('DWS_LAYOUT',    DWS_APP . 'layout/');
+	define('DWS_TEMPLT',    DWS_APP . 'templates/');
+	define('DWS_CONTENT',   DWS_APP . 'content/');
+	define('DWS_DATABASES', DWS_APP . 'databases/');
+	define('DWS_MODULES',   DWS_APP . 'modules/');
 
 define('GENERIC_FROM_EMAIL',        'noreply@donatstudios.com');
 
