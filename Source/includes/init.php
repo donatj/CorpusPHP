@@ -11,7 +11,7 @@ function __autoload($class) {
 		}
 	}
 
-	die('Failed to dynamically load class "' . $class . '"');
+	trigger_error('Failed to dynamically load class "' . $class . '"', E_USER_ERROR);
 }
 
 session_name(md5(DWS_BASE));
