@@ -21,7 +21,8 @@ define('DWS_ADMIN', DWS_BASE . 'admin/');
 define('DWS_DOMAIN', 'http://' . $_SERVER['HTTP_HOST']);
 
 define('DWS_INCL', 'includes/');
-define('DWS_CLASS', DWS_INCL . 'classes/');
+define('DWS_VENDOR', 'Vendor/');
+define('DWS_CORPUS', 'CorpusPHP/');
 define('DWS_FILT',  DWS_INCL . 'filters/');
 define('DWS_FUNC',  DWS_INCL . 'functions/');
 
@@ -35,4 +36,4 @@ define('DWS_MODULES',   DWS_APP . 'modules/');
 
 define('GENERIC_FROM_EMAIL',        'noreply@donatstudios.com');
 
-$__autoload_paths = array( DWS_DATABASES, DWS_CLASS, DWS_DBO );
+$__autoload_paths = array( DWS_DATABASES, DWS_VENDOR, DWS_CORPUS, DWS_DBO );

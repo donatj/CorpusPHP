@@ -5,10 +5,10 @@ require_once(DWS_INCL . 'init.php');
 
 $_ms = new MessageStack;
 
-require_once(DWS_CLASS . 'Corpus.php');
-require_once(DWS_CLASS . 'Core.php');
-require_once(DWS_CLASS . 'Database.php');
-require_once(DWS_CLASS . 'FormElements.php');
+require_once(DWS_CORPUS . 'Corpus.php');
+require_once(DWS_CORPUS . 'Core.php');
+require_once(DWS_CORPUS . 'Database.php');
+require_once(DWS_CORPUS . 'FormElements.php');
 
 require_once(DWS_FUNC . 'error.php');
 require_once(DWS_FUNC . 'general.php');
