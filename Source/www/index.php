@@ -19,6 +19,7 @@
 *
 **/
 
+chdir('..');
 require("CorpusPHP/app_top.php");
 
 $_content = _::content();

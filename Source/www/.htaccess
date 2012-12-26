@@ -1,5 +1,6 @@
-php_flag short_open_tag on
 RewriteEngine On
+php_flag short_open_tag on
+php_flag display_errors on
 
 RewriteRule ^images/w/([0-9]+)/h/([0-9]+)/(.+)$ images/displayImage.php?w=$1&h=$2&src=$3 [l]
 RewriteRule ^images/w/([0-9]+)/(.+)$ images/displayImage.php?w=$1&src=$2 [l]
@@ -10,15 +11,22 @@ RewriteRule ^css/images/(.*)$ images/site/$1?%{QUERY_STRING} [l]
 # RewriteCond %{HTTP_HOST} ^www.donatstudios.com [NC]
 # RewriteRule ^(.*)$ http://donatstudios.com/$1 [L,R=301]
 
-RewriteRule ^favicon.ico$ images/site/favicon.ico [l]
-RewriteRule ^([a-zA-Z0-9_.-]+)$ index.php?url=$1&%{QUERY_STRING} [l]
+# RewriteRule ^favicon.ico$ images/site/favicon.ico [l]
+# RewriteRule ^([a-zA-Z0-9_.-]+)$ index.php?url=$1&%{QUERY_STRING} [l]
 
-# 404 Handler
 php_flag register_globals off
 php_flag magic_quotes_gpc off
 php_flag register_long_arrays off
+
+# RewriteCond %{DOCUMENT_ROOT}/CorpusPHP/Source/Application/raw/js/general.js -f
+# RewriteRule ^(.*)$ index.php
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_URI} ^/([^/]+)/(.+)$
+# RewriteCond %{DOCUMENT_ROOT}/%1/Application/raw/%2 -f
+# RewriteRule ^(.*)$ /%1/Application/raw/%2 [L,R]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?url=$1&%{QUERY_STRING}
 
-php_flag display_errors on
