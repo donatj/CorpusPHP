@@ -28,5 +28,5 @@ php_flag register_long_arrays off
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?url=$1&%{QUERY_STRING}
+RewriteRule ^(.*)$ index.php?corpusphp_url=$1&%{QUERY_STRING}
 

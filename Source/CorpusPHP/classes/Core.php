@@ -15,7 +15,7 @@ class _ extends Core {} class Core {
 		global $___Urls, $_meta;
 		$this->cacheUrls();
 		self::$id = (int)$_GET['id'];
-		self::$url = trim($_GET['url']);
+		self::$url = trim($_GET['corpusphp_url']);
 		
 		if( self::$url == '' ) {
 			self::$url = 'index.php';
