@@ -25,6 +25,7 @@ class _ extends Core {} class Core {
 		if( self::$id <= 0 && isset($___Urls[ self::$url ]) ){
 			self::$id = $___Urls[ self::$url ];
 		}
+		
 		$_meta['id'] = self::$id;
 		$_meta['page'] = parse_url( $_SERVER['REQUEST_URI'] );
 		$_meta['page']['url'] = self::$url;
