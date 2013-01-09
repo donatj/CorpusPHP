@@ -15,6 +15,7 @@ CREATE TABLE `categories` (
   `categories_id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL,
   `name` text,
+  `page_header` text,
   `description` text,
   `large_description` text,
   `head` text,
