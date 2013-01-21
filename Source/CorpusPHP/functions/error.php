@@ -9,6 +9,7 @@ function _errorTracer($waitForFunct = false, $startAtFile = false) {
 	if( function_exists('debug_backtrace') ) {
 		$traceback = debug_backtrace();
 		$trace_str = '';
+		$start     = false;
 		if(is_array($traceback)) {
 			
 			foreach($traceback as $trace) {

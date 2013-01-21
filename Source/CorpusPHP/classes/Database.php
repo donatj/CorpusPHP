@@ -100,6 +100,8 @@ abstract class Database {
 	*/
 	static function build($table, $data, $parameters = false, $escape = true) {
 
+		$values = '';
+
 		foreach($data as $column => $value){
 
 			if ( is_array($value) && $value[0] === true ) {

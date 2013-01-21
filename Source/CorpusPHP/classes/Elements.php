@@ -13,6 +13,8 @@ class elm extends Elements {} class Elements {
 
 	static function elm( $tag, $attributes = false, $innerHTML = false ) {
 
+		$values = '';
+
 		if( is_array($attributes) ) {
 			foreach( $attributes as $column => $value){
 

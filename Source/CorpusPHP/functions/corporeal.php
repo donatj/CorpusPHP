@@ -8,6 +8,7 @@ function recrux( $key, $value ) {
 }
 
 function addressFormat($data, $html=true) {
+	$str = '';
 	if( nempty($data['address']) ) $str .= $data['address'] . "\n";
 	if( nempty($data['address2']) ) $str .= $data['address2'] . "\n";
 	if( nempty($data['city']) ) $str .= $data['city'] . ", ";
@@ -149,6 +150,8 @@ function keywordExpansion( $searchedFor ) {
 */
 function OxfordComma( $texts, $conj = 'and', $sep = ',' ) {
 	$len = count( $texts );
+	$str = '';
+	$j   = 0;
 	foreach( $texts as $fragment ) {
 		$str .= $fragment;
 		//echo $len;

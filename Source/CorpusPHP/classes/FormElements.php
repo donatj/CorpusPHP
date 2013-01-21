@@ -44,7 +44,9 @@ class fe extends FormElements {} class FormElements {
 	static function DropdownFromArray($data_array, $name, $selected, $params = '', $blank = false, $strict = false) {
 		if(is_array( $selected ) ) { $selected = $selected[$name]; }
 		elseif($selected === true) { $selected = $_POST[$name]; }
-		
+
+		$str = '';
+		$i   = 0;
 		if( $blank ) $str = '<option value="">'.$blank.'</option>';
 		foreach($data_array as $k => $v) {
 			if(is_int($k) && !$strict) { $value = $v; } else{ $value = $k; }
@@ -95,7 +97,7 @@ class fe extends FormElements {} class FormElements {
 		return self::DropdownFromArray(range($start, $end, $step), $name, $selected, $params, $blank);
 	}
 
-	static function Checkbox($name, $checked = false, $value="checked", $params = 'style="width: auto"') {
+	static function Checkbox($name, $checked = false, $value="checked", $params = 'style="width: auto"', $raw = false) {
 		return self::__input('checkbox', $name, $value, $checked, $params, $raw);
 	}
 
@@ -123,6 +125,8 @@ class fe extends FormElements {} class FormElements {
 	* @param string $labelParams
 	*/
 	static function CheckboxesFromArray($data_array, $name = false, $labelParams = '') {
+		$data = '';
+
 		foreach($data_array as $k => $v) {
 			$data .= $v['label_pre'] . '<label '.$labelParams.'>' . $v['pre_label']  .
 				self::Checkbox(firstNotEmpty($name, $k),
@@ -143,6 +147,8 @@ class fe extends FormElements {} class FormElements {
 	* @param string $labelParams
 	*/
 	static function RadioButtonsFromArray($data_array, $name = false, $checkKey = false, $labelParams = '') {
+		$data = '';
+
 		foreach($data_array as $k => $v) {
 			$data .= $v['label_pre'] . '<label '.$labelParams.'>' . $v['pre_label']  .
 				self::RadioButton(firstNotEmpty($name, $k),
