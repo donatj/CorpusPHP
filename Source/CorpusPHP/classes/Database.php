@@ -132,9 +132,6 @@ abstract class Database {
 	/**
 	* Return from a query.  Note, this is *not* simply mysql_fetch_array wrapper
 	*
-	* @todo rename to prevent mysql_fetch_array name confusion
-	* @todo universal/updated trim support
-	* @todo ::KEYROW - Maybe some way to chose a key?
 	* @param string|resource $qry
 	* @param bool|string $type ex: ::KEYVALUE, ::KEYROW, ::ROW, ::SCALAR, ::FLAT
 	* @param bool $trim
