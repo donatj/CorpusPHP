@@ -1,4 +1,4 @@
-<?
+<?php
 
 include('markdown.php');
 

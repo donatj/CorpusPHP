@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Database Connection / Manipulation Class

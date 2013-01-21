@@ -1,4 +1,4 @@
-<?
+<?php
 
 if( !$shutup ) :
 
@@ -119,5 +119,5 @@ window.addEvent('domready', function() {
 	})	
 });
 </script>
-<?
+<?php
 endif;

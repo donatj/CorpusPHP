@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['name'] = 'IFrame';
 $_meta['callable'] = true;

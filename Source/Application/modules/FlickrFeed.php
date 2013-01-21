@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['name'] = 'FlickrFeed';
 $_meta['callable'] = true;

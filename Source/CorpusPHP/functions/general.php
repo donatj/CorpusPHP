@@ -1,4 +1,4 @@
-<?
+<?php
 //cache arrays, need to be here
 $___Urls = false;
 

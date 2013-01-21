@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @author Greg Crane
  * @version 1.1

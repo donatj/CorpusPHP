@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['name'] = 'TwitterFeed';
 $_meta['callable'] = true;

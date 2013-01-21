@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Class Representing a Credit Card

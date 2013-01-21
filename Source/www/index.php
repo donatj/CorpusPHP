@@ -1,4 +1,4 @@
-<?
+<?php
 /** CorpusPHP Framework **
 *
 * @package CorpusPHP

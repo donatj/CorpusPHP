@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * MessageStack Class for Stacking Messages across

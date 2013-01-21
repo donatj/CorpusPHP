@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * Table Generating Module
 * @todo work out an alignment system
@@ -6,7 +6,7 @@
 if( !$shutup ) :
 ?>
 <table <?= firstNotEmpty( $data['params'], 'cellpadding="6" cellspacing="0" style="width: 100%"' ) ?>>
-<?
+<?php
 if( count( $data['header'] ) ) {
 	echo '<tr>';
 	foreach( $data['header'] as $header ) {
@@ -29,5 +29,5 @@ if( count( $data['data'] ) ) {
 }
 ?>
 </table>
-<?
+<?php
 endif;

@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['title'] = 'Site Map';
 $_meta['sitemap'] = false;
@@ -11,7 +11,7 @@ if( !$shutup ) {
 	<li>Site Navigation
 	<?= draw_category_tree('','',-1) ?>
 	<ul>
-	<?
+	<?php
 	$info = co::content_info();
 	foreach($info as $file => $data) {
 		if($data['sitemap'] !== false) {
@@ -23,5 +23,5 @@ if( !$shutup ) {
 	</li>
 	<?= draw_category_tree('','') ?>
 </ul>
-<?
+<?php
 }

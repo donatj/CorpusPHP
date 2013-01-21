@@ -1,4 +1,4 @@
-<?
+<?php
 $_meta['title'] = 'Contact Us';
 
 if( !$shutup ) :
@@ -89,5 +89,5 @@ window.addEvent('domready', function() {
 });
 </script>
 
-<?
+<?php
 endif;

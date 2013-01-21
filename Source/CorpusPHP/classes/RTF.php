@@ -1,4 +1,4 @@
-<?
+<?php
 // RTF Generator Class
 //
 // Example of use:

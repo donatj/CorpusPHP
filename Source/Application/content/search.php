@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['title'] = 'Search Results';
 $_meta['sitemap'] = false;
@@ -10,7 +10,7 @@ if( !$shutup ) :
 
 	?>
 	<h1>Search Results</h1>
-	<?
+	<?php
 
 	$ss = implodePre(" concat_ws(' ',name,description,large_description,details) like '%", $searchA, "%' OR ", "%'");
 

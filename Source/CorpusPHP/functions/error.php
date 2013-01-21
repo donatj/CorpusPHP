@@ -1,4 +1,4 @@
-<?
+<?php
 
 function _errorHandler( $errno, $errstr, $errfile, $errline) {
 	echo '<p><strong>Error ' . $errno . '<br /><small>' . $errstr . '</small></strong><small>';

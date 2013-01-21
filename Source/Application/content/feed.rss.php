@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['title'] = 'RSS Feed';
 $_meta['sitemap'] = false;

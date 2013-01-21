@@ -12,6 +12,6 @@ if( !$shutup ) {
 	?>
 	<br /><br />
 	<div align="center"><a href="<?= DWS_BASE ?>">Return Home</a></div>
-<?
+<?php
 
 }

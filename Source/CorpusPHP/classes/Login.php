@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Basic login class for use on front and back side of projects

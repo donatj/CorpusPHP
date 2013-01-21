@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['title'] = 'XML Sitemap';
 $_meta['sitemap'] = false;

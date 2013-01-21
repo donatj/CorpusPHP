@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Navigation History Class 

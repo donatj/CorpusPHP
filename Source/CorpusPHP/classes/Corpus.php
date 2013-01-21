@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * The Corpus from which all modules, layouts, templates and content are compiled

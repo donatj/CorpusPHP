@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Split Page Results

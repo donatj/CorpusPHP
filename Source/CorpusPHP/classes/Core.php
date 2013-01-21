@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 *	The (Spicy Hot) Swappable Core

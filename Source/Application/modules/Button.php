@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['name'] = 'Button';
 $_meta['callable'] = true;

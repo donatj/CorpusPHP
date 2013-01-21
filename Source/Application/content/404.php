@@ -12,7 +12,7 @@ header("HTTP/1.0 404 Not Found");
 	<h1>404 - Not Found</h1>
 	<p>The page you requested could not be found</p>
 </td>
-<?
+<?php
 
 $_GET['search'] = str_replace('_',' ', $_meta['page']['url'] );
 $_search_content = co::content('search', false, $m);
@@ -26,5 +26,5 @@ if( $m['search_results'] > 0 ) {
 <? } ?>
 </table>
 	
-<?
+<?php
 endif;

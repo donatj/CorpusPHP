@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * @name Damned Simple Image Scaler
 * @author Jesse G. Donat

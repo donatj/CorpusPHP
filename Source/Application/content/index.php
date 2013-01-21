@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['hide_breadcrumb'] = true;
 $_meta['sitemap']         = false;
@@ -8,6 +8,6 @@ if( !$shutup ) :
 
 Home Page Content
 
-<?
+<?php
 
 endif;

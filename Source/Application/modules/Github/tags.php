@@ -1,4 +1,4 @@
-<?
+<?php
 
 $_meta['name'] = 'GithubTags';
 $_meta['callable'] = true;
