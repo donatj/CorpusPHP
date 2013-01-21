@@ -27,11 +27,6 @@ abstract class Database {
 		if(!self::$link) trigger_error('Error Connecting to Database', E_USER_ERROR);
 		if(!mysql_select_db(DB_DATABASE)) trigger_error('Cannot Locate Database: ' . DB_DATABASE, E_USER_ERROR);
 
-		//Check if the database is UTF-8 because we're responsible like that.
-		if( mysql_fetch_object( self::query( "Show Variables Like 'character_set_database'" ) )->Value != 'utf8' ) {
-			die( '<span style="color:red">Fatal Error:</span> The database\'s default encoding is not UTF-8. Please correctly configure your database and reimport to prevent corruption.' );
-		}
-
 		mysql_query( "SET NAMES "         . static::$_charset );
 		mysql_query( "SET CHARACTER SET " . static::$_charset );
 	}
