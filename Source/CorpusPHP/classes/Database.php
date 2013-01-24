@@ -73,9 +73,8 @@ abstract class Database {
 	private static function error($qry, $error, $fatal, $display = true) {
 		global $_ms;
 		//needs logic look into
-		$trace_str = _errorTracer('query');
 		if($fatal) {
-			die('<table><td valign="top"><strong>'. $error . '</strong><br /><br /><small>' . $qry . '</small></td><td valign="top">' . $trace_str . '</td></table>');
+			trigger_error($error . ' ' . $qry, E_USER_ERROR);
 		}else{
 			if(is_object($_ms) && $display) { $_ms->add($error . ' : ' . $qry . $trace_str, true); }
 			return false;
