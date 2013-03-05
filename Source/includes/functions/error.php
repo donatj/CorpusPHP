@@ -35,7 +35,7 @@ function _errorTracer($waitForFunct = false, $startAtFile = false) {
 
 function drop() {
 	call_user_func_array('see', func_get_args());
-	die();
+	die(127);
 }
 
 function see() {
@@ -50,7 +50,7 @@ function see() {
 			$argument = $argument === true ? "(bool)true" : $argument;
 			$args .= print_r($argument, true) . $eol . $eol;
 		} $args .= ">>>>>>>>>>>>>>> EOF >>>>>>>>>>>>>>>>>";
-		$final = "<pre>{$eol}{$args}{$eol}</pre>";
-		die($final);
+		$final = PHP_EOL . PHP_EOL . "<pre>{$eol}{$args}{$eol}</pre>" . PHP_EOL . PHP_EOL;
+		echo $final;
 	} return "";
 }
