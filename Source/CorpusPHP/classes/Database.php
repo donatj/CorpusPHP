@@ -24,8 +24,8 @@ abstract class Database {
 	public static function make_connection() {
 		global $_ms;
 		self::$link = @mysql_connect(static::$_host, static::$_user, static::$_password);
-		if(!self::$link) trigger_error('Error Connecting to Database', E_USER_ERROR);
-		if(!mysql_select_db(DB_DATABASE)) trigger_error('Cannot Locate Database: ' . DB_DATABASE, E_USER_ERROR);
+		if(!self::$link) trigger_error('Error Connecting to Database ' . static::$_host, E_USER_ERROR);
+		if(!mysql_select_db(static::$_database)) trigger_error('Cannot Locate Database: ' . static::$_database, E_USER_ERROR);
 
 		mysql_query( "SET NAMES "         . static::$_charset );
 		mysql_query( "SET CHARACTER SET " . static::$_charset );
@@ -176,8 +176,8 @@ abstract class Database {
 	* @todo This is not well implimented
 	*/
 	static function backup() {
-		$db_file = DFS_DB_BACKUP . 'db_' . DB_DATABASE . '-' . date('YmdHis') . '.sql.gz';
-		$command = "mysqldump --opt --host=".DB_HOST." --user=".DB_USER." --password=".DB_PASSWORD." ".DB_DATABASE." | gzip > ".$db_file;
+		$db_file = DFS_DB_BACKUP . 'db_' . static::$_database . '-' . date('YmdHis') . '.sql.gz';
+		$command = "mysqldump --opt --host=".DB_HOST." --user=".DB_USER." --password=".DB_PASSWORD." ".static::$_database." | gzip > ".$db_file;
 		exec($command);
 		if( is_file($db_file) ) { return true; }
 		return false;
