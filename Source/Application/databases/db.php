@@ -7,4 +7,6 @@ class db extends Database {
 	protected static $_password = DB_PASSWORD;
 	protected static $_charset  = 'utf8';
 
+	protected static $_database;
+
 }
