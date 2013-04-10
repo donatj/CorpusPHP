@@ -10,10 +10,12 @@ define('DB_USER',       '--username--');
 define('DB_PASSWORD',   '--password--');
 define('DB_DATABASE',   '--database--');
 
+define('DWS_ROOT', '/');
+
 if( strtolower($_SERVER['HTTPS']) == 'on' ) {
-	define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+	define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . DWS_ROOT);
 }else{
-	define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+	define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . DWS_ROOT);
 }
 
 define('DWS_ADMIN', DWS_BASE . 'admin/');
