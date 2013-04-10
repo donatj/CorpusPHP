@@ -18,5 +18,5 @@ RewriteRule ^css/images/(.*)$ images/site/$1?%{QUERY_STRING} [l]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?corpusphp_url=$1&%{QUERY_STRING}
+RewriteRule ^(.*)$ index.php?%{QUERY_STRING}
 

@@ -15,7 +15,14 @@ class _ extends Core {} class Core {
 		global $___Urls, $_meta;
 		$this->cacheUrls();
 		self::$id = (int)$_GET['id'];
-		self::$url = trim($_GET['corpusphp_url']);
+		
+		$root = trim(DWS_ROOT, '/');
+
+		if (preg_match('/^'.preg_quote( $root, '/' ).'\/(.*)$/m', ltrim($_SERVER['REQUEST_URI'],'/'), $regs)) {
+			self::$url = $regs[1];
+		} else {
+			trigger_error('Router Failure');
+		}
 		
 		if( self::$url == '' ) {
 			self::$url = 'index.php';
@@ -26,8 +33,8 @@ class _ extends Core {} class Core {
 			self::$id = $___Urls[ self::$url ];
 		}
 		
-		$_meta['id'] = self::$id;
-		$_meta['page'] = parse_url( $_SERVER['REQUEST_URI'] );
+		$_meta['id']          = self::$id;
+		$_meta['page']        = parse_url( $_SERVER['REQUEST_URI'] );
 		$_meta['page']['url'] = self::$url;
 
 	}
