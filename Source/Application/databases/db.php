@@ -8,4 +8,6 @@ class db extends Database {
 	protected static $_database = DB_DATABASE;
 
 	protected static $_charset  = 'utf8';
+
+	protected static $_connection;
 }

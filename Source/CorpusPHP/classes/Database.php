@@ -23,8 +23,8 @@ abstract class Database {
 	*/
 	public static function make_connection() {
 		global $_ms;
-		self::$link = @mysql_connect(static::$_host, static::$_user, static::$_password);
-		if(!self::$link) trigger_error('Error Connecting to Database ' . static::$_host, E_USER_ERROR);
+		static::$_connection = @mysql_connect(static::$_host, static::$_user, static::$_password);
+		if(!static::$_connection) trigger_error('Error Connecting to Database ' . static::$_host, E_USER_ERROR);
 		if(!mysql_select_db(static::$_database)) trigger_error('Cannot Locate Database: ' . static::$_database, E_USER_ERROR);
 
 		mysql_query( "SET NAMES "         . static::$_charset );
@@ -39,7 +39,7 @@ abstract class Database {
 	* @return string escaped/trimmed string
 	*/
 	static function input($str, $trim = true) {
-		if(!self::$link) { self::make_connection(); }
+		if(!static::$_connection) { self::make_connection(); }
 		
 		if($trim) $str = trim($str);
 		return mysql_real_escape_string($str);
@@ -54,7 +54,7 @@ abstract class Database {
 	* @return resource the returned query resource
 	*/
 	static function query($query, $fatal = true, $display = false) {
-		if(!self::$link) { self::make_connection(); }
+		if(!static::$_connection) { self::make_connection(); }
 
 		if( is_resource($query) ) { return $query; } 
 		$qry = mysql_query($query);
