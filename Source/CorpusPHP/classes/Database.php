@@ -170,18 +170,6 @@ abstract class Database {
 		}
 		return $data;
 	}
-
-	/**
-	* Backs up the database using MySQL Dump and Gzip
-	* @todo This is not well implimented
-	*/
-	static function backup() {
-		$db_file = DFS_DB_BACKUP . 'db_' . static::$_database . '-' . date('YmdHis') . '.sql.gz';
-		$command = "mysqldump --opt --host=".DB_HOST." --user=".DB_USER." --password=".DB_PASSWORD." ".static::$_database." | gzip > ".$db_file;
-		exec($command);
-		if( is_file($db_file) ) { return true; }
-		return false;
-	}
 	
 	/**
 	* Returns the members of a MySQL enumeration as an array

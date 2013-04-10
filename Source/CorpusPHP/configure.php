@@ -9,7 +9,6 @@ define('DB_HOST',       'localhost');
 define('DB_USER',       '--username--');
 define('DB_PASSWORD',   '--password--');
 define('DB_DATABASE',   '--database--');
-define('DFS_DB_BACKUP', 'admin/db_backups/');
 
 if( strtolower($_SERVER['HTTPS']) == 'on' ) {
 	define('DWS_BASE', 'http://' . $_SERVER['HTTP_HOST'] . '/');
