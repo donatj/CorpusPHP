@@ -21,7 +21,7 @@ abstract class Database {
 	/**
 	* Creates connection to the database, checks the database character set, and sets the database to work in UTF-8
 	*/
-	public static function make_connection() {
+	protected static function connect() {
 		global $_ms;
 		static::$_connection = @mysql_connect(static::$_host, static::$_user, static::$_password);
 		if(!static::$_connection) trigger_error('Error Connecting to Database ' . static::$_host, E_USER_ERROR);
@@ -39,7 +39,7 @@ abstract class Database {
 	* @return string escaped/trimmed string
 	*/
 	static function input($str, $trim = true) {
-		if(!static::$_connection) { self::make_connection(); }
+		if(!static::$_connection) { self::connect(); }
 		
 		if($trim) $str = trim($str);
 		return mysql_real_escape_string($str);
@@ -54,7 +54,7 @@ abstract class Database {
 	* @return resource the returned query resource
 	*/
 	static function query($query, $fatal = true, $display = false) {
-		if(!static::$_connection) { self::make_connection(); }
+		if(!static::$_connection) { self::connect(); }
 
 		if( is_resource($query) ) { return $query; } 
 		$qry = mysql_query($query);
