@@ -16,47 +16,55 @@ $_config->defaults(
 $USERNAME   = firstNotEmpty( $data['username'], $_config->USERNAME );
 $REPOSITORY = firstNotEmpty( $data['repository'], $_config->REPOSITORY );
 
-$feedUrl = "http://github.com/api/v2/json/repos/show/{$USERNAME}/{$REPOSITORY}/tags";
+$opts = array( 'http' => array('header'  => 'User-Agent: Github Sucks at APIs') );
+$context = stream_context_create($opts);
+$feedUrl = "https://api.github.com/repos/{$USERNAME}/{$REPOSITORY}/git/refs/tags";
+
 $cacheKey = md5($feedUrl);
 
 if( !$_cache->isExpired( $cacheKey ) ) {
 	$feed = $_cache->$cacheKey;
 }else{
-	if( $feed = file_get_contents( $feedUrl ) ) {
+	if( $feed = file_get_contents( $feedUrl, false, $context ) ) {
 		$_cache->set( $cacheKey, $feed, 1, 'DAY', false );
 	}else{
 		$feed = $_cache->$cacheKey;
-		$_ms->add('Error Communicating with Github API, Error 1', true);
+		$_ms->add('Error Communicating with Github API, Error ' . __LINE__, true);
 	}
 }
 
 $github = json_decode($feed, true);
 
-krsort($github['tags']);
-foreach( $github['tags'] as $tag => $hash ) {
+$info = array('data' => array());
 
-	$feedUrl = "http://github.com/api/v2/json/commits/show/{$USERNAME}/{$REPOSITORY}/{$hash}";
+foreach( $github as $data ) {
+	$feedUrl = $data['object']['url'];
+
+	$tag = str_replace('refs/tags/', '', $data['ref']);
+	
 	$cacheKey = md5($feedUrl);
 	
 	if( !$_cache->isExpired( $cacheKey ) ) {
 		$feed = $_cache->$cacheKey;
 	}else{
-		if( $feed = file_get_contents( $feedUrl ) ) {
+		if( $feed = @file_get_contents( $feedUrl ) ) {
 			$_cache->set( $cacheKey, $feed, 1, 'MONTH', true );
 		}else{
 			$feed = $_cache->$cacheKey;
-			$_ms->add('Error Communicating with Github API, Error 1', true);
+			$_ms->add('Error Communicating with Github API, Error ' . __LINE__ . ':' . $data['ref'] . ' - ' . $hash, true);
 		}
 	}
 	
 	$commit = json_decode($feed, true);
-	
-	$info['data'][] = array( 
-		$tag . '<br /><small><a href="http://github.com/'. $USERNAME .'/' . $REPOSITORY . '/zipball/'.$tag.'">Download</a></small>',
-		co::module('blog/date', strtotime($commit['commit']['committed_date']) ), 
-		'<small>' . nl2br($commit['commit']['message']) . '</small>',
-	);
-	
+
+	$download_link = 'http://github.com/'. $USERNAME .'/' . $REPOSITORY . '/zipball/'. $tag;
+	if($commit) {
+		array_unshift($info['data'], array( 
+			$tag . '<br /><small><a href="' . $download_link .'" target="_blank">Download</a></small>',
+			$commit['tagger']['date'] ? co::module('blog/date', strtotime($commit['tagger']['date']) )  : '', 
+			'<small>' . nl2br($commit['message']) . '</small>',
+		));
+	}
 }
 
 $info['header'] = array('Build', 'Date', 'Message');

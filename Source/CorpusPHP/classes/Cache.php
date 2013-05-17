@@ -48,7 +48,7 @@ class Cache {
 	}
 
 	public function get($key) {
-		return db::fetch("select value from cache where module = '" .db::input( $this->module ). "' and `key` = '".db::input($key)."'", db::SCALAR);
+		return unserialize( db::fetch("select value from cache where module = '" .db::input( $this->module ). "' and `key` = '".db::input($key)."'", db::SCALAR) );
 	}
 	
 	public function isCached($key) {
@@ -69,7 +69,7 @@ class Cache {
 		db::perform('cache', array(
 			'module' => $this->module, 
 			'key' => $key, 
-			'value' => $value, 
+			'value' => serialize( $value ), 
 			'expires' => array(true, 'date_add(now(), INTERVAL '.abs($expires).' ' .$interval. ')'),
 			'autoclear' => (int)$autoclear, 
 		), true);
