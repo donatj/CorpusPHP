@@ -28,13 +28,7 @@ class co extends Corpus {} class Corpus {
 	* Sets up the $metaSupreme variable
 	*/
 	function __construct(){
-		self::$metaSupreme['content']['meta'] = self::__meta_scan(DWS_CONTENT);
-		self::$metaSupreme['modules']['meta'] = self::__meta_scan(DWS_MODULES);
-		
-		foreach( self::$metaSupreme['modules']['meta'] as $k => $v ) {
-			if( $v['callable'] === true ) { self::$metaSupreme['modules']['calls'][$v['name']] = $k; }
-		}
-		
+		self::$metaSupreme['content']['meta'] = self::__meta_scan(DWS_CONTENT);		
 	}
 
 	/**
@@ -59,12 +53,6 @@ class co extends Corpus {} class Corpus {
 		return $data;
 	}
 	
-	private static function __premeta( $fname ) {
-		if( strpos( $fname, DWS_MODULES ) === 0 ) {
-			return self::$metaSupreme['modules']['meta'][ substr( $fname, strlen( DWS_MODULES ) ) ];
-		}
-	}
-
 	/**
 	* Does the actual loading of and sets up the enviornment for content/layouts/modules/templates
 	* wrapped in an output buffer, within a function for maximum encapsulation
@@ -86,13 +74,6 @@ class co extends Corpus {} class Corpus {
 			self::__conf_load($fname, $_meta);
 			if( !startsWith($fname, DWS_CONTENT) ) {
 				$fname = DWS_CONTENT . $fname;
-			}
-		}
-		if( !$shutup ) { 
-			$_premeta = self::__premeta( $fname ); 
-			if( $_premeta['name'] ) {
-				$_cache = new Cache( $_premeta['name'] );
-				$_config = new Configuration( $_premeta['name'] );
 			}
 		}
 		
@@ -162,8 +143,6 @@ class co extends Corpus {} class Corpus {
 	}
 
 	public static function module($name, $data = false, &$_meta = false) {
-		// if($_meta == false) { $_meta = array(); } //modules should not set the global meta unless otherwise passed the global meta manually
-		// return self::__load(DWS_MODULES . $name, false, $data, false, $_meta);
 		$mod = new Module($name, $data);
 		return $mod->render();
 
