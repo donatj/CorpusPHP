@@ -18,10 +18,10 @@ class _ extends Core {} class Core {
 		
 		$root = trim(DWS_ROOT, '/');
 
-		if (preg_match('/^'.preg_quote( $root, '/' ).'\/(.*)$/m', ltrim($_SERVER['REQUEST_URI'],'/'), $regs)) {
+		if (preg_match('/^\/?' . preg_quote( $root, '/' ) . '\/(.*)$/m', '/' . ltrim($_SERVER['REQUEST_URI'],'/'), $regs)) {
 			self::$url = $regs[1];
 		} else {
-			trigger_error('Router Failure');
+			trigger_error('Router Failure', E_USER_ERROR);
 		}
 		
 		if( self::$url == '' ) {
