@@ -38,7 +38,7 @@ $w = min($w, $orig[0]);
 $h = min($h, $orig[1]);
 
 $cacheHash = array( $_GET['src'], filemtime( $_GET['src'] ), $w, $h, $orig);
-$cacheName = '../cache/' . md5( json_encode($cacheHash) ) . '.thumb.jpg';
+$cacheName = '../../cache/' . md5( json_encode($cacheHash) ) . '.thumb.jpg';
 
 if( !file_exists($cacheName) ) {
 	$sourceFile = imagecreatefromstring( file_get_contents( $_GET['src'] ) ); //doesn't care about type
@@ -57,7 +57,10 @@ header("Pragma: public");
 header("X-Powered-By: CorpusPHP");
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + (60*60*24*120) ) . ' GMT');
 header("Last-Modified: ".gmdate( "D, d M Y H:i:s", filemtime($cacheName) )." GMT");
+header("X-Orig-Height: " . (int)$orig[0]);
+header("X-Orig-Width: " . (int)$orig[1]);
 header('Content-type: image/jpeg');
 header("Content-Transfer-Encoding:  binary"); 
 header("Content-Length: " . filesize($cacheName) ); 
+header('X-Runtime: ' . microtime(true) - $s_time);
 fpassthru($fp);
