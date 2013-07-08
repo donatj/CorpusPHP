@@ -1,6 +1,6 @@
 <?php
 
-function __autoload($class) {
+spl_autoload_register(function ( $class ) {
 	$class_bits = explode("\\", $class);
 	$class = array_pop($class_bits);
 	global $__autoload_paths;
@@ -10,9 +10,9 @@ function __autoload($class) {
 			return true;
 		}
 	}
+});
 
-	trigger_error('Failed to dynamically load class "' . $class . '"', E_USER_ERROR);
-}
+require("vendor/autoload.php");
 
 session_name(md5(DWS_BASE));
 session_start();
