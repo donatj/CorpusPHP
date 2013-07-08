@@ -162,8 +162,11 @@ class co extends Corpus {} class Corpus {
 	}
 
 	public static function module($name, $data = false, &$_meta = false) {
-		if($_meta == false) { $_meta = array(); } //modules should not set the global meta unless otherwise passed the global meta manually
-		return self::__load(DWS_MODULES . $name, false, $data, false, $_meta);
+		// if($_meta == false) { $_meta = array(); } //modules should not set the global meta unless otherwise passed the global meta manually
+		// return self::__load(DWS_MODULES . $name, false, $data, false, $_meta);
+		$mod = new Module($name, $data);
+		return $mod->render();
+
 	}
 
 	public static function content_info() {

@@ -29,10 +29,12 @@ from
 order by
 	x, if(x, - c, c), if(x, -CHAR_LENGTH(tag), CHAR_LENGTH(tag))');
 
-//print_r( $tags );
+$max = 0;
+foreach( $tags as $tag ) { $max = max($max, $tag['c']); }
+
 echo '<div class="TagCloudWrap">';
 foreach( $tags as $tag ) {
-	echo '<a style="font-size: '. number_format(($tag['c'] / 3) + .5, 3) .'em" href="'. href('tags?tag=' . urlencode($tag['tag'])) .'">' . $tag['tag'] . '</a> ';
+	echo '<a style="font-size: '. number_format(3 * ($tag['c'] / $max) + .4, 3) .'em" href="'. href('tags?tag=' . urlencode($tag['tag'])) .'">' . $tag['tag'] . '</a> ';
 }
 echo '</div>';
 

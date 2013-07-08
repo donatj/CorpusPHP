@@ -4,7 +4,7 @@ $_meta['name'] = 'LastFM';
 
 if( !$shutup ) :
 
-$_config->defaults(
+$this->_config->defaults(
 	array(
 		'APIKEY' => '',
 		'CACHEDIR' => 'cache/',
@@ -17,26 +17,26 @@ $_config->defaults(
 	)
 );
 
-if( empty( $_config->APIKEY ) ) { $_ms->add('Last.fm API Key Required', true); }
+if( empty( $this->_config->APIKEY ) ) { $_ms->add('Last.fm API Key Required', true); }
 
-$username = firstNotEmpty( $data[0], $_config->USERNAME );
-$albumWidth = firstNotEmpty( $data[1], $_config->IMGWIDTH );
-$numberToDisplay = firstNotEmpty( $data[2], $_config->IMGCOUNT );
+$username = firstNotEmpty( $this->data[0], $this->_config->USERNAME );
+$albumWidth = firstNotEmpty( $this->data[1], $this->_config->IMGWIDTH );
+$numberToDisplay = firstNotEmpty( $this->data[2], $this->_config->IMGCOUNT );
 
 $feedUrl = "http://ws.audioscrobbler.com/2.0/user/{$username}/weeklyalbumchart.xml";
 $cacheKey = md5($feedUrl);
 
-if( $_cache->isCached( $cacheKey ) ) {
-	$chartXml = $_cache->$cacheKey;
+if( $this->_cache->isCached( $cacheKey ) ) {
+	$chartXml = $this->_cache->$cacheKey;
 }else{
 	$chartXml = file_get_contents($feedUrl);
-	$_cache->set( $cacheKey, $chartXml , $_config->CACHEDAYS, 'DAY');
+	$this->_cache->set( $cacheKey, $chartXml , $this->_config->CACHEDAYS, 'DAY');
 }
 
 $dom = DOMDocument::loadXML( $chartXml );
 
 $Albums = $dom->getElementsByTagName( 'album' );
-echo '<div class="'. $_config->DIVCLASS .'">';
+echo '<div class="'. $this->_config->DIVCLASS .'">';
 foreach($Albums as $Album) {
 	
 	$artistName = $Album->getElementsByTagName('artist')->item(0)->nodeValue;
@@ -44,22 +44,22 @@ foreach($Albums as $Album) {
 	$mbid = $Album->getElementsByTagName('mbid')->item(0)->nodeValue;
 	
 	if( $mbid ) { //most reliable
-		$albumAddr = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={$_config->APIKEY}&mbid=" . $mbid;
+		$albumAddr = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={$this->_config->APIKEY}&mbid=" . $mbid;
 		$cacheName = md5( $mbid );
 	}else{
-		$albumAddr = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={$_config->APIKEY}&artist=" . urlencode($artistName) . '&album=' . urlencode($albumName);
+		$albumAddr = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={$this->_config->APIKEY}&artist=" . urlencode($artistName) . '&album=' . urlencode($albumName);
 		$cacheName = md5( $artistName .'x'. $albumName );
 	}	
 	
-	$cacheFName = $_config->CACHEDIR . $cacheName . '.lastfm.jpg';
+	$cacheFName = $this->_config->CACHEDIR . $cacheName . '.lastfm.jpg';
 	
 	if( !file_exists($cacheFName) ) {
 		
-		if( $_cache->isCached( $cacheName ) ) {
-			$albumXml = $_cache->$cacheName;
+		if( $this->_cache->isCached( $cacheName ) ) {
+			$albumXml = $this->_cache->$cacheName;
 		}else{
 			$albumXml = file_get_contents($albumAddr);
-			$_cache->set( $cacheName, $albumXml , 10 );
+			$this->_cache->set( $cacheName, $albumXml , 10 );
 		}
 		
 		$albumDom = DOMDocument::loadXML($albumXml);
@@ -77,7 +77,7 @@ foreach($Albums as $Album) {
 	
 	if( file_exists($cacheFName) ) {
 		$title = htmlE( $artistName . ' - ' . $albumName );
-		echo '<div class="'. $_config->IMGCLASS .'" title="'.htmlE( $artist['name'] ).'">
+		echo '<div class="'. $this->_config->IMGCLASS .'" title="'.htmlE( $artist['name'] ).'">
 			<img src="' . htmlE( 'images/displayImage.php?src=../'.$cacheFName.'&w='.(int)$albumWidth ) .'" alt="' . $title . '" title="' . $title . '" /></div>';
 		
 		if(++$count >= $numberToDisplay) break 1;

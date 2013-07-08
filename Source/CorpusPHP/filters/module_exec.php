@@ -5,7 +5,7 @@ return function($content) {
 	return preg_replace_callback( PATTERN_MODULE_CALL, function($m){
 		global $_ms;
 		$modules = co::module_info();
-		$module = $modules['calls'][ $m[1] ];
+		$module = $m[1];
 		if( strlen( $module ) > 0 ) {
 			$m[3] = str_replace( "'", '"', $m[3] );
 			if( $m[2] == '[' ) {

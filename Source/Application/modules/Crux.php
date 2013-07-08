@@ -5,6 +5,6 @@ $_meta['callable'] = true;
 
 if( !$shutup ) :
 
-echo crux( $data[0] );
+echo crux( $this->data[0] );
 
 endif;

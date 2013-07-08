@@ -5,7 +5,7 @@ $_meta['callable'] = true;
 
 if( !$shutup ) :
 
-$_config->defaults(
+$this->_config->defaults(
 	array(
 		'USERNAME' => 'donatj',
 		'REPOSITORY' => 'CorpusPHP',
@@ -13,8 +13,8 @@ $_config->defaults(
 	)
 );
 
-$USERNAME   = firstNotEmpty( $data['username'], $_config->USERNAME );
-$REPOSITORY = firstNotEmpty( $data['repository'], $_config->REPOSITORY );
+$USERNAME   = firstNotEmpty( $this->data['username'], $this->_config->USERNAME );
+$REPOSITORY = firstNotEmpty( $this->data['repository'], $this->_config->REPOSITORY );
 
 $opts = array( 'http' => array('header'  => 'User-Agent: Github Sucks at APIs') );
 $context = stream_context_create($opts);
@@ -22,13 +22,13 @@ $feedUrl = "https://api.github.com/repos/{$USERNAME}/{$REPOSITORY}/git/refs/tags
 
 $cacheKey = md5($feedUrl);
 
-if( !$_cache->isExpired( $cacheKey ) ) {
-	$feed = $_cache->$cacheKey;
+if( !$this->_cache->isExpired( $cacheKey ) ) {
+	$feed = $this->_cache->$cacheKey;
 }else{
 	if( $feed = file_get_contents( $feedUrl, false, $context ) ) {
-		$_cache->set( $cacheKey, $feed, 1, 'DAY', false );
+		$this->_cache->set( $cacheKey, $feed, 1, 'DAY', false );
 	}else{
-		$feed = $_cache->$cacheKey;
+		$feed = $this->_cache->$cacheKey;
 		$_ms->add('Error Communicating with Github API, Error ' . __LINE__, true);
 	}
 }
@@ -37,21 +37,21 @@ $github = json_decode($feed, true);
 
 $info = array('data' => array());
 
-foreach( $github as $data ) {
-	$feedUrl = $data['object']['url'];
+foreach( $github as $this->data ) {
+	$feedUrl = $this->data['object']['url'];
 
-	$tag = str_replace('refs/tags/', '', $data['ref']);
+	$tag = str_replace('refs/tags/', '', $this->data['ref']);
 	
 	$cacheKey = md5($feedUrl);
 	
-	if( !$_cache->isExpired( $cacheKey ) ) {
-		$feed = $_cache->$cacheKey;
+	if( !$this->_cache->isExpired( $cacheKey ) ) {
+		$feed = $this->_cache->$cacheKey;
 	}else{
 		if( $feed = @file_get_contents( $feedUrl ) ) {
-			$_cache->set( $cacheKey, $feed, 1, 'MONTH', true );
+			$this->_cache->set( $cacheKey, $feed, 1, 'MONTH', true );
 		}else{
-			$feed = $_cache->$cacheKey;
-			$_ms->add('Error Communicating with Github API, Error ' . __LINE__ . ':' . $data['ref'] . ' - ' . $hash, true);
+			$feed = $this->_cache->$cacheKey;
+			$_ms->add('Error Communicating with Github API, Error ' . __LINE__ . ':' . $this->data['ref'] . ' - ' . $hash, true);
 		}
 	}
 	

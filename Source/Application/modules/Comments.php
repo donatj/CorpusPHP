@@ -2,8 +2,8 @@
 
 if( !$shutup ) :
 
-$group_id = $data[0];
-$group = firstNotEmpty( $data[1], 'default' );
+$group_id = $this->data[0];
+$group = firstNotEmpty( $this->data[1], 'default' );
 $_cs = new MessageStack('CommentStack');
 
 if( is_array($_POST['Comment']) ) {
@@ -46,7 +46,7 @@ $comments = db::fetch( "Select c.*, u.access From comments c Left Join users u U
 */
 
 
-$comments = db::fetch("Select c.*, u.access From comments c Left Join users u Using( user_id ) Where enabled And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By parent_id, comment_date ASC");
+$comments = db::fetch("Select c.*, u.access From comments c Left Join users u Using( user_id ) Where enabled = 1 And grouping='".db::input($group)."' And grouping_id = " . (int)$group_id . " Order By parent_id, comment_date ASC");
 
 foreach( $comments as $comment ) {
 	$comment_data[ $comment['comment_id'] ]['data'] = $comment;
@@ -85,7 +85,7 @@ if( !function_exists('draw_comment_tree') ) {
 
 ?>
 <div id="Comments">
-<? 
+<?php
 echo draw_comment_tree($comment_data);
 ?>
 <form method="post" action="<?= href() ?>#MakeComment">
@@ -94,7 +94,7 @@ echo draw_comment_tree($comment_data);
 	<div class="column">
 		
 		<label class="required">Name</label>
-		<?= fe::Textbox("Comment[name]", $_POST['Comment']['name'] ) ?>
+		<?= fe::Textbox("Comment[name]", $_POST['Comment']['name'], 'required="required"' ) ?>
 		<br style="clear: both;" />
 		
 		<label>Email</label>

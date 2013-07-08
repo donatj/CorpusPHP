@@ -5,6 +5,6 @@ $_meta['callable'] = true;
 
 if( !$shutup ) :
 
-echo call_user_func_array('button', $data);
+echo call_user_func_array('button', $this->data);
 
 endif;
