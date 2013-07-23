@@ -19,7 +19,7 @@ session_start();
 
 header( 'Content-Type: text/html; charset=UTF-8' );
 header( 'X-UA-Compatible: IE=edge' );
-header( 'X-Powered-By: CorpusPHP 1.x' );
+header( 'X-Powered-By: CorpusPHP 2.x' );
 
 if(function_exists('mb_internal_encoding')) {
 	mb_internal_encoding( 'UTF-8' );
