@@ -2,7 +2,7 @@
 
 if( !$shutup ) :
 
-$tags = db::fetch('select *
+	$tags = db::fetch('select *
 from
 	(
 		select
@@ -29,13 +29,15 @@ from
 order by
 	x, if(x, - c, c), if(x, -CHAR_LENGTH(tag), CHAR_LENGTH(tag))');
 
-$max = 0;
-foreach( $tags as $tag ) { $max = max($max, $tag['c']); }
+	$max = 0;
+	foreach( $tags as $tag ) {
+		$max = max($max, $tag['c']);
+	}
 
-echo '<div class="TagCloudWrap">';
-foreach( $tags as $tag ) {
-	echo '<a style="font-size: '. number_format(3 * ($tag['c'] / $max) + .4, 3) .'em" href="'. href('tags?tag=' . urlencode($tag['tag'])) .'">' . $tag['tag'] . '</a> ';
-}
-echo '</div>';
+	echo '<div class="TagCloudWrap">';
+	foreach( $tags as $tag ) {
+		echo '<a style="font-size: ' . number_format(3 * ($tag['c'] / $max) + .4, 3) . 'em" href="' . href('tags?tag=' . urlencode($tag['tag'])) . '">' . $tag['tag'] . '</a> ';
+	}
+	echo '</div>';
 
 endif;
