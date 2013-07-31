@@ -64,7 +64,7 @@ if( !$shutup ) {
 		//$item->appendChild($doc->createElement('title')->appendChild( $doc->createTextNode( $_data['name'] . ' ' ) ));
 		$item->appendChild($doc->createElement('title'))->appendChild( $doc->createTextNode( $_data['name'] ) );
 		$item->appendChild($doc->createElement('author',  GENERIC_FROM_EMAIL .'('. STORE_NAME .')' ) );
-		$item->appendChild($doc->createElement('pubDate',  date("D, d M Y H:i:s", max( strtotime($_data['creation_date']), strtotime($_data['update_date']) ) ).' CST' ) );
+		$item->appendChild($doc->createElement('pubDate',  date(DateTime::RSS, max( strtotime($_data['creation_date']), strtotime($_data['update_date']) ) ).' CST' ) );
 		$item->appendChild($doc->createElement('link',  href($_data['categories_id']) ) );
 		// self::exec_module_calls($_data['large_description']);
 		$item->appendChild($doc->createElement('description'))->appendChild( $doc->createCDATASection( __rss_desc_cleanup( $_data['large_description']) ) );
