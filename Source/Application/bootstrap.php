@@ -20,7 +20,7 @@
 **/
 
 chdir('..');
-require("CorpusPHP/app_top.php");
+require("corpusphp/app_top.php");
 
 $_content = _::content();
 
