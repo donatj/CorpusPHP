@@ -19,7 +19,7 @@ class _ extends Core {} class Core {
 		$root = trim(DWS_ROOT, '/');
 		$parsed = parse_url($_SERVER['REQUEST_URI']);
 		if (preg_match('/^\/?' . preg_quote( $root, '/' ) . '\/(.*)$/m', '/' . ltrim($parsed['path'],'/'), $regs)) {
-			self::$url = $regs[1];
+			self::$url = urldecode($regs[1]);
 		} else {
 			trigger_error('Router Failure', E_USER_ERROR);
 		}

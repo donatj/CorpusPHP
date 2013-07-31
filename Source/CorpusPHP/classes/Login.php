@@ -40,7 +40,7 @@ class Login {
 				}
 			}else{
 				$_ms->add("Error Logging In", true);
-				redirect('login.php');
+				redirect('login');
 			}
 		}
 	}
@@ -53,7 +53,7 @@ class Login {
 			$_ms->add(GENERIC_LOGIN_ERROR, true);
 			$this->Logout();
 			$_nh->SetSnapshot('application/index.php', 'login');
-			redirect('login.php');
+			redirect('login');
 		}
 	}
 
