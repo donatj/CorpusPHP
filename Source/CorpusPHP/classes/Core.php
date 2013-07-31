@@ -131,8 +131,15 @@ class _ extends Core {} class Core {
 	* @return array
 	*/
 	public static function data($id) {
-		$data = db::fetch( "Select * From categories Where categories_id = " . (int)$id, db::ROW );
+		$data = db::fetch( "SELECT * FROM categories WHERE categories_id = " . (int)$id, db::ROW );
 		$data['supplementary'] = json_decode($data['supplementary'], true);
+		$data['filters']       = db::fetch("SELECT filter FROM categories_filters WHERE categories_id = ".intval($id)." ORDER BY sort", db::FLAT);
+
+		$data['large_description_raw'] = $data['large_description'];
+		
+		foreach($data['filters'] as $filter) {
+			$data['large_description'] = Filter::process($filter, $data['large_description']);
+		}
 		return $data;
 	}
 

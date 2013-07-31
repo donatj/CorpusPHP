@@ -44,7 +44,7 @@ class co extends Corpus {} class Corpus {
 		foreach($files as $file) {
 			if( strpos($file,'.php') && $file != 'conf.php' ) {
 				$meta = array();
-				self::__load($path . $sub . $file,'', false, true, $meta, false, false);
+				self::__load($path . $sub . $file,'', false, true, $meta, false);
 				if($meta) { $data[$sub . $file] = $meta; }
 			}elseif( is_dir( $path . $sub . $file ) && $file != '.' && $file != '..' ) {
 				$data = array_merge( self::__meta_scan( $path, $sub . $file . '/' ), $data);
@@ -66,7 +66,7 @@ class co extends Corpus {} class Corpus {
 	* @param bool $__execConf
 	* @return string the compiled result
 	*/
-	private static function __load( $fname,  $lname = '', $data = false, $shutup = false, &$_meta = false, $__execModuleCalls = true, $__execConf = false, &$__route = null ) {
+	private static function __load( $fname,  $lname = '', $data = false, $shutup = false, &$_meta = false, $__execConf = false, &$__route = null ) {
 		global $_ms, $_lg, $_nh;
 		$fname = self::__get_filename($fname);
 		if( $_meta === false ) { global $_meta; }
@@ -82,10 +82,9 @@ class co extends Corpus {} class Corpus {
 			ob_start();
 			require($fname);
 			$content = ob_get_clean();
-			if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false ) {
-				$mc = include(DWS_FILT . 'module_exec.php');
-				$content = $mc( $content );
-			}
+			// if( !$shutup && $__execModuleCalls && $_meta['execModuleCalls'] !== false ) {
+			// 	$content = Filter::process('module_exec', $content);
+			// }
 
 			if(!$lname || $_meta['raw']) {
 				return $content;
@@ -112,7 +111,7 @@ class co extends Corpus {} class Corpus {
 				$path .= $pathSub . '/';
 				if( is_file(  DWS_CONTENT . $path . 'conf.php' ) ) {
 					//needs to not shutup because its the only way to tell from scan at current
-					self::__load( DWS_CONTENT . $path . 'conf.php', false, false, false, $_meta, false, false, $fname );
+					self::__load( DWS_CONTENT . $path . 'conf.php', false, false, false, $_meta, false, $fname );
 				}
 			}
 		}
@@ -123,7 +122,7 @@ class co extends Corpus {} class Corpus {
 	}
 
 	public static function content($name, $shutup = false, &$_meta = false) {
-		return self::__load(DWS_CONTENT . $name, $name, false, $shutup, $_meta, true, true);
+		return self::__load(DWS_CONTENT . $name, $name, false, $shutup, $_meta, true);
 	}
 
 	public static function layout($name, $data = false, $layout = false, &$_meta = false) {

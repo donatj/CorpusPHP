@@ -22,14 +22,16 @@ define('DWS_ADMIN', DWS_BASE . 'admin/');
 define('DWS_DOMAIN', 'http://' . $_SERVER['HTTP_HOST']);
 
 define('DWS_INCL', 'includes/');
-define('DWS_VENDOR', 'Vendor/');
-define('DWS_CORPUS', 'CorpusPHP/');
+define('DWS_VENDOR', 'vendor/');
+define('DWS_CORPUS', 'corpusphp/');
 	define('DWS_CLASSES', DWS_CORPUS . 'classes/');
-	define('DWS_FILT',  DWS_CORPUS . 'filters/');
-	define('DWS_FUNC',  DWS_CORPUS . 'functions/');
+	define('DWS_FILTER',  DWS_CORPUS . 'filters/');
+	define('DWS_FUNC',    DWS_CORPUS . 'functions/');
+	define('DWS_DBO',     DWS_CORPUS . 'dbo/');
 
-define('DWS_APP', 'Application/');
-	define('DWS_DBO',       DWS_APP . 'dbo/');
+define('DWS_APP', 'application/');
+	define('DWS_APP_FILTER',  DWS_APP . 'filters/');
+	define('DWS_APP_DBO',     DWS_APP . 'dbo/');
 	define('DWS_LAYOUT',    DWS_APP . 'layout/');
 	define('DWS_TEMPLT',    DWS_APP . 'templates/');
 	define('DWS_CONTENT',   DWS_APP . 'content/');
@@ -38,4 +40,5 @@ define('DWS_APP', 'Application/');
 
 define('GENERIC_FROM_EMAIL',        'noreply@donatstudios.com');
 
-$__autoload_paths = array( DWS_DATABASES, DWS_CLASSES, DWS_VENDOR, DWS_DBO );
+$__autoload_paths = array( DWS_DATABASES, DWS_CLASSES, DWS_VENDOR, DWS_APP_DBO, DWS_DBO );
+

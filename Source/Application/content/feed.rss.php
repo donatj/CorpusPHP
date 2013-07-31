@@ -19,7 +19,10 @@ if( !$shutup ) {
 	if( !function_exists('__rss_desc_cleanup') ) {
 		function __rss_desc_cleanup( $string ) {
 			$string = preg_replace('%<(?P<tagname>(?:iframe|script|style)).*?</?(?P=tagname)>%six', ' ', $string);
-			$string = preg_replace_callback('/(?:href|src)="(.*?)"/six', 'href', $string);
+			$string = preg_replace_callback('/(href|src)="(.*?)"/six', function($matches){
+
+				return $matches[1] . '="'. href($matches[2]) .'"';
+			}, $string);
 			return $string;
 		}
 	}
@@ -53,8 +56,9 @@ if( !$shutup ) {
 
 	$channel->appendChild($channel_image);
 
-	$qry = mysql_query("SELECT * FROM categories WHERE list > 0 and template > 0 ORDER BY creation_date desc limit 75");
-	while($_data = mysql_fetch_array($qry)) {
+	$qry = mysql_query("SELECT categories_id FROM categories WHERE list > 0 and template > 0 and creation_date ORDER BY creation_date desc limit 75");
+	while($cat_id = mysql_fetch_array($qry)) {
+		$_data = Core::data($cat_id['categories_id']);
 		$item = $doc->createElement('item');
 		$item->appendChild($doc->createElement('guid', href($_data['categories_id']) ));
 		//$item->appendChild($doc->createElement('title')->appendChild( $doc->createTextNode( $_data['name'] . ' ' ) ));
@@ -62,7 +66,7 @@ if( !$shutup ) {
 		$item->appendChild($doc->createElement('author',  GENERIC_FROM_EMAIL .'('. STORE_NAME .')' ) );
 		$item->appendChild($doc->createElement('pubDate',  date("D, d M Y H:i:s", max( strtotime($_data['creation_date']), strtotime($_data['update_date']) ) ).' CST' ) );
 		$item->appendChild($doc->createElement('link',  href($_data['categories_id']) ) );
-		self::exec_module_calls($_data['large_description']);
+		// self::exec_module_calls($_data['large_description']);
 		$item->appendChild($doc->createElement('description'))->appendChild( $doc->createCDATASection( __rss_desc_cleanup( $_data['large_description']) ) );
 		$channel->appendChild($item);
 	}
