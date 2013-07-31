@@ -56,7 +56,8 @@ CREATE TABLE `categories_filters` (
 CREATE TABLE `categories_tags` (
   `categories_id` int(11) NOT NULL,
   `tag` varchar(255) NOT NULL,
-  PRIMARY KEY (`categories_id`)
+  PRIMARY KEY (`categories_id`,`tag`),
+  KEY `tag` (`tag`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
