@@ -41,3 +41,6 @@ Initially, set your database connection information and file system constants in
 `includes/configure.php`
 
 Other configuration options are availble in the `config` table.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/donatj/corpusphp/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
