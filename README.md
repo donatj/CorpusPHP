@@ -1,3 +1,9 @@
+# Warning: This is the unsupported "CorpusPHP" framework. 
+
+For the more modern "Corpus Components" set of libraries, see https://github.com/CorpusPHP
+
+---
+
 CorpusPHP: The PHP Framework for the Rest of Us
 ===============================================
 
